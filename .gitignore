@@ -1,0 +1,17 @@
+# Editors
+/**/*/__pycache__/*
+/.idea/*
+.vscode/
+
+# Virtual Environment
+/django/
+
+# Migrations
+/*/migrations/*
+!/*/migrations/__init__.py
+
+# Static, Media and DB
+/media_cdn/
+/static_cdn/
+db.sqlite3
+

@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+
+
+{% block content %}
+
+<body id="register" class="unselectable">
+    <div class="col-12 col-sm-9 col-md-12 col-lg-9 mx-auto my-5">
+        <div class="card-login-register p-5" >
+            <h1 class="text-center mb-5 neon-h1">Sign Up</h1>
+            <form method="post" class="row" id="registerForm">
+                {% csrf_token %}
+                {% for field in registration_form %}
+                <div class="form-outline mb-4 col-md-6">
+                   
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <div class="text-center">
+                    <button type="submit" class="btnLogReg " >
+                        Sign Up
+                    </button>
+                
+                <div class="mt-3 mb-5">
+                    <a class="login" href="{% url 'account:login' %}">Already have an account? Log in!</a>
+                </div>
+            </div>
+                <input type="submit" hidden />
+                <div class="col-md-12 text-start error">
+                    {% for field in registration_form %}
+                    {% for error in field.errors %}
+                    <p>{{error}}</p>
+                    {% endfor %}
+                    {% endfor %}
+                    {% if registration_form.non_field_errors %}
+                    <p>{{ registration_form.non_field_errors }}</p>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock content %}

@@ -1,0 +1,88 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white" style="box-shadow: 2px 2px 10px  #888888 ;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand ms-4 mt-2 mt-lg-0" href="{% url 'main:index' %}">
+                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15" alt="MDB Logo"
+                    loading="lazy" />
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_superuser %}
+                
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="{% url 'main:addProduct' %}">Add Product</a>
+                </li>
+                {% endif %}
+                <li class="nav-item mx-2">
+                    <a class="nav-link {% if nav == 'Men'%} active{%endif%}"  href="{% url 'main:menswear' %}">MEN</a>
+                </li>
+                
+                <li class="nav-item mx-2">
+                    <a class="nav-link {% if nav == 'Women'%} active{%endif%}" href="{% url 'main:womenswear' %}">WOMEN</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link {% if nav == 'Kids'%} active{%endif%}" href="{% url 'main:kidswear' %}">KIDS</a>
+                </li>
+                
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <a class="link-grayish me-3" href="#" style="text-decoration: none; color:#888888">
+                <i class="fa fa-cart-plus"></i>&nbsp; CART &nbsp;
+            </a>
+
+           
+            <!-- Avatar -->
+            {% if request.user.is_authenticated %}
+                
+                <div class="dropdown me-4">
+                    <a class="btn btn-white dropdown-toggle {% if request.user.is_superuser %}text-danger {% else %}text-muted {% endif %}" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ request.user.first_name}}
+                    </a>
+    
+                    <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="dropdownMenuLink">
+                        {% if request.user.is_superuser %}
+                        <li><a class="dropdown-item text-muted" href="{% url 'main:products' %}">Products</a></li>
+                        <li><a class="dropdown-item text-muted" href="{% url 'main:users' %}">Users</a></li>                    
+                        <li><a class="dropdown-item text-muted" href="{% url 'admin:index' %}">Admin</a></li>  
+                        <hr class="dropdown-divider">
+                        {% endif %}
+                        <li><a class="dropdown-item text-muted" href="{% url 'account:logout' %}">Log out</a></li>
+                    </ul>
+                    
+                </div>
+                
+                
+           
+                     
+            
+            {% else %}
+            <ul class= "navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-2" href="#" role="button" >
+                    <a class="btnLogReg btn" href="{% url 'account:login' %}">Login</a></li>
+                </li>
+            </ul>
+                
+                {% endif %}
+        </div>
+        <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

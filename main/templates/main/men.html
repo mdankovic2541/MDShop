@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="row col-md-12">
+
+    {% for product in products %}
+    <div class="card mx-auto mt-2 " style="width: 18rem;">
+        <p class="flag">{{product.flag}}</p>
+        <img src="..." class="card-img-top" alt="...">
+        <div>
+            <h2>{{ product.title }}</h3>
+                <h4> {{ product.brand }}</h5>
+        </div>
+        <div class="card-body mx-auto">
+            <p><b>{{ product.price }}kn</b></p>
+            <p>{{ product.size }}</p>
+            <p> {{ product.type }}</p>
+            <p> <i>{{ product.brand }}</i> </p>
+            <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
+            <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
+
+            </ul>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

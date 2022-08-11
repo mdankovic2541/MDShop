@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %}
+{% block title %}
+MDShop
+{% endblock%}
+
+{% block content %}
+
+<style>
+    .hero {
+        min-height: 50vh;
+        background: #000 url(https://wallpaperaccess.com/full/1098467.jpg) center center no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hero:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .hero-content {
+        position: absolute;
+        bottom: 15px;
+        color: #fff;
+
+    }
+</style>
+
+
+<div class="hero">
+    <div class="container-fluid">
+        <div class="hero-content">
+
+            <div class="col-md-12">
+                <h1>Bootstrap Hero Image</h1>
+            </div>
+            <div class="col-md-6">
+                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image</p>
+            </div>
+            <div class="col-md-6 ">
+                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap
+                    Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero
+                    Image
+                    Bootstrap Hero Image</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row col-md-12">
+
+    {% for product in products %}
+    <div class="card mx-auto mt-2 " style="width: 18rem;">
+        <p class="flag">{{product.flag}}</p>
+        <img src="..." class="card-img-top" alt="...">
+        <div>
+            <h2>{{ product.title }}</h3>
+                <h4> {{ product.brand }}</h5>
+        </div>
+        <div class="card-body mx-auto">
+            <p><b>{{ product.price }}kn</b></p>
+            <p>{{ product.size }}</p>
+            <p> {{ product.type }}</p>
+            <p> <i>{{ product.brand }}</i> </p>
+            <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
+            <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
+
+            </ul>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock%}

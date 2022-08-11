@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+{% block title %}
+MDShop
+{% endblock%}
+
+{% block content %}
+
+
+
+<div class="cont mx-auto  text-center">
+    <a class="btn btn-success mb-4" href="{% url 'main:addProduct' %}">Add Product</a>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Price</th>
+            <th scope="col">Type</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Size</th>
+            <th scope="col">Collection</th>
+            <th scope="col">Flag</th>            
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+            {% for product in products %}
+          <tr>
+            <td>{{ product.title}}</td>
+            <td>{{ product.brand}}</td>
+            <td>{{ product.price}}</td>
+            <td>{{ product.type}}</td>
+            <td>{{ product.quantity}}</td>
+            <td>{{ product.size}}</td>
+            <td>{{ product.collection}}</td>
+            <td>{{ product.flag}}</td>
+            <td><a href="" class="btnCardLeft">Edit</a>
+                <a href="" class="btnCardRight">Delete</a>
+                </td>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+        
+      </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock%}
