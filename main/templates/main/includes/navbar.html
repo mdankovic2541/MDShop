@@ -18,21 +18,16 @@
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if request.user.is_superuser %}
-                
+               
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="{% url 'main:addProduct' %}">Add Product</a>
-                </li>
-                {% endif %}
-                <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Men'%} active{%endif%}"  href="{% url 'main:menswear' %}">MEN</a>
+                    <a class="nav-link {% if nav == 'Men'%} active{%endif%}"  href="{% url 'main:menswear' %}"><b>MEN</b></a>
                 </li>
                 
                 <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Women'%} active{%endif%}" href="{% url 'main:womenswear' %}">WOMEN</a>
+                    <a class="nav-link {% if nav == 'Women'%} active{%endif%}" href="{% url 'main:womenswear' %}"><b>WOMEN</b></a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Kids'%} active{%endif%}" href="{% url 'main:kidswear' %}">KIDS</a>
+                    <a class="nav-link {% if nav == 'Kids'%} active{%endif%}" href="{% url 'main:kidswear' %}"><b>KIDS</b></a>
                 </li>
                 
             </ul>
@@ -44,7 +39,7 @@
         <div class="d-flex align-items-center">
             <!-- Icon -->
             <a class="link-grayish me-3" href="#" style="text-decoration: none; color:#888888">
-                <i class="fa fa-cart-plus"></i>&nbsp; CART &nbsp;
+                <i class="fa fa-cart-plus"></i>&nbsp; <b>CART</b> &nbsp;
             </a>
 
            
@@ -53,7 +48,7 @@
                 
                 <div class="dropdown me-4">
                     <a class="btn btn-white dropdown-toggle {% if request.user.is_superuser %}text-danger {% else %}text-muted {% endif %}" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ request.user.first_name}}
+                       <b> {{ request.user.first_name}}</b>
                     </a>
     
                     <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="dropdownMenuLink">

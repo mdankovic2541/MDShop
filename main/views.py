@@ -1,8 +1,10 @@
 from multiprocessing import context
+from telnetlib import STATUS
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http.response import Http404
+from django.http import HttpResponse
 from account.models import Account
-from main.forms import CreateProductForm
+from main.forms import CreateProductForm, EditProductForm
 from .models import Product
 
 # Create your views here.
@@ -20,7 +22,7 @@ def indexView(request):
     return render(request,"main/index.html",context)
 
 
-def addProduct(request):
+def addProductView(request):
     form = CreateProductForm(request.POST or None)
     if form.is_valid():
         obj = form.save()
@@ -52,8 +54,52 @@ def productsView(request):
     return render(request,"main/products.html",context)
 
 
+def editProductView(request,productId):
+    context = {}
+    product = get_object_or_404(Product, id=productId)
+    if request.POST:
+        form = EditProductForm(request.POST or None, instance=product)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            context['success_message'] = 'Product updated!'
+            product = obj
+    form = EditProductForm(
+        initial = {
+            'title': product.title,
+            'quantity':product.quantity,
+            'collection':product.collection,
+            'brand': product.brand,
+            'type': product.type,
+            'size': product.size,
+            'price' : product.price,
+            'flag': product.flag
+        }
+    )
+    context = {
+        'form': form,
+        'product': product,
+    }
+    return render(request, 'main/editProduct.html', context)
 
-def productDetail(request,productId):
+
+def deleteProductView(request,productId):
+    try:
+        product = get_object_or_404(Product, id=productId)
+        if not request.user.is_superuser:
+            return redirect('main:index')
+    except Product.DoesNotExist:
+        return HttpResponse("Product not found",status = 404)
+    except Exception:
+        return HttpResponse("Internal Error",status= 500)
+    product.delete()
+    
+    return redirect('main:products')
+    
+
+
+
+def productDetailView(request,productId):
     context = {}
     try:
         product = get_object_or_404(Product, id=productId)
