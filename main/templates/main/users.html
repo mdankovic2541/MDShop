@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% block title %}
-MDShop
+Users
 {% endblock%}
 
 {% block content %}
@@ -39,8 +39,8 @@ MDShop
             <td>{{ account.street_number}}</td>
             <td>{{ account.postal_code}}</td>
             <td>{{ account.is_superuser}}</td>
-            <td><a href="" class="btnCardLeft">Edit</a>
-                <a href="" class="btnCardRight">Delete</a>
+            <td><a href="{% url 'account:editAccount' account.id %}" class="btnCardLeft">Edit</a>
+                <a href="{% url 'account:deleteAccount' account.id %}" class="btnCardRight">Delete</a>
                 </td>
             
           </tr>

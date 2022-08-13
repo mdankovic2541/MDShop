@@ -1,7 +1,16 @@
 from django.db import models
 
-# Create your models here.
+from account.models import Account
 
+# Create your models here.
+# class Comment(models.Model):
+#     description = models.CharField(null=False, blank=False,max_length=250)
+
+#     account = models.ForeignKey(Account,on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f'Comment:{self.description}'
+        
 class Product(models.Model):
     quantity = models.IntegerField(null=False,blank=False)
     title = models.CharField(null=False,blank=False,max_length=80)
@@ -11,6 +20,8 @@ class Product(models.Model):
     size = models.CharField(null=False,blank=False,max_length=20)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     flag = models.CharField(null=False,blank=False,max_length=80)
+
+    #comment = models.ForeignKey(Comment,on_delete=models.CASCADE,default="")
 
     def __str__(self):
         return f'product: {self.title}'

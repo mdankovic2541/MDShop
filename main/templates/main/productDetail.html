@@ -4,8 +4,118 @@
 {% endblock%}
 {% block content %}
 
-<h1>{{ product.title}}</h1>
-<a href="{% url 'main:index' %}">Back</a>
+
+<div class="hero">
+    <div class="container-fluid">
+        <div class="hero-content">
+
+            <div class="col-md-12">
+                <h1>Bootstrap Hero Image</h1>
+            </div>
+            <div class="col-md-6">
+                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image</p>
+            </div>
+            <div class="col-md-6 ">
+                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap
+                    Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero
+                    Image
+                    Bootstrap Hero Image</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row col-md-12">
+    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+        <div class="card  " >
+            <div class="row">
+
+                <div class="col">
+                    <p class="flag">{{product.flag}}</p>
+                    <img src="" alt="..." class="card-img-top">          
+                        
+                </div>
+               
+            
+                <div class="col"> 
+                    <h2>{{ product.title }}</h3>
+                    <h4> {{ product.brand }}</h5>
+                
+                    <div class="card-body mx-auto">
+                        <h5><b>{{ product.price }}kn</b></h5>
+                        <h5>{{ product.size }}</h5>
+                        <h5> {{ product.type }}</h5>
+                        <h5> <i>{{ product.brand }}</i> </h5>
+                        <h5>{{ product.collection }} collection</h5>
+                        
+                        
+                        <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
+                        <a class="btnCardRight" href="{% url 'main:index' %}">Back</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="text-center mx-auto mt-3 border-top border-bottom border-secondary p-3 bg-secondary ">
+       <h3 class="text-light">Comments on this product:</h3>
+    </div>
+    <div>
+        {% for account in accounts %}
+            {% for product in products %}
+                {% if account.id == product.id%}
+                    <p>{{account.id}}{{account}}{{product.id}}{{product}}</p>
+                    {%endif%}
+    
+            {%endfor%}
+        
+    
+        {%endfor%}
+    </div>
+
+<div class="row col-md-12">
+    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+        <div class="card" >
+            <div class="col p-3">
+                <h3 class="">Username:</h3>            
+                    <p class="text-justify pt-4">This is where the comment will show , 
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                         Officia doloribus consequuntur repudiandae, culpa porro cumque eum et eos id illo quasi,
+                        mollitia eaque veniam dignissimos tempora quo dolore soluta at.</p>
+                    
+                        <!-- Check if user is adimn or if user wrote this comment in order to make him be able to edit or delete it-->
+                <div class="card-body mx-auto text-center"> 
+                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Edit</a>
+                    <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Delete</a>
+                </div>                
+            </div>
+        </div>
+        
+    </div>
+
+
+    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+        <div class="card" >
+            <div class="col p-3">
+                <h3 class="">Username:</h3>            
+                    <p class="text-justify pt-4">This is where the comment will show , 
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                         Officia doloribus consequuntur repudiandae, culpa porro cumque eum et eos id illo quasi,
+                        mollitia eaque veniam dignissimos tempora quo dolore soluta at.</p>
+                    
+                        <!-- Check if user is adimn or if user wrote this comment in order to make him be able to edit or delete it-->
+                <div class="card-body mx-auto text-center"> 
+                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Edit</a>
+                    <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Delete</a>
+                </div>                
+            </div>
+        </div>
+        
+    </div>
+</div>
 
    
 {% endblock %}

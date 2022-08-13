@@ -13,6 +13,7 @@ class CreateProductForm(forms.ModelForm):
               'size',
               'price',
               'flag'
+              
             ]
         widgets = {
             'title': forms.TextInput(attrs={
@@ -88,6 +89,7 @@ class CreateProductForm(forms.ModelForm):
                     'maxlength': '80',
                     'required': True
                     }),     
+                
             
         }
 

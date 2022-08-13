@@ -23,6 +23,8 @@ def indexView(request):
 
 
 def addProductView(request):
+    if not request.user.is_superuser:
+        return redirect('main:index')
     form = CreateProductForm(request.POST or None)
     if form.is_valid():
         obj = form.save()
@@ -35,6 +37,8 @@ def addProductView(request):
     return render(request, 'main/addProduct.html', context)
 
 def usersView(request):
+    if not request.user.is_superuser:
+        return redirect('main:index')
     context = {}
     accounts = Account.objects.all()
     context = {
@@ -45,6 +49,8 @@ def usersView(request):
 
 
 def productsView(request):
+    if not request.user.is_superuser:
+        return redirect('main:index')
     context = {}
     products = Product.objects.all()
     context = {
@@ -57,6 +63,9 @@ def productsView(request):
 def editProductView(request,productId):
     context = {}
     product = get_object_or_404(Product, id=productId)
+    
+    if not request.user.is_superuser:
+        return redirect('main:index')
     if request.POST:
         form = EditProductForm(request.POST or None, instance=product)
         if form.is_valid():
@@ -105,7 +114,7 @@ def productDetailView(request,productId):
         product = get_object_or_404(Product, id=productId)
     except Http404: 
         return redirect('main:index')
-
+    
     context = {
         'product' : product,
 

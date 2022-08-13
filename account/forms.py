@@ -49,3 +49,29 @@ class UserPasswordResetForm(PasswordResetForm):
 		super(UserPasswordResetForm, self).__init__(*args, **kwargs)
 
 	email = forms.EmailField(label='', widget=forms.EmailInput(attrs={'name': 'email', 'class':'form-control form-control-lg', 'placeholder':'Electronic mail', 'autofocus':'true'}))
+
+
+class EditAccountForm(forms.ModelForm):    
+	class Meta:
+		model = Account
+		fields = ['first_name', 'last_name', 'email', 'username','street_name','street_number','city','postal_code','country']
+
+	def save(self, commit=True):
+		account = self.instance
+		account.first_name = self.cleaned_data['first_name']
+		account.last_name = self.cleaned_data['last_name']
+		account.email = self.cleaned_data['email']
+		account.username = self.cleaned_data['username']		
+		account.street_name = self.cleaned_data['street_name']
+		account.street_number = self.cleaned_data['street_number']
+		account.city = self.cleaned_data['city']
+		account.postal_code = self.cleaned_data['postal_code']
+		account.country = self.cleaned_data['country']
+
+
+        # if self.cleaned_data['image']:
+        #     account.image = self.cleaned_data['image']
+
+		if commit:
+			account.save()
+		return account

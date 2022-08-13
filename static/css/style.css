@@ -118,3 +118,27 @@ li a:hover, .link-grayish:hover{
    
   
  }
+
+ .hero {
+   min-height: 50vh;
+   background: #000 url(https://wallpaperaccess.com/full/1098467.jpg) center center no-repeat;
+   background-size: cover;
+   position: relative;
+}
+
+.hero:before {
+   content: "";
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.hero-content {
+   position: absolute;
+   bottom: 15px;
+   color: #fff;
+
+}

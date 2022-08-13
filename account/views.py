@@ -1,7 +1,10 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegistrationForm, LoginForm
+from django.http import HttpResponse
+
+from .models import Account
+from .forms import EditAccountForm, RegistrationForm, LoginForm
 
 
 # @isAlreadyAuthenticated
@@ -58,3 +61,47 @@ def loginView(request):
 def logoutView(request):
 	logout(request)
 	return redirect('main:index')
+
+
+def editAccountView(request,accountId):
+    context = {}
+    account = get_object_or_404(Account, id=accountId)
+    if request.POST:
+        form = EditAccountForm(request.POST or None, instance=account)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            context['success_message'] = 'Product updated!'
+            product = obj
+    form = EditAccountForm(
+        initial = {
+            'first_name' : account.first_name ,
+			'last_name': account.last_name,
+			'email': account.email,
+			'username': account.username,
+			'street_name':account.street_name,
+			'street_number':account.street_number,
+			'city':account.city,
+			'postal_code':account.postal_code,
+			'country':account.country
+        }
+    )
+    context = {
+        'form': form,
+        'account': account,
+    }
+    return render(request, 'account/editAccount.html', context)
+
+
+def deleteAccountView(request,accountId):
+    try:
+        account = get_object_or_404(Account, id=accountId)
+        if not request.user.is_superuser:
+            return redirect('main:index')
+    except Account.DoesNotExist:
+        return HttpResponse("Account not found",status = 404)
+    except Exception:
+        return HttpResponse("Internal Error",status= 500)
+    account.delete()
+    
+    return redirect('main:users')
