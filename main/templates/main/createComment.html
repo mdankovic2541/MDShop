@@ -1,0 +1,80 @@
+{% load static %}
+<div class="commentsBody">
+    <div class="row">
+        <div class="input-group mb-3">
+            <button class="btn btn-warning btn-sm" onClick="clearTextarea()" id="resetCommentBtn">
+                <i class="fa-solid fa-broom"></i>&nbsp;&nbsp;Clear
+            </button>
+            <input type="text" id="commText" class="form-control py-1 px-3" placeholder="Your comment" onkeyup="checkForWhitespace()"></input>
+            <button class="btn btn-warning btn-sm" disabled id="addCommentBtn">
+                <i class="fa-solid fa-comment-dots"></i>&nbsp;&nbsp;Submit
+            </button>
+        </div>
+        <div class="col-md-12 mt-2 mb-4 text-center">
+        </div>
+        <script>
+            function checkForWhitespace() {
+                if (document.getElementById("commText").value === "" || !$("#commText").val().replace(/\s/g, '').length) document.getElementById('addCommentBtn').disabled = true;
+                else document.getElementById('addCommentBtn').disabled = false;
+            }
+
+            function clearTextarea() {
+                $("#commText").val("");
+                checkForWhitespace();
+            }
+
+            $("#addCommentBtn").click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'main:createComment' product.id %}",
+                    data: {
+                        description: $("#commText").val(),
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+                        dataType: "json",
+                    },
+                    success: function (data) {
+                        clearTextarea();
+                        $("#allComments").append(
+                            "<div class='row m-2 comment' id='detailBlogComment-" + data['comm_id'] + "'>" +
+                            "<div class='col-md-8 text-start py-2 px-4'>" +
+                            "<a href='#'>" + data['account'] + "</a>" +
+                            " says:" +
+                            "</div>" +
+                            "<div class=\"col-md-4 text-end py-2 px-4\">" +
+                            "<button class=\"btn btn-outline-danger btn-sm\">" +
+                            "<i class= \"fa-regular fa-heart\"></i>&nbsp;&nbsp;<span>0</span>" +
+                            "</button> " +
+                            "<button class=\"btn btn-outline-danger\" id=\"btnCommentDelete-" + data['comm_id'] + "\">" +
+                            "<i class=\"fa-solid fa-trash-can\"></i>" +
+                            "</button></div>" +
+                            "<div class='col-md-12'>" +
+                            "<p class='text-white text-start p-2' id='appCommBody'>" + data['description'] + "</p>" +
+                            "</div>" +
+                            "</div>" +
+                            "<script>$(\"#btnCommentDelete-" + data['comm_id'] + "\").click(function (e) {" +
+                            "$.ajax({ " +
+                            "url: \"#\"," +
+                            "type: \"POST\"," +
+                            "data: {" +
+                            "'id': " + data['comm_id'] + "," +
+                            "csrfmiddlewaretoken: '{{ csrf_token }}'," +
+                            "}," +
+                            "cache: false," +
+                            "dataType: \"json\"," +
+                            "success: function () {" +
+                            "$(\"#detailBlogComment-" + data['comm_id'] + "\").remove();" +
+                            "$(\"#commentCount\").html($(\".comment\").length + \" comments\");" +
+                            "}," +
+                            "fail: function () { }" +
+                            "});" +
+                            "});<\/script>");
+                        $("#commentCount").html($(".comment").length + " comments");
+                        
+                    },
+                    failure: function () { },
+                });
+            });
+        </script>
+    </div>
+</div>

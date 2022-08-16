@@ -93,36 +93,6 @@ class CreateProductForm(forms.ModelForm):
             
         }
 
-class CreateCommentForm(forms.ModelForm):    
-        class Meta:
-                model = Comment
-                fields = ['description',
-                        'account'
-               
-              
-                        ]
-                widgets = {
-                        'description': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'type': 'text',
-                        'name': 'Description',
-                        'id': 'id_description',
-                        'placeholder': 'Description',
-                        'maxlength': '250',
-                        'required': True,
-                        }),
-                        'account': forms.TextInput(attrs={
-                        'class': 'form-control',
-                        'type': 'text',
-                        'name': 'Account',
-                        'id': 'id_account',
-                        'placeholder': 'Account',
-                        'maxlength': '250',
-                        'required': True,
-                        }),     
-                
-            
-        }
 
 class EditProductForm(forms.ModelForm):    
      class Meta:

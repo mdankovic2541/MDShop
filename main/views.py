@@ -1,11 +1,13 @@
 from multiprocessing import context
 from telnetlib import STATUS
+
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http.response import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from account.models import Account
 from main.forms import CreateProductForm, EditProductForm
-from .models import Product
+from .models import Product, Comment
+from main.helpers import isAjax
 
 # Create your views here.
 
@@ -47,6 +49,35 @@ def usersView(request):
     }
     return render(request,"main/users.html",context)
 
+
+def createCommentView(request, productId):
+    product = get_object_or_404(Product, id=productId)
+    if product and isAjax(request):
+        description = request.POST.get('description', None)
+        if description:
+            comment = product.comments.create(description=description,product=product.id, account=request.user)
+            comment.save()
+            response = {
+                'description': comment.description,
+                'account': comment.account.username,
+                
+            }
+            return JsonResponse(response)
+    else:
+        return redirect('main:index')
+
+def deleteCommentView(request,commentId):
+    try:
+        comment = get_object_or_404(Comment, id=commentId)
+    except Comment.DoesNotExist:
+        return HttpResponse("Comment not found",status = 404)
+    except Exception:
+        print(Exception)
+        return HttpResponse("Internal Error",status= 500)
+    comment.delete()
+    
+    return redirect('main:index')
+    
 
 def productsView(request):
     if not request.user.is_superuser:
@@ -112,11 +143,13 @@ def productDetailView(request,productId):
     context = {}
     try:
         product = get_object_or_404(Product, id=productId)
+        comments = product.comments.all()
     except Http404: 
         return redirect('main:index')
     
     context = {
         'product' : product,
+        'comments' : comments
 
     }
     

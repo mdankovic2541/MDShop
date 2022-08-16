@@ -26,14 +26,18 @@
     </div>
 </div>
 
-<div class="row col-md-12">
+<div class="row">
+
+
+
+<div class="row col-md-{% if request.user.is_authenticated %}9 {% else %}12 {%endif%}">
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
         <div class="card  " >
             <div class="row">
 
                 <div class="col">
                     <p class="flag">{{product.flag}}</p>
-                    <img src="" alt="..." class="card-img-top">          
+                    <img src="" alt="..." class="img-fluid">          
                         
                 </div>
                
@@ -60,62 +64,35 @@
     </div>
 </div>
 
-    <div class="text-center mx-auto mt-3 border-top border-bottom border-secondary p-3 bg-secondary ">
-       <h3 class="text-light">Comments on this product:</h3>
-    </div>
-    <div>
-        {% for account in accounts %}
-            {% for product in products %}
-                {% if account.id == product.id%}
-                    <p>{{account.id}}{{account}}{{product.id}}{{product}}</p>
-                    {%endif%}
-    
-            {%endfor%}
-        
-    
-        {%endfor%}
-    </div>
 
-<div class="row col-md-12">
-    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-        <div class="card" >
-            <div class="col p-3">
-                <h3 class="">Username:</h3>            
-                    <p class="text-justify pt-4">This is where the comment will show , 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                         Officia doloribus consequuntur repudiandae, culpa porro cumque eum et eos id illo quasi,
-                        mollitia eaque veniam dignissimos tempora quo dolore soluta at.</p>
-                    
-                        <!-- Check if user is adimn or if user wrote this comment in order to make him be able to edit or delete it-->
-                <div class="card-body mx-auto text-center"> 
-                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Edit</a>
-                    <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Delete</a>
-                </div>                
+<div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-white text-start" id="postComments">
+    <div class="commentsBod">
+        <div id="allComments">
+            {% for comment in comments %}
+            <div class="row m-2 comment" id="detailBlogComment-{{ comment.id }}">
+                <div class="col-md-8 text-start py-2 px-4">
+                    {% if comment.account.is_active %}
+                    <a href="#">{{ comment.account }}</a>
+                    says:
+                    {% else %}
+                    <span style="text-decoration: line-through; color: #aaa;">{{ comment.account }}</span>
+                    says:
+                    {% endif %}
+                </div>
+                <div class="col-md-9">
+                    <p class="text-white text-start p-2" id="appCommBody">{{ comment.description }}</p>
+                </div>
+                {% if request.user.is_superuser or request.user == comment.account %}
+                <div class="col-md-3">
+                    <a class="btn btn-danger" href="{% url 'main:deleteComment' comment.id %}">del</a>
+                </div>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
-        
     </div>
-
-
-    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-        <div class="card" >
-            <div class="col p-3">
-                <h3 class="">Username:</h3>            
-                    <p class="text-justify pt-4">This is where the comment will show , 
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                         Officia doloribus consequuntur repudiandae, culpa porro cumque eum et eos id illo quasi,
-                        mollitia eaque veniam dignissimos tempora quo dolore soluta at.</p>
-                    
-                        <!-- Check if user is adimn or if user wrote this comment in order to make him be able to edit or delete it-->
-                <div class="card-body mx-auto text-center"> 
-                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Edit</a>
-                    <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Delete</a>
-                </div>                
-            </div>
-        </div>
-        
-    </div>
+    {% include './createComment.html' %}
 </div>
-
    
+</div>
 {% endblock %}
