@@ -5,6 +5,7 @@
 
 # Virtual Environment
 /django/
+/env/
 
 # Migrations
 /*/migrations/*
