@@ -47,6 +47,7 @@ MDShop
                 <p><b>{{ product.price }}kn</b></p>
                 <p>{{ product.size }}</p>
                 <p> {{ product.type }}</p>
+                <p> {{ product.getCollection }} of {{ product.year }}</p>
                 <p> <i>{{ product.brand }}</i> </p>
                 <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
                 <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>

@@ -1,12 +1,16 @@
 from socket import fromshare
 from django import forms
-from .models import Product, Comment
+from .models import Product, Comment, year_choices, current_year
 
 class CreateProductForm(forms.ModelForm):
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'brand', 'type', 'size', 'price', 'flag', 'image']
+		fields = ['title', 'quantity', 'collection', 'year', 'brand', 'type', 'size', 'price', 'flag', 'image']
+		year = forms.TypedChoiceField(coerce=int, choices=year_choices)
 		widgets = {
+			'year': forms.NumberInput(attrs={
+				'class': 'form-control',
+			}),
 	    	'title': forms.TextInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'text',
@@ -26,15 +30,21 @@ class CreateProductForm(forms.ModelForm):
 		    	'value':'0',
 		    	'required': True
 		    }),
-			'collection': forms.TextInput(attrs={
+			'collection': forms.Select(choices=Product.Collection, attrs={
 		    	'class': 'form-control',
-		    	'type': 'text',
 		    	'name': 'Collection',
 		    	'id': 'id_collection',
-		    	'placeholder': 'Collection',
-		    	'maxlength': '80',
 		    	'required': True
 		    }),
+			# 'year': forms.NumberInput(attrs={
+		    # 	'class': 'form-control',
+		    # 	'type': 'number',
+		    # 	'name': 'Year',
+		    # 	'id': 'id_year',
+		    # 	'min': '0',
+		    # 	'value':'2022',
+		    # 	'required': True
+			# }),
 	    	'brand': forms.TextInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'text',
@@ -94,7 +104,7 @@ class CreateProductForm(forms.ModelForm):
 class EditProductForm(forms.ModelForm):
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'brand','type','size','price','flag', 'image']
+		fields = ['title', 'quantity', 'collection', 'year', 'brand','type','size','price','flag', 'image']
 		
 		def save(self, commit=True):
 			product = self.instance
