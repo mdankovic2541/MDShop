@@ -5,32 +5,51 @@
     <div class="col-12 col-sm-9 col-lg-6 col-xl-6 mx-auto my-5">
         <div class="card-login-register p-5">
             <h1 class="text-center mb-5 neon-h1">Edit product - {{ product.title }}</h1>
-            <form method="post" class="w-100 ">
+            <form method="post" class="w-100" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="title" id="id_title" placeholder="Title" maxlength="50" value="{{form.initial.title}}" required autofocus>
+                    <input class="form-control" type="text" name="title" id="id_title" placeholder="Title"
+                        maxlength="50" value="{{form.initial.title}}" required autofocus>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control" type="number" name="quantity" id="id_quantity" value="{{ form.initial.quantity }}"  required>
+                    <input class="form-control" type="number" name="quantity" id="id_quantity"
+                        value="{{ form.initial.quantity }}" required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="collection" id="id_collection" placeholder="Collection" maxlength="80" value="{{form.initial.collection}}" required>
+                    <input class="form-control" type="text" name="collection" id="id_collection"
+                        placeholder="Collection" maxlength="80" value="{{form.initial.collection}}" required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control"  type="text" name="brand" id="id_brand" placeholder="Brand" maxlength="80" value="{{form.initial.brand}}" required>
+                    <input class="form-control" type="text" name="brand" id="id_brand" placeholder="Brand"
+                        maxlength="80" value="{{form.initial.brand}}" required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control"  type="text" name="type" id="id_type" placeholder="Type" maxlength="80" value="{{form.initial.type}}" required>
+                    <input class="form-control" type="text" name="type" id="id_type" placeholder="Type" maxlength="80"
+                        value="{{form.initial.type}}" required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="size" id="id_size" placeholder="Size" maxlength="80" value="{{form.initial.size}}" required>
+                    <input class="form-control" type="text" name="size" id="id_size" placeholder="Size" maxlength="80"
+                        value="{{form.initial.size}}" required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control" type="number" name="price" id="id_price" value="{{form.initial.price}}" required>
+                    <input class="form-control" type="number" name="price" id="id_price" value="{{form.initial.price}}"
+                        required>
                 </div>
                 <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="flag" id="id_flag" placeholder="Flag" maxlength="80" value="{{form.initial.flag}}" required>
-                
+                    <input class="form-control" type="text" name="flag" id="id_flag" placeholder="Flag" maxlength="80"
+                        value="{{form.initial.flag}}" required>
+                </div>
+                <div class="form-outline ">
+                    <div class="form-outline my-3 text-center" id="id_image_group">
+                        <div class="middle">
+                            <div class="text">Current image</div>
+                        </div>
+                        <img class="img-fluid image rounded w-25" src="{{form.initial.image.url}}"
+                            id="id_image_display">
+                    </div>
+                    <input class="form-control" type="file" name="image" id="id_image_file" accept="image/*"
+                        onchange="readURL(this)">
+                </div>
                 <div class="form-outline my-4 text-center">
                     <button class="btn btn-outline-success" type="submit">Update</button>
                     <button class="btn btn-outline-warning" type="reset">Reset</button>
@@ -50,6 +69,20 @@
                 {% endif %}
             </form>
         </div>
+        <script type="text/javascript">
+            document.getElementById('id_image_group').onclick = function (event) {
+                document.getElementById('id_image_file').click();
+            };
+
+            function readURL(input) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#id_image_display')
+                        .attr('src', e.target.result)
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        </script>
     </div>
 </body>
 {% endblock content %}

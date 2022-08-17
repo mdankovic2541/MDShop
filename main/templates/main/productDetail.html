@@ -30,69 +30,71 @@
 
 
 
-<div class="row col-md-{% if request.user.is_authenticated %}9 {% else %}12 {%endif%}">
-    <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-        <div class="card  " >
-            <div class="row">
+    <div class="row col-md-{% if request.user.is_authenticated %}9 {% else %}12 {%endif%}">
+        <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+            <div class="card  ">
+                <div class="row">
 
-                <div class="col">
-                    <p class="flag">{{product.flag}}</p>
-                    <img src="" alt="..." class="img-fluid">          
-                        
-                </div>
-               
-            
-                <div class="col"> 
-                    <h2>{{ product.title }}</h3>
-                    <h4> {{ product.brand }}</h5>
-                
-                    <div class="card-body mx-auto">
-                        <h5><b>{{ product.price }}kn</b></h5>
-                        <h5>{{ product.size }}</h5>
-                        <h5> {{ product.type }}</h5>
-                        <h5> <i>{{ product.brand }}</i> </h5>
-                        <h5>{{ product.collection }} collection</h5>
-                        
-                        
-                        <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
-                        <a class="btnCardRight" href="{% url 'main:index' %}">Back</a>
+                    <div class="col">
+                        <p class="flag">{{product.flag}}</p>
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
 
+                    </div>
+
+
+                    <div class="col">
+                        <h2>{{ product.title }}</h3>
+                            <h4> {{ product.brand }}</h5>
+
+                                <div class="card-body mx-auto">
+                                    <h5><b>{{ product.price }}kn</b></h5>
+                                    <h5>{{ product.size }}</h5>
+                                    <h5> {{ product.type }}</h5>
+                                    <h5> <i>{{ product.brand }}</i> </h5>
+                                    <h5>{{ product.collection }} collection</h5>
+
+
+                                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to
+                                        cart</a>
+                                    <a class="btnCardRight" href="{% url 'main:index' %}">Back</a>
+
+                                </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-white text-start" id="postComments">
-    <div class="commentsBod">
-        <div id="allComments">
-            {% for comment in comments %}
-            <div class="row m-2 comment" id="detailBlogComment-{{ comment.id }}">
-                <div class="col-md-8 text-start py-2 px-4">
-                    {% if comment.account.is_active %}
-                    <a href="#">{{ comment.account }}</a>
-                    says:
-                    {% else %}
-                    <span style="text-decoration: line-through; color: #aaa;">{{ comment.account }}</span>
-                    says:
+    <div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-white text-start"
+        id="postComments">
+        <div class="commentsBod">
+            <div id="allComments">
+                {% for comment in comments %}
+                <div class="row m-2 comment" id="detailBlogComment-{{ comment.id }}">
+                    <div class="col-md-8 text-start py-2 px-4">
+                        {% if comment.account.is_active %}
+                        <a href="#">{{ comment.account }}</a>
+                        says:
+                        {% else %}
+                        <span style="text-decoration: line-through; color: #aaa;">{{ comment.account }}</span>
+                        says:
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <p class="text-white text-start p-2" id="appCommBody">{{ comment.description }}</p>
+                    </div>
+                    {% if request.user.is_superuser or request.user == comment.account %}
+                    <div class="col-md-3">
+                        <a class="btn btn-danger" href="{% url 'main:deleteComment' comment.id %}">del</a>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="col-md-9">
-                    <p class="text-white text-start p-2" id="appCommBody">{{ comment.description }}</p>
-                </div>
-                {% if request.user.is_superuser or request.user == comment.account %}
-                <div class="col-md-3">
-                    <a class="btn btn-danger" href="{% url 'main:deleteComment' comment.id %}">del</a>
-                </div>
-                {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
+        {% include './createComment.html' %}
     </div>
-    {% include './createComment.html' %}
-</div>
-   
+
 </div>
 {% endblock %}

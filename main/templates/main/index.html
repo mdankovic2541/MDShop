@@ -36,25 +36,25 @@ MDShop
 
     {% for product in products %}
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-    <div class="card " >
-        <p class="flag">{{product.flag}}</p>
-        <img src="..." class="card-img-top" alt="...">
-        <div>
-            <h2>{{ product.title }}</h3>
-                <h4> {{ product.brand }}</h5>
-        </div>
-        <div class="card-body mx-auto">
-            <p><b>{{ product.price }}kn</b></p>
-            <p>{{ product.size }}</p>
-            <p> {{ product.type }}</p>
-            <p> <i>{{ product.brand }}</i> </p>
-            <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
-            <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
+        <div class="card ">
+            <p class="flag">{{product.flag}}</p>
+            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
+            <div>
+                <h2>{{ product.title }}</h3>
+                    <h4> {{ product.brand }}</h5>
+            </div>
+            <div class="card-body mx-auto">
+                <p><b>{{ product.price }}kn</b></p>
+                <p>{{ product.size }}</p>
+                <p> {{ product.type }}</p>
+                <p> <i>{{ product.brand }}</i> </p>
+                <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
+                <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
 
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
     {% endfor %}
 </div>
 
