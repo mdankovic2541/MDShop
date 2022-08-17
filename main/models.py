@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from account.models import Account
 from django.db.models.signals import post_delete
@@ -21,7 +22,7 @@ class Product(models.Model):
 	size					= models.CharField(null=False,blank=False,max_length=20)
 	price					= models.DecimalField(max_digits=6, decimal_places=2)
 	flag					= models.CharField(null=False,blank=False,max_length=80)
-	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False)
+	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False, default="")
 
 
 	def __str__(self):

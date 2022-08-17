@@ -13,7 +13,7 @@ MDShop
         <div class="hero-content">
 
             <div class="col-md-12">
-                <h1>Bootstrap Hero Image</h1>
+                <h1>Summer collection</h1>
             </div>
             <div class="col-md-6">
                 <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image</p>
@@ -36,7 +36,7 @@ MDShop
 
     {% for product in products %}
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-        <div class="card ">
+        <div class="card text-center">
             <p class="flag">{{product.flag}}</p>
             <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
             <div>
@@ -44,10 +44,8 @@ MDShop
                     <h4> {{ product.brand }}</h5>
             </div>
             <div class="card-body mx-auto">
-                <p><b>{{ product.price }}kn</b></p>
-                <p>{{ product.size }}</p>
-                <p> {{ product.type }}</p>
-                <p> <i>{{ product.brand }}</i> </p>
+                <p>Price: <b>{{ product.price }}kn</b></p>
+                <p>Size: {{ product.size }}</p>
                 <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
                 <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
 
