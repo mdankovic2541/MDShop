@@ -36,16 +36,28 @@ class Product(models.Model):
 		SUMMER = 'SM', _('Summmer')
 		AUTUMN = 'AT', _('Autumn')
 		WINTER = 'WT', _('Winter')
-
+	class Flag(models.TextChoices):
+		NEW = 'N', _('NEW')
+		POPULAR = 'P', _('POPULAR')
+	class ClothesType(models.TextChoices):
+		MALE = 'M', _('Male')
+		FEMALE = 'F', _('Female')
+		UNISEX = 'U', _('Unisex')
+		KIDS = 'K', _('Kids')
+	
 	quantity				= models.IntegerField(null=False,blank=False)
 	title					= models.CharField(null=False,blank=False,max_length=80)
 	collection				= models.CharField(max_length=2, choices=Collection.choices, null=False, blank=False)
 	year					= models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)
+	
 	brand					= models.CharField(null=False,blank=False,max_length=80)
-	type					= models.CharField(null=False,blank=False,max_length=80)
+	
+	type					= models.CharField(max_length=1, choices=ClothesType.choices, null=False, blank=False)
+	
 	size					= models.CharField(null=False,blank=False,max_length=20)
-	price					= models.DecimalField(max_digits=6, decimal_places=2)
-	flag					= models.CharField(null=False,blank=False,max_length=80)
+	
+	price					= models.DecimalField(max_digits=6, decimal_places=2)	
+	flag					= models.CharField(max_length=1, choices=Flag.choices, null=False, blank=False)
 	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False)
 
 	def __str__(self):
@@ -53,6 +65,12 @@ class Product(models.Model):
 
 	def getCollection(self):
 		return self.get_collection_display()
+
+	def getFlag(self):
+		return self.get_flag_display()
+
+	def getType(self):
+		return self.get_type_display()
 
 
 @receiver(post_delete, sender=Product)

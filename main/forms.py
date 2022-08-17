@@ -36,15 +36,12 @@ class CreateProductForm(forms.ModelForm):
 		    	'id': 'id_collection',
 		    	'required': True
 		    }),
-			# 'year': forms.NumberInput(attrs={
-		    # 	'class': 'form-control',
-		    # 	'type': 'number',
-		    # 	'name': 'Year',
-		    # 	'id': 'id_year',
-		    # 	'min': '0',
-		    # 	'value':'2022',
-		    # 	'required': True
-			# }),
+			'type': forms.Select(choices=Product.ClothesType, attrs={
+				'class': 'form-control',
+		    	'name': 'Type',
+		    	'id': 'id_type',
+		    	'required': True
+			}),
 	    	'brand': forms.TextInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'text',
@@ -54,15 +51,15 @@ class CreateProductForm(forms.ModelForm):
 		    	'maxlength': '80',
 		    	'required': True
 		    }),  
-	    	'type': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
-		    	'name': 'Type',
-		    	'id': 'id_type',
-		    	'placeholder': 'Type',
-		    	'maxlength': '80',
-		    	'required': True
-		    }), 
+	    	# 'type': forms.TextInput(attrs={
+		    # 	'class': 'form-control',
+		    # 	'type': 'text',
+		    # 	'name': 'Type',
+		    # 	'id': 'id_type',
+		    # 	'placeholder': 'Type',
+		    # 	'maxlength': '80',
+		    # 	'required': True
+		    # }), 
 	    	'size': forms.TextInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'text',
@@ -81,13 +78,10 @@ class CreateProductForm(forms.ModelForm):
 		    	'value':'0',
 		    	'required': True
 		    }), 
-	    	'flag': forms.TextInput(attrs={
+			'flag': forms.Select(choices=Product.Flag, attrs={
 		    	'class': 'form-control',
-		    	'type': 'text',
 		    	'name': 'Flag',
 		    	'id': 'id_flag',
-		    	'placeholder': 'Flag',
-		    	'maxlength': '80',
 		    	'required': True
 		    }),
 			'image': forms.FileInput(attrs={
