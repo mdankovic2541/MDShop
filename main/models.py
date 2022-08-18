@@ -1,4 +1,3 @@
-from typing import Collection
 from django.db import models
 from account.models import Account
 from django.db.models.signals import post_delete
@@ -31,33 +30,41 @@ class Brand(models.Model):
 	brand					= models.CharField
 
 class Product(models.Model):
-	class Collection(models.TextChoices):
+	class ClothesCollection(models.TextChoices):
+		OUT_OF_COLLECTION = 'NO', _('Out of collection')
 		SPRING = 'SP', _('Spring')
 		SUMMER = 'SM', _('Summmer')
 		AUTUMN = 'AT', _('Autumn')
 		WINTER = 'WT', _('Winter')
-	class Flag(models.TextChoices):
+	class ClothesFlag(models.TextChoices):
 		NEW = 'N', _('NEW')
 		POPULAR = 'P', _('POPULAR')
+		NONE = 'X', _('NONE')
 	class ClothesType(models.TextChoices):
 		MALE = 'M', _('Male')
 		FEMALE = 'F', _('Female')
 		UNISEX = 'U', _('Unisex')
 		KIDS = 'K', _('Kids')
 	
+	class ClothesSize(models.TextChoices):
+		EXTRA_SMALL = 'XS', _('Extra small')
+		SMALL = 'RS', _('Small')
+		MEDIUM = 'RM', _('Medium')
+		LARGE = 'RL', _('Large')
+		EXTRA_LARGE = 'XL', _('Extra large')
+		EXTRA_EXTRA_LARGE = '2L', _('Extra extra large')
+	
 	quantity				= models.IntegerField(null=False,blank=False)
 	title					= models.CharField(null=False,blank=False,max_length=80)
-	collection				= models.CharField(max_length=2, choices=Collection.choices, null=False, blank=False)
+	collection				= models.CharField(max_length=2, choices=ClothesCollection.choices, default=ClothesCollection.OUT_OF_COLLECTION, null=False, blank=False)
 	year					= models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)
 	
-	brand					= models.CharField(null=False,blank=False,max_length=80)
+	brand					= models.CharField(null=False,blank=False,max_length=80)	
 	
-	type					= models.CharField(max_length=1, choices=ClothesType.choices, null=False, blank=False)
-	
-	size					= models.CharField(null=False,blank=False,max_length=20)
-	
+	size					= models.CharField(choices=ClothesSize.choices, max_length=2, default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
+	type					= models.CharField(max_length=1, choices=ClothesType.choices, default=ClothesType.UNISEX, null=False, blank=False)
 	price					= models.DecimalField(max_digits=6, decimal_places=2)	
-	flag					= models.CharField(max_length=1, choices=Flag.choices, null=False, blank=False)
+	flag					= models.CharField(max_length=1, choices=ClothesFlag.choices, default=ClothesFlag.NEW, null=False, blank=False)
 	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False)
 
 	def __str__(self):
@@ -71,6 +78,9 @@ class Product(models.Model):
 
 	def getType(self):
 		return self.get_type_display()
+	
+	def getSize(self):
+		return self.get_size_display()
 
 
 @receiver(post_delete, sender=Product)

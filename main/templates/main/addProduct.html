@@ -17,7 +17,7 @@ Add new product
             </p>
             {% endif %}
             {% for field in form %}
-            <div class="form-group my-3">
+            <div class="my-3">
                 <h5 class="ps-2">{{field.name|capfirst}}</h5>
                 {{ field }}
                 {% for error in field.errors %}
@@ -25,9 +25,9 @@ Add new product
                 {% endfor %}
             </div>
             {% endfor %}
-            <button type="submit" class="btnLogReg">
-                Add product
-            </button>
+            <div class="text-center">
+                <button type="submit" class="btnLogReg">Add product</button>
+            </div>
         </form>
     </div>
 </div>

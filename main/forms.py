@@ -5,12 +5,9 @@ from .models import Product, Comment, year_choices, current_year
 class CreateProductForm(forms.ModelForm):
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'year', 'brand', 'type', 'size', 'price', 'flag', 'image']
+		fields = ['title', 'collection', 'year', 'quantity', 'brand', 'type', 'size', 'price', 'flag', 'image']
 		year = forms.TypedChoiceField(coerce=int, choices=year_choices)
 		widgets = {
-			'year': forms.NumberInput(attrs={
-				'class': 'form-control',
-			}),
 	    	'title': forms.TextInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'text',
@@ -19,8 +16,17 @@ class CreateProductForm(forms.ModelForm):
 		    	'placeholder': 'Title',
 		    	'maxlength': '80',
 		    	'required': True,
-		    	'autofocus': True
+		    	'autofocus': True,
 		    }), 
+			'collection': forms.Select(choices=Product.ClothesCollection, attrs={
+		    	'class': 'form-control',
+		    	'name': 'Collection',
+		    	'id': 'id_collection',
+		    	'required': True
+		    }),
+			'year': forms.NumberInput(attrs={
+				'class': 'form-control',
+			}),
 	    	'quantity': forms.NumberInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'number',
@@ -28,12 +34,6 @@ class CreateProductForm(forms.ModelForm):
 		    	'id': 'id_quantity',
 		    	'min': '0',
 		    	'value':'0',
-		    	'required': True
-		    }),
-			'collection': forms.Select(choices=Product.Collection, attrs={
-		    	'class': 'form-control',
-		    	'name': 'Collection',
-		    	'id': 'id_collection',
 		    	'required': True
 		    }),
 			'type': forms.Select(choices=Product.ClothesType, attrs={
@@ -50,25 +50,19 @@ class CreateProductForm(forms.ModelForm):
 		    	'placeholder': 'Brand',
 		    	'maxlength': '80',
 		    	'required': True
-		    }),  
-	    	# 'type': forms.TextInput(attrs={
-		    # 	'class': 'form-control',
-		    # 	'type': 'text',
-		    # 	'name': 'Type',
-		    # 	'id': 'id_type',
-		    # 	'placeholder': 'Type',
-		    # 	'maxlength': '80',
+		    }),
+			# 'size': forms.Select(choices=Product.ClothesSize, attrs={
+			# 	'class': 'form-control',
+		    # 	'name': 'Size',
+		    # 	'id': 'id_size',
 		    # 	'required': True
-		    # }), 
-	    	'size': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
+			# }),
+			'size': forms.Select(choices=Product.ClothesSize.choices, attrs={
+				'class': 'form-control',
 		    	'name': 'Size',
 		    	'id': 'id_size',
-		    	'placeholder': 'Size',
-		    	'maxlength': '80',
 		    	'required': True
-		    }),         
+			}),			
 	    	'price': forms.NumberInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'number',
@@ -78,7 +72,7 @@ class CreateProductForm(forms.ModelForm):
 		    	'value':'0',
 		    	'required': True
 		    }), 
-			'flag': forms.Select(choices=Product.Flag, attrs={
+			'flag': forms.Select(choices=Product.ClothesFlag, attrs={
 		    	'class': 'form-control',
 		    	'name': 'Flag',
 		    	'id': 'id_flag',
