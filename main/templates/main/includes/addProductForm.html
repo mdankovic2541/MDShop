@@ -1,0 +1,17 @@
+{% for field in form %}
+<div
+    class="{% if field.name == 'collection' %}col-8{% elif field.name == 'quantity' or field.name == 'type' or field.name == 'flag' or field.name == 'year' %}col-4{% elif field.name == 'size' or field.name == 'price' %}col-6{% endif %}">
+    <h5 class="ms-2">{{field.name|capfirst}}</h5>
+    <div class="input-group mb-4">
+        {{ field }}
+        {% if field.name == 'brand' %}
+        <a href="{% url 'main:addBrand' %}" class="btnLogReg">Add Brand</a>
+        {% elif field.name == 'price' %}
+        <span class="input-group-text">HRK</span>
+        {% endif %}
+    </div>
+    {% for error in field.errors %}
+    <p class="my-2 text-danger">{{ error }}</p>
+    {% endfor %}
+</div>
+{% endfor %}

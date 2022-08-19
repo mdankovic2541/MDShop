@@ -1,11 +1,9 @@
-from multiprocessing import context
-from telnetlib import STATUS
-
+from django.db.models import Q
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http.response import Http404
 from django.http import HttpResponse, JsonResponse
 from account.models import Account
-from main.forms import CreateProductForm, EditProductForm
+from main.forms import CreateProductForm, EditProductForm, CreateBrandForm
 from .models import Product, Comment
 from main.helpers import isAjax
 
@@ -157,7 +155,7 @@ def productDetailView(request,productId):
 
 def menswearView(request):
 	context = {}
-	products = Product.objects.filter(type='MEN').all()
+	products = Product.objects.filter(Q(type__contains='M') | Q(type__contains='U')).all()
 	context = {
 		'products' : products,
 		'nav':'Men',
@@ -169,7 +167,7 @@ def menswearView(request):
 	
 def womenswearView(request):
 	context = {}
-	products = Product.objects.filter(type='WOMEN').all()
+	products = Product.objects.filter(Q(type__contains='W') | Q(type__contains='U')).all()
 	context = {
 		'products' : products,
 		'nav':'Women',
@@ -188,3 +186,17 @@ def kidswearView(request):
 	}
 
 	return render(request,"main/kids.html",context)
+
+
+def addBrandView(request):
+	if not request.user.is_superuser:
+		return redirect('main:index')
+	form = CreateBrandForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		form = CreateBrandForm()
+		return redirect('main:addProduct')
+	context = {
+		'form': form,
+	}
+	return render(request, 'main/addBrand.html', context)

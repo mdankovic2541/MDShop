@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import (
+    addBrandView,
     createCommentView,
     deleteCommentView,
     editProductView,
@@ -12,7 +13,6 @@ from .views import (
     womenswearView,
     productsView,
     deleteProductView,
-
 )
 
 
@@ -31,4 +31,6 @@ urlpatterns = [
     path('kidswear',kidswearView, name='kidswear'),
     path('users',usersView, name='users'),
     path('products',productsView, name='products'),
+
+    path('create_brand', addBrandView, name='addBrand'),
 ]

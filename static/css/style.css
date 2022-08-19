@@ -1,125 +1,130 @@
 * {
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
+   font-family: "Roboto", Helvetica, Arial, sans-serif;
 }
 
-body{ background: #ADA996;  /* fallback for old browsers */
-   background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
-   background: linear-gradient(to bottom, #eae9e9, #dad4d4, #a9a7a7, #827e69); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  }   
-
-.btnLogReg{
-    border: 2px solid #619baf;
-    border-radius: 1px 10px 10px 1px;
-    background-color: white;
-    color: #619baf;
-    font-size: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    
-    
+body {
+   background: #ADA996;
+   /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+   /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to bottom, #eae9e9, #dad4d4, #a9a7a7, #827e69);
+   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.btnLogReg:hover{
-    border: 2px solid white;
-    border-radius: 1px 10px 10px 1px;
-    background-color: #619baf;
-    color: white;
-    font-size: 20px;
-    transition-duration: 0.4s;
-    
+.btnLogReg {
+   border: 2px solid #619baf;
+   border-radius: 1px 10px 10px 1px;
+   background-color: white;
+   color: #619baf;
+   font-size: 1.35rem;
+   padding: 0px 10px;
+   text-decoration: none;
 }
 
-.card-login-register{
-   box-shadow: 5px 5px 20px 5px #888888; 
+.btnLogReg:hover {
+   background-color: #619baf;
+   color: white;
+   transition-duration: 0.4s;
+
+}
+
+.card-login-register {
+   box-shadow: 5px 5px 20px 5px #888888;
    background-color: #fff;
    opacity: 0.8;
    transition: all 0.5s ease;
-  
+
 }
 
-.card-login-register:hover{
-    opacity: 1;
+.card-login-register:hover {
+   opacity: 1;
 }
 
-li a, .link-grayish{
-    transition: all 0.5s ease;
-    
+li a,
+.link-grayish {
+   transition: all 0.5s ease;
+
 }
 
 
-li a:hover, .link-grayish:hover{
-    color: black;
-    transform: scale(1.2);
+li a:hover,
+.link-grayish:hover {
+   color: black;
+   transform: scale(1.2);
 }
 
-.card{
-   box-shadow: 5px 5px 20px 5px #888888; 
+.card {
+   box-shadow: 5px 5px 20px 5px #888888;
    background-color: #fff;
    opacity: 0.8;
    padding-top: 10px;
    transition: all 0.5s ease;
 }
-.card:hover{
-    box-shadow: 5px 5px 20px 5px #888888; 
-    background-color: #fff;
-    opacity: 1;
-    transition: all 0.5s ease;
- }
 
- .btnCardRight{
-    border: 2px solid #1b6944;
-    border-radius: 1px 10px 10px 1px;
-    background-color: white;
-    color: #1b6944;
-    font-size: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    text-decoration: none;
-    
- }
- .btnCardRight:hover{
-    border: 2px solid white;
-    border-radius: 1px 10px 10px 1px;
-    background-color: #1b6944;
-    color: white;
-    font-size: 20px;
-    transition-duration: 0.4s;
- }
- .btnCardLeft{
-    border: 2px solid #908203;
-    border-radius: 10px 1px 1px 10px;
-    background-color: white;
-    color: #908203;
-    font-size: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    text-decoration: none;
- }
- .btnCardLeft:hover{
-    border: 2px solid white;
-    border-radius: 10px 1px 1px 10px;
-    background-color: #908203;
-    color: white;
-    font-size: 20px;
-    transition-duration: 0.4s;
- }
+.card:hover {
+   box-shadow: 5px 5px 20px 5px #888888;
+   background-color: #fff;
+   opacity: 1;
+   transition: all 0.5s ease;
+}
 
- .flag{
-    background-color: #ab1919;
-    width: fit-content;
-    padding: 4px;
-    color: white;
-    border-radius: 1px 10px 10px 1px;
- }
+.btnCardRight {
+   border: 2px solid #1b6944;
+   border-radius: 1px 10px 10px 1px;
+   background-color: white;
+   color: #1b6944;
+   font-size: 20px;
+   padding-left: 5px;
+   padding-right: 5px;
+   text-decoration: none;
 
- .cont{
+}
+
+.btnCardRight:hover {
+   border: 2px solid white;
+   border-radius: 1px 10px 10px 1px;
+   background-color: #1b6944;
+   color: white;
+   font-size: 20px;
+   transition-duration: 0.4s;
+}
+
+.btnCardLeft {
+   border: 2px solid #908203;
+   border-radius: 10px 1px 1px 10px;
+   background-color: white;
+   color: #908203;
+   font-size: 20px;
+   padding-left: 5px;
+   padding-right: 5px;
+   text-decoration: none;
+}
+
+.btnCardLeft:hover {
+   border: 2px solid white;
+   border-radius: 10px 1px 1px 10px;
+   background-color: #908203;
+   color: white;
+   font-size: 20px;
+   transition-duration: 0.4s;
+}
+
+.flag {
+   background-color: #ab1919;
+   width: fit-content;
+   padding: 4px;
+   color: white;
+   border-radius: 1px 10px 10px 1px;
+}
+
+.cont {
    padding: 3%;
    position: relative;
-   
-  
- }
 
- .hero {
+
+}
+
+.hero {
    min-height: 50vh;
    background: #000 url(https://wallpaperaccess.com/full/1098467.jpg) center center no-repeat;
    background-size: cover;

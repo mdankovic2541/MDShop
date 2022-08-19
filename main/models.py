@@ -26,8 +26,13 @@ def max_value_current_year(value):
 def year_choices():
 	return [(r,r) for r in range(1984, datetime.date.today().year+1)]
 
+
 class Brand(models.Model):
-	brand					= models.CharField
+	name					= models.CharField(max_length=256, blank=False, null=False, unique=True)
+
+	def __str__(self):
+		return self.name
+
 
 class Product(models.Model):
 	class ClothesCollection(models.TextChoices):
@@ -57,10 +62,8 @@ class Product(models.Model):
 	quantity				= models.IntegerField(null=False,blank=False)
 	title					= models.CharField(null=False,blank=False,max_length=80)
 	collection				= models.CharField(max_length=2, choices=ClothesCollection.choices, default=ClothesCollection.OUT_OF_COLLECTION, null=False, blank=False)
-	year					= models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)
-	
-	brand					= models.CharField(null=False,blank=False,max_length=80)	
-	
+	year					= models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)	
+	brand					= models.OneToOneField(Brand, on_delete=models.CASCADE, null=False, blank=False)
 	size					= models.CharField(choices=ClothesSize.choices, max_length=2, default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
 	type					= models.CharField(max_length=1, choices=ClothesType.choices, default=ClothesType.UNISEX, null=False, blank=False)
 	price					= models.DecimalField(max_digits=6, decimal_places=2)	
