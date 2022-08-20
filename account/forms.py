@@ -107,6 +107,54 @@ class EditAccountForm(forms.ModelForm):
 	class Meta:
 		model = Account
 		fields = ['first_name', 'last_name', 'email', 'username','street_name','street_number','city','postal_code','country']
+		widgets = {
+			'first_name': forms.TextInput(attrs={
+				'name': 'first_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'First Name',
+				'autofocus': 'true'
+			}),
+			'last_name': forms.TextInput(attrs={
+				'name': 'last_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Last Name'
+			}),
+			'email': forms.EmailInput(attrs={
+				'name': 'email',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Electronic mail'
+			}),
+			'username': forms.TextInput(attrs={
+				'name': 'username',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Username'
+			}),
+			'street_name': forms.TextInput(attrs={
+				'name':'street_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Name'
+			}),
+			'street_number': forms.TextInput(attrs={
+				'name': 'street_number',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Number'
+			}),
+			'city': forms.TextInput(attrs={
+				'name': 'city',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'City Name'
+			}),
+			'postal_code': forms.TextInput(attrs={
+				'name': 'postal_code',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Postal Code'
+			}),
+			'country': forms.TextInput(attrs={
+				'name': 'country',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Country Name'
+			}),
+		}
 
 	def save(self, commit=True):
 		account = self.instance

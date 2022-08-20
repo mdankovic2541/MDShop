@@ -1,40 +1,17 @@
 {% extends 'main/base.html' %}
 {% block content %}
 
-<body id="postDetail" class="unselectable">
-    <div class="col-12 col-sm-9 col-lg-6 col-xl-6 mx-auto my-5">
+<body id="editAccount">
+    <div class="col-12 col-md-12 col-lg-10 col-xl-8 mx-auto my-5 p-3">
         <div class="card-login-register p-5">
             <h1 class="text-center mb-5 neon-h1">Edit account - {{ account.username }}</h1>
-            <form method="post" class="w-100 ">
+            <form method="post" class="row">
                 {% csrf_token %}
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="first_name" id="id_first_name" placeholder="First name" maxlength="50" value="{{form.initial.first_name}}" required autofocus>
+                {% for field in form %}
+                <div class="form-outline mb-4 col-md-6">
+                    {{ field }}
                 </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="last_name" id="id_last_name" placeholder="Last na" maxlength="80" value="{{form.initial.last_name}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="email" id="id_email" placeholder="Email" maxlength="80" value="{{form.initial.email}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control"  type="text" name="username" id="id_username" placeholder="Username" maxlength="80" value="{{form.initial.username}}" required>                  
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="street_name" id="id_street_name" placeholder="Street name" maxlength="80" value="{{form.initial.street_name}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="street_number" id="id_street_number" placeholder="Street number" maxlength="80" value="{{form.initial.street_number}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="city" id="id_city" placeholder="City" maxlength="80" value="{{form.initial.city}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="postal_code" id="id_postal_code" placeholder="Postal code" maxlength="80" value="{{form.initial.postal_code}}" required>
-                </div>
-                <div class="form-outline my-3">
-                    <input class="form-control" type="text" name="country" id="id_country" placeholder="Country" maxlength="80" value="{{form.initial.country}}" required>
-                </div>
-                
+                {% endfor %}
                 <div class="form-outline my-4 text-center">
                     <button class="btn btn-outline-success" type="submit">Update</button>
                     <button class="btn btn-outline-warning" type="reset">Reset</button>
@@ -57,3 +34,42 @@
     </div>
 </body>
 {% endblock content %}
+
+<!--
+    <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="first_name" id="id_first_name"
+                        placeholder="First name" maxlength="50" value="{{form.initial.first_name}}" required autofocus>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="last_name" id="id_last_name" placeholder="Last name"
+                        maxlength="80" value="{{form.initial.last_name}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="email" id="id_email" placeholder="Email"
+                        maxlength="80" value="{{form.initial.email}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="username" id="id_username" placeholder="Username"
+                        maxlength="80" value="{{form.initial.username}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="street_name" id="id_street_name"
+                        placeholder="Street name" maxlength="80" value="{{form.initial.street_name}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="street_number" id="id_street_number"
+                        placeholder="Street number" maxlength="80" value="{{form.initial.street_number}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="city" id="id_city" placeholder="City" maxlength="80"
+                        value="{{form.initial.city}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="postal_code" id="id_postal_code"
+                        placeholder="Postal code" maxlength="80" value="{{form.initial.postal_code}}" required>
+                </div>
+                <div class="form-outline my-3">
+                    <input class="form-control" type="text" name="country" id="id_country" placeholder="Country"
+                        maxlength="80" value="{{form.initial.country}}" required>
+                </div>
+-->

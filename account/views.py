@@ -72,7 +72,6 @@ def editAccountView(request,accountId):
             obj = form.save(commit=False)
             obj.save()
             context['success_message'] = 'Product updated!'
-            product = obj
     form = EditAccountForm(
         initial = {
             'first_name' : account.first_name ,
