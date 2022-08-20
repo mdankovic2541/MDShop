@@ -1,11 +1,24 @@
-from socket import fromshare
 from django import forms
-from .models import Product, Comment
+from .models import Product, Brand, current_year, year_choices
 
 class CreateProductForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['brand'].disabled = True if self.initial.get('isBranded') == True else False
+
+	year = forms.TypedChoiceField(coerce=int, choices=year_choices, widget=forms.Select(attrs={
+				'class': 'form-control',
+			}), initial=current_year)
+	brand = forms.ModelChoiceField(queryset= Brand.objects.all(),  widget=forms.Select(attrs={				
+		    	'class': 'form-control',
+		    	'name': 'Brand',
+		    	'id': 'id_brand',
+		    	'required': True,
+	}), empty_label='Pick a Brand')
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'brand', 'type', 'size', 'price', 'flag', 'image']
+		fields = ['title', 'collection', 'year', 'quantity', 'type', 'flag', 'brand', 'size', 'price', 'image']
 		widgets = {
 	    	'title': forms.TextInput(attrs={
 		    	'class': 'form-control',
@@ -15,8 +28,14 @@ class CreateProductForm(forms.ModelForm):
 		    	'placeholder': 'Title',
 		    	'maxlength': '80',
 		    	'required': True,
-		    	'autofocus': True
+		    	'autofocus': True,
 		    }), 
+			'collection': forms.Select(choices=Product.ClothesCollection, attrs={
+		    	'class': 'form-control',
+		    	'name': 'Collection',
+		    	'id': 'id_collection',
+		    	'required': True
+		    }),
 	    	'quantity': forms.NumberInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'number',
@@ -26,42 +45,18 @@ class CreateProductForm(forms.ModelForm):
 		    	'value':'0',
 		    	'required': True
 		    }),
-			'collection': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
-		    	'name': 'Collection',
-		    	'id': 'id_collection',
-		    	'placeholder': 'Collection',
-		    	'maxlength': '80',
-		    	'required': True
-		    }),
-	    	'brand': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
-		    	'name': 'Brand',
-		    	'id': 'id_brand',
-		    	'placeholder': 'Brand',
-		    	'maxlength': '80',
-		    	'required': True
-		    }),  
-	    	'type': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
+			'type': forms.Select(choices=Product.ClothesType, attrs={
+				'class': 'form-control',
 		    	'name': 'Type',
 		    	'id': 'id_type',
-		    	'placeholder': 'Type',
-		    	'maxlength': '80',
 		    	'required': True
-		    }), 
-	    	'size': forms.TextInput(attrs={
-		    	'class': 'form-control',
-		    	'type': 'text',
+			}),
+			'size': forms.Select(choices=Product.ClothesSize.choices, attrs={
+				'class': 'form-control',
 		    	'name': 'Size',
 		    	'id': 'id_size',
-		    	'placeholder': 'Size',
-		    	'maxlength': '80',
 		    	'required': True
-		    }),         
+			}),			
 	    	'price': forms.NumberInput(attrs={
 		    	'class': 'form-control',
 		    	'type': 'number',
@@ -71,13 +66,10 @@ class CreateProductForm(forms.ModelForm):
 		    	'value':'0',
 		    	'required': True
 		    }), 
-	    	'flag': forms.TextInput(attrs={
+			'flag': forms.Select(choices=Product.ClothesFlag, attrs={
 		    	'class': 'form-control',
-		    	'type': 'text',
 		    	'name': 'Flag',
 		    	'id': 'id_flag',
-		    	'placeholder': 'Flag',
-		    	'maxlength': '80',
 		    	'required': True
 		    }),
 			'image': forms.FileInput(attrs={
@@ -94,7 +86,7 @@ class CreateProductForm(forms.ModelForm):
 class EditProductForm(forms.ModelForm):
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'brand','type','size','price','flag', 'image']
+		fields = ['title', 'quantity', 'collection', 'year', 'brand','type','size','price','flag', 'image']
 		
 		def save(self, commit=True):
 			product = self.instance
@@ -112,3 +104,21 @@ class EditProductForm(forms.ModelForm):
 			if commit:
 				product.save()
 			return product
+
+
+class CreateBrandForm(forms.ModelForm):
+	class Meta:
+		model = Brand
+		fields = ['name']
+		widgets = {			
+	    	'name': forms.TextInput(attrs={
+		    	'class': 'form-control',
+		    	'type': 'text',
+		    	'name': 'Name',
+		    	'id': 'id_name',
+		    	'placeholder': 'Name',
+		    	'maxlength': '80',
+		    	'required': True,
+		    	'autofocus': True,
+		    }), 
+		}

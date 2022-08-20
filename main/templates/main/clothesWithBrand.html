@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+{% block title %}
+Products of {{ brand.name }}
+{% endblock%}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="mx-auto p-5 my-5" style="background-color:darkgrey;">
+            <h3 class="pb-3"><b>Products [{{ brand.name }}]</b></h3>
+            <a class="btn btn-outline-light mb-4" href="{% url 'main:addProduct' brand.id %}">
+                Add Branded Product [{{ brand.name }}]
+            </a>
+            <div class="table-responsive">
+                <table class="table table-striped" id="tablica">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Collection</th>
+                            <th scope="col">Flag</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.title}}</td>
+                            <td>{{ product.brand}}</td>
+                            <td>{{ product.price}} kn</td>
+                            <td>{{ product.type}}</td>
+                            <td>{{ product.quantity}}</td>
+                            <td>{{ product.size}}</td>
+                            <td>{{ product.collection}}</td>
+                            <td>{{ product.flag}}</td>
+                            <td><a href="{% url 'main:editProduct' product.id %}" class="btnCardLeft">Edit</a>
+                                <a href="{% url 'main:deleteProduct' product.id %}" class="btnCardRight">Delete</a>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock%}

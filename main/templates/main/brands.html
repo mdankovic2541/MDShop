@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% block title %}
+Brands
+{% endblock%}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="mx-auto p-5 my-5" style="background-color:darkgrey;">
+            <h3 class="pb-3"><b>Brands</b></h3>
+            <a class="btn btn-outline-light mb-4" href="{% url 'main:addBrand' %}">Add Brand</a>
+            <div class="table-responsive">
+                <table class="table table-striped" id="tablica">
+                    <thead>
+                        <tr>
+                            <th scope="col">Brand Name</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for brand in brands %}
+                        <tr>
+                            <td>{{ brand.name}}</td>
+                            <td>
+                                {{ brand.getCount }}&nbsp;&nbsp;<a href="{% url 'main:productsOfBrand' brand.id %}"
+                                    class="btnCardRight">View</a>
+                            </td>
+                            <td>
+                                <a href="#" class="btnCardLeft">Edit</a>
+                                <a href="#" class="btnCardRight">Delete</a>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock%}
