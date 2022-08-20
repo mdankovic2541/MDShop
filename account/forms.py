@@ -5,35 +5,80 @@ from .models import Account
 
 
 class RegistrationForm(UserCreationForm):
-	first_name					= forms.CharField(widget=forms.TextInput(attrs={'name': 'first_name', 'class':'form-control form-control-lg', 'placeholder':'First Name', 'autofocus':'true'}), label='')
-	last_name					= forms.CharField(widget=forms.TextInput(attrs={'name': 'last_name', 'class':'form-control form-control-lg', 'placeholder':'Last Name'}), label='')
-	email						= forms.EmailField(widget=forms.EmailInput(attrs={'name': 'email', 'class':'form-control form-control-lg', 'placeholder':'Electronic mail'}), label='')
-	username					= forms.CharField(max_length=16, widget=forms.TextInput(attrs={'name': 'username', 'class':'form-control form-control-lg', 'placeholder':'Username'}), label='')
-	password1					= forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password1', 'class':'form-control form-control-lg', 'placeholder':'Password'}))
-	password2					= forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password2', 'class':'form-control form-control-lg', 'placeholder':'Repeat password'}))
-	street_name = forms.CharField(widget=
-	forms.TextInput(attrs={'name':'street_name','class':'form-control form-control-lg', 'placeholder':'Street Name'}))
-	street_number = forms.CharField(widget=
-	forms.TextInput(attrs={'name':'street_number','class':'form-control form-control-lg', 'placeholder':'Street Number'}))
-	city =  forms.CharField(widget=
-	forms.TextInput(attrs={'name':'city','class':'form-control form-control-lg', 'placeholder':'City Name'}))
-	postal_code =  forms.CharField(widget=
-	forms.TextInput(attrs={'name':'postal_code','class':'form-control form-control-lg', 'placeholder':'Postal Code'}))
-	country =  forms.CharField(widget=
-	forms.TextInput(attrs={'name':'country','class':'form-control form-control-lg', 'placeholder':'Country Name'}))
-	
+	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password1', 'class':'form-control form-control-lg', 'placeholder':'Password'}))
+	password2 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password2', 'class':'form-control form-control-lg', 'placeholder':'Repeat password'}))
+
 	class Meta:
 		model = Account
 		fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2','street_name','street_number','city','postal_code','country')
-
+		widgets = {
+			'first_name': forms.TextInput(attrs={
+				'name': 'first_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'First Name',
+				'autofocus': 'true'
+			}),
+			'last_name': forms.TextInput(attrs={
+				'name': 'last_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Last Name'
+			}),
+			'email': forms.EmailInput(attrs={
+				'name': 'email',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Electronic mail'
+			}),
+			'username': forms.TextInput(attrs={
+				'name': 'username',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Username'
+			}),
+			'street_name': forms.TextInput(attrs={
+				'name':'street_name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Name'
+			}),
+			'street_number': forms.TextInput(attrs={
+				'name': 'street_number',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Number'
+			}),
+			'city': forms.TextInput(attrs={
+				'name': 'city',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'City Name'
+			}),
+			'postal_code': forms.TextInput(attrs={
+				'name': 'postal_code',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Postal Code'
+			}),
+			'country': forms.TextInput(attrs={
+				'name': 'country',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Country Name'
+			}),
+		}
+	
 
 class LoginForm(forms.ModelForm):
-	email						= forms.EmailField(widget=forms.EmailInput(attrs={'name': 'email', 'class':'form-control form-control-lg', 'placeholder':'Email', 'autofocus':'true'}))
-	password					= forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password1', 'class':'form-control form-control-lg', 'placeholder':'Password'}))
 
 	class Meta:
 		model = Account
 		fields = ('email', 'password')
+		widgets = {
+			'email': forms.EmailInput(attrs={
+				'name': 'email',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Electronic mail',
+				'autofocus': 'true'
+			}),
+			'password': forms.PasswordInput(attrs={
+				'name': 'password1',
+				'class': 'form-control form-control-lg',
+				'placeholder':'Password'
+			}),
+		}
 
 	def clean(self):
 		if self.is_valid():
@@ -44,14 +89,21 @@ class LoginForm(forms.ModelForm):
 
 
 class UserPasswordResetForm(PasswordResetForm):
-
 	def __init__(self, *args, **kwargs):
 		super(UserPasswordResetForm, self).__init__(*args, **kwargs)
 
-	email = forms.EmailField(label='', widget=forms.EmailInput(attrs={'name': 'email', 'class':'form-control form-control-lg', 'placeholder':'Electronic mail', 'autofocus':'true'}))
+	email = forms.EmailField(
+			widget=forms.EmailInput(attrs={
+				'name': 'email',
+				'class':'form-control form-control-lg',
+				'placeholder':'Electronic mail',
+				'autofocus':'true'
+			})
+		)
 
 
-class EditAccountForm(forms.ModelForm):    
+class EditAccountForm(forms.ModelForm):
+
 	class Meta:
 		model = Account
 		fields = ['first_name', 'last_name', 'email', 'username','street_name','street_number','city','postal_code','country']
@@ -67,10 +119,6 @@ class EditAccountForm(forms.ModelForm):
 		account.city = self.cleaned_data['city']
 		account.postal_code = self.cleaned_data['postal_code']
 		account.country = self.cleaned_data['country']
-
-
-        # if self.cleaned_data['image']:
-        #     account.image = self.cleaned_data['image']
 
 		if commit:
 			account.save()

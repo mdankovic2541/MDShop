@@ -38,7 +38,7 @@ class Account(AbstractBaseUser):
 	first_name					= models.CharField(verbose_name='First name', max_length=60)
 	last_name					= models.CharField(verbose_name='Last name', max_length=60)
 	email						= models.EmailField(verbose_name='E-mail', max_length=60, unique=True)
-	username					= models.CharField(max_length=32, unique=True)
+	username					= models.CharField(max_length=16, unique=True)
 	street_name = models.CharField(max_length=60)
 	street_number = models.CharField(max_length=20)
 	city =  models.CharField(max_length=50)
