@@ -18,18 +18,21 @@
             </a>
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-               
+
                 <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Men'%} active{%endif%}"  href="{% url 'main:menswear' %}"><b>MEN</b></a>
+                    <a class="nav-link {% if nav == 'Men'%} active{%endif%}"
+                        href="{% url 'main:menswear' %}"><b>MEN</b></a>
                 </li>
-                
+
                 <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Women'%} active{%endif%}" href="{% url 'main:womenswear' %}"><b>WOMEN</b></a>
+                    <a class="nav-link {% if nav == 'Women'%} active{%endif%}"
+                        href="{% url 'main:womenswear' %}"><b>WOMEN</b></a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link {% if nav == 'Kids'%} active{%endif%}" href="{% url 'main:kidswear' %}"><b>KIDS</b></a>
+                    <a class="nav-link {% if nav == 'Kids'%} active{%endif%}"
+                        href="{% url 'main:kidswear' %}"><b>KIDS</b></a>
                 </li>
-                
+
             </ul>
             <!-- Left links -->
         </div>
@@ -42,39 +45,42 @@
                 <i class="fa fa-cart-plus"></i>&nbsp; <b>CART</b> &nbsp;
             </a>
 
-           
+
             <!-- Avatar -->
             {% if request.user.is_authenticated %}
-                
-                <div class="dropdown me-4">
-                    <a class="btn btn-white dropdown-toggle {% if request.user.is_superuser %}text-danger {% else %}text-muted {% endif %}" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                       <b> {{ request.user.username}}</b>
-                    </a>
-    
-                    <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="dropdownMenuLink">
-                        {% if request.user.is_superuser %}
-                        <li><a class="dropdown-item text-muted" href="{% url 'main:products' %}">Products</a></li>
-                        <li><a class="dropdown-item text-muted" href="{% url 'main:users' %}">Users</a></li>                    
-                        <li><a class="dropdown-item text-muted" href="{% url 'admin:index' %}">Admin</a></li>  
-                        <hr class="dropdown-divider">
-                        {% endif %}
-                        <li><a class="dropdown-item text-muted" href="{% url 'account:logout' %}">Log out</a></li>
-                    </ul>
-                    
-                </div>
-                
-                
-           
-                     
-            
+
+            <div class="dropdown me-4">
+                <a class="btn btn-white dropdown-toggle {% if request.user.is_superuser %}text-danger {% else %}text-muted {% endif %}"
+                    href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <b> {{ request.user.username}}</b>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="dropdownMenuLink">
+                    {% if request.user.is_superuser %}
+                    <li><a href="{% url 'main:brands' %}" class="dropdown-item text-muted">Brands</a></li>
+                    <li><a href="{% url 'main:products' %}" class="dropdown-item text-muted">Products</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a href="{% url 'main:users' %}" class="dropdown-item text-muted">Users</a></li>
+                    <li><a href="{% url 'admin:index' %}" class="dropdown-item text-muted">Admin</a></li>
+                    <hr class="dropdown-divider">
+                    {% endif %}
+                    <li><a href="{% url 'account:logout' %}" class="dropdown-item text-muted">Log out</a></li>
+                </ul>
+            </div>
+
+
+
+
+
             {% else %}
-            <ul class= "navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item mx-2" href="#" role="button" >
-                    <a class="btnLogReg btn" href="{% url 'account:login' %}">Login</a></li>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-2" href="#" role="button">
+                    <a class="btnLogReg btn" href="{% url 'account:login' %}">Login</a>
+                </li>
                 </li>
             </ul>
-                
-                {% endif %}
+
+            {% endif %}
         </div>
         <!-- Right elements -->
     </div>

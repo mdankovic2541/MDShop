@@ -2,6 +2,11 @@ from django import forms
 from .models import Product, Brand, current_year, year_choices
 
 class CreateProductForm(forms.ModelForm):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['brand'].disabled = True if self.initial.get('isBranded') == True else False
+
 	year = forms.TypedChoiceField(coerce=int, choices=year_choices, widget=forms.Select(attrs={
 				'class': 'form-control',
 			}), initial=current_year)
@@ -9,8 +14,8 @@ class CreateProductForm(forms.ModelForm):
 		    	'class': 'form-control',
 		    	'name': 'Brand',
 		    	'id': 'id_brand',
-		    	'required': True		
-	}), empty_label='Pick or Create a Brand')
+		    	'required': True,
+	}), empty_label='Pick a Brand')
 	class Meta:
 		model = Product
 		fields = ['title', 'collection', 'year', 'quantity', 'type', 'flag', 'brand', 'size', 'price', 'image']

@@ -4,9 +4,7 @@
     <h5 class="ms-2">{{field.name|capfirst}}</h5>
     <div class="input-group mb-4">
         {{ field }}
-        {% if field.name == 'brand' %}
-        <a href="{% url 'main:addBrand' %}" class="btnLogReg">Add Brand</a>
-        {% elif field.name == 'price' %}
+        {% if field.name == 'price' %}
         <span class="input-group-text">HRK</span>
         {% endif %}
     </div>
