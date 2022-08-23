@@ -1,0 +1,12 @@
+{% for field in address %}
+<div
+    class="{% if field.name == 'street_name' or field.name == 'city' %}col-8{% elif field.name == 'street_number' or field.name == 'postal_code' %}col-4{% else %}col-12{% endif %}">
+    <h5 class="ms-2">{{ field.label|title }}</h5>
+    <div class="input-group mb-4">
+        {{ field }}
+    </div>
+    {% for error in field.errors %}
+    <p class="my-2 text-danger">{{ error }}</p>
+    {% endfor %}
+</div>
+{% endfor %}

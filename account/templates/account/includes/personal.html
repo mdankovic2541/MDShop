@@ -1,0 +1,11 @@
+{% for field in form %}
+<div class="{% if field.name == 'email' %}col-8{% elif field.name == 'username' %}col-4{% else %}col-6{% endif %}">
+    <h5 class="ms-2">{{ field.label|title }}</h5>
+    <div class="input-group mb-4">
+        {{ field }}
+    </div>
+    {% for error in field.errors %}
+    <p class="my-2 text-danger">{{ error }}</p>
+    {% endfor %}
+</div>
+{% endfor %}

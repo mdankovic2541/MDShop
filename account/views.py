@@ -1,19 +1,22 @@
+from webbrowser import get
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
+from .models import Account, Address
+from .forms import AddressForm, EditAccountForm, EditAddressForm, RegistrationForm, LoginForm
 
-from .models import Account
-from .forms import EditAccountForm, RegistrationForm, LoginForm
 
-
-# @isAlreadyAuthenticated
 def registerView(request):
 	context = {}
 	if request.POST:
 		form = RegistrationForm(request.POST)
+		address = AddressForm(request.POST)
 		if form.is_valid():
-			form.save()
+			user = form.save()
+			address = address.save(commit=False)
+			address.user = user
+			address.save()
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password2')
 			account = authenticate(email=email, password=raw_password)
@@ -21,14 +24,17 @@ def registerView(request):
 			return redirect('main:index')
 		else:
 			context = {
-				'registration_form': form,
+				'form': form,
+				'address': address,
 				'navbar': 'register'
 			}
 	else:
 		form = RegistrationForm()
+		address = AddressForm()
 		context = {
 			'navbar': 'register',
-			'registration_form': form
+			'address': address,
+			'form': form
 		}
 	return render(request, 'account/register.html', context)
 
@@ -64,43 +70,51 @@ def logoutView(request):
 
 
 def editAccountView(request,accountId):
-    context = {}
-    account = get_object_or_404(Account, id=accountId)
-    if request.POST:
-        form = EditAccountForm(request.POST or None, instance=account)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            context['success_message'] = 'Product updated!'
-    form = EditAccountForm(
-        initial = {
-            'first_name' : account.first_name ,
+	context = {}
+	account = get_object_or_404(Account, id=accountId)
+	address = get_object_or_404(Address, user=account)
+	if request.POST:
+		form = EditAccountForm(request.POST or None, instance=account)
+		address = EditAddressForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			address = address.save(commit=False)
+			address.user = user
+			address.save()
+	form = EditAccountForm(
+		initial = {
+			'first_name' : account.first_name ,
 			'last_name': account.last_name,
 			'email': account.email,
 			'username': account.username,
-			'street_name':account.street_name,
-			'street_number':account.street_number,
-			'city':account.city,
-			'postal_code':account.postal_code,
-			'country':account.country
-        }
-    )
-    context = {
-        'form': form,
-        'account': account,
-    }
-    return render(request, 'account/editAccount.html', context)
+		}
+	)
+	address = EditAddressForm(
+		initial = {
+			'street_name': address.street_name,
+			'street_number': address.street_number,
+			'city': address.city,
+			'postal_code': address.postal_code,
+			'country': address.country
+		}
+	)
+	context = {
+		'form': form,
+		'address': address,
+		'account': account,
+	}
+	return render(request, 'account/editAccount.html', context)
 
 
 def deleteAccountView(request,accountId):
-    try:
-        account = get_object_or_404(Account, id=accountId)
-        if not request.user.is_superuser:
-            return redirect('main:index')
-    except Account.DoesNotExist:
-        return HttpResponse("Account not found",status = 404)
-    except Exception:
-        return HttpResponse("Internal Error",status= 500)
-    account.delete()
-    
-    return redirect('main:users')
+	try:
+		account = get_object_or_404(Account, id=accountId)
+		if not request.user.is_superuser:
+			return redirect('main:index')
+	except Account.DoesNotExist:
+		return HttpResponse("Account not found",status = 404)
+	except Exception:
+		return HttpResponse("Internal Error",status= 500)
+	account.delete()
+	
+	return redirect('main:users')

@@ -7,13 +7,12 @@
 
 <body id="login" class="unselectable">
     <div class="col-12 col-sm-9 col-lg-6 col-xl-6 mx-auto my-5">
-        <div class="card-login-register p-5" >
+        <div class="card-login-register p-5">
             <h1 class="text-center mb-5 neon-h1">Login</h1>
             <form method="post" class="row" id="loginForm">
                 {% csrf_token %}
                 {% for field in login_form %}
                 <div class="form-outline mb-4 col-md-12">
-                   
                     {{ field }}
                 </div>
                 {% endfor %}
@@ -21,12 +20,12 @@
                     <button type="submit" class="btnLogReg ">
                         Login
                     </button>
-                
-                <div class="mt-3 mb-3">
-                    <a href="{% url 'account:register' %}" class="register">Don't have an account? Sign up!</a>
-                   
+                    <div class="mt-4 mb-3">
+                        <a href="{% url 'account:register' %}" class="register">Don't have an account? Sign up!</a>
+                        <br>
+                        <a href="#" class="forgot">Forgot your password?</a>
+                    </div>
                 </div>
-            </div>
                 <input type="submit" hidden />
                 <div class="col-md-12 text-start error">
                     {% for field in login_form %}

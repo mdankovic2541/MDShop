@@ -3,20 +3,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-
-
 class AwesomeAccountManager(BaseUserManager):
 	def create_user(self, email, username, password):
 		if not email:
 			raise ValueError("Users must have an email address.")
 		if not username:
 			raise ValueError("Users must have a username.")
-
 		user = self.model(
 			email=self.normalize_email(email),
 			username=username,
 		)
-
 		user.set_password(password)
 		user.save(using=self._db)
 		return user
@@ -39,11 +35,6 @@ class Account(AbstractBaseUser):
 	last_name					= models.CharField(verbose_name='Last name', max_length=60)
 	email						= models.EmailField(verbose_name='E-mail', max_length=60, unique=True)
 	username					= models.CharField(max_length=16, unique=True)
-	street_name					= models.CharField(max_length=60)
-	street_number				= models.CharField(max_length=20)
-	city						= models.CharField(max_length=50)
-	postal_code					= models.CharField(max_length=50)
-	country						= models.CharField(max_length=50)
 	date_joined					= models.DateField(verbose_name='Date joined', auto_now_add=True)
 	last_login					= models.DateField(verbose_name='Last login', auto_now_add=True)
 	is_admin					= models.BooleanField(default=False)
@@ -66,5 +57,13 @@ class Account(AbstractBaseUser):
 		return True
 
 
+class Address(models.Model):
+	user						= models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True, related_name='address')
+	street_name					= models.CharField(verbose_name='Street Name', max_length=60, null=False, blank=False)
+	street_number				= models.CharField(max_length=20, null=False, blank=False)
+	city						= models.CharField(max_length=50, null=False, blank=False)
+	postal_code					= models.IntegerField(default=00000, null=False, blank=False)
+	country						= models.CharField(max_length=50, null=False, blank=False)
 
-
+	def __str__(self):
+		return f'{self.street_name} {self.street_number}, {self.city} {self.postal_code}, {self.country}'

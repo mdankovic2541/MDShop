@@ -1,16 +1,81 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth import authenticate
-from .models import Account
+from .models import Account, Address
+
+
+class AddressForm(forms.ModelForm):
+
+	class Meta:
+		model = Address
+		fields = ['street_name', 'street_number', 'city', 'postal_code', 'country']
+		widgets = {
+			'street_name': forms.TextInput(attrs={
+				'name':'Street Name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Name'
+			}),
+			'street_number': forms.TextInput(attrs={
+				'name': 'Street Number',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Number'
+			}),
+			'city': forms.TextInput(attrs={
+				'name': 'City',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'City Name'
+			}),
+			'postal_code': forms.NumberInput(attrs={
+				'name': 'Postal Code',
+				'class': 'form-control form-control-lg',
+			}),
+			'country': forms.TextInput(attrs={
+				'name': 'Country',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Country Name'
+			}),
+		}
+
+
+class EditAddressForm(forms.ModelForm):
+	class Meta:
+		model = Address
+		fields = ['street_name', 'street_number', 'city', 'postal_code', 'country']
+		widgets = {
+			'street_name': forms.TextInput(attrs={
+				'name':'Street Name',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Name'
+			}),
+			'street_number': forms.TextInput(attrs={
+				'name': 'Street Number',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Street Number'
+			}),
+			'city': forms.TextInput(attrs={
+				'name': 'City',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'City Name'
+			}),
+			'postal_code': forms.NumberInput(attrs={
+				'name': 'Postal Code',
+				'class': 'form-control form-control-lg',
+			}),
+			'country': forms.TextInput(attrs={
+				'name': 'Country',
+				'class': 'form-control form-control-lg',
+				'placeholder': 'Country Name'
+			}),
+		}
 
 
 class RegistrationForm(UserCreationForm):
-	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password1', 'class':'form-control form-control-lg', 'placeholder':'Password'}))
-	password2 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password2', 'class':'form-control form-control-lg', 'placeholder':'Repeat password'}))
+	password1 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password1', 'class':'form-control form-control-lg', 'placeholder':'Password'}), label='Password')
+	password2 = forms.CharField(widget=forms.PasswordInput(attrs={'name': 'password2', 'class':'form-control form-control-lg', 'placeholder':'Repeat password'}), label='Repeat password')
 
 	class Meta:
 		model = Account
-		fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2','street_name','street_number','city','postal_code','country')
+		fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
 		widgets = {
 			'first_name': forms.TextInput(attrs={
 				'name': 'first_name',
@@ -33,31 +98,6 @@ class RegistrationForm(UserCreationForm):
 				'class': 'form-control form-control-lg',
 				'placeholder': 'Username'
 			}),
-			'street_name': forms.TextInput(attrs={
-				'name':'street_name',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Street Name'
-			}),
-			'street_number': forms.TextInput(attrs={
-				'name': 'street_number',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Street Number'
-			}),
-			'city': forms.TextInput(attrs={
-				'name': 'city',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'City Name'
-			}),
-			'postal_code': forms.TextInput(attrs={
-				'name': 'postal_code',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Postal Code'
-			}),
-			'country': forms.TextInput(attrs={
-				'name': 'country',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Country Name'
-			}),
 		}
 	
 
@@ -65,7 +105,7 @@ class LoginForm(forms.ModelForm):
 
 	class Meta:
 		model = Account
-		fields = ('email', 'password')
+		fields = ['email', 'password']
 		widgets = {
 			'email': forms.EmailInput(attrs={
 				'name': 'email',
@@ -106,7 +146,7 @@ class EditAccountForm(forms.ModelForm):
 
 	class Meta:
 		model = Account
-		fields = ['first_name', 'last_name', 'email', 'username','street_name','street_number','city','postal_code','country']
+		fields = ['first_name', 'last_name', 'email', 'username']
 		widgets = {
 			'first_name': forms.TextInput(attrs={
 				'name': 'first_name',
@@ -122,38 +162,15 @@ class EditAccountForm(forms.ModelForm):
 			'email': forms.EmailInput(attrs={
 				'name': 'email',
 				'class': 'form-control form-control-lg',
-				'placeholder': 'Electronic mail'
+				'placeholder': 'Electronic mail',
+				'readonly': True,
 			}),
 			'username': forms.TextInput(attrs={
 				'name': 'username',
 				'class': 'form-control form-control-lg',
-				'placeholder': 'Username'
-			}),
-			'street_name': forms.TextInput(attrs={
-				'name':'street_name',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Street Name'
-			}),
-			'street_number': forms.TextInput(attrs={
-				'name': 'street_number',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Street Number'
-			}),
-			'city': forms.TextInput(attrs={
-				'name': 'city',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'City Name'
-			}),
-			'postal_code': forms.TextInput(attrs={
-				'name': 'postal_code',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Postal Code'
-			}),
-			'country': forms.TextInput(attrs={
-				'name': 'country',
-				'class': 'form-control form-control-lg',
-				'placeholder': 'Country Name'
-			}),
+				'placeholder': 'Username',
+				'readonly': True,
+			}),			
 		}
 
 	def save(self, commit=True):
@@ -162,11 +179,6 @@ class EditAccountForm(forms.ModelForm):
 		account.last_name = self.cleaned_data['last_name']
 		account.email = self.cleaned_data['email']
 		account.username = self.cleaned_data['username']		
-		account.street_name = self.cleaned_data['street_name']
-		account.street_number = self.cleaned_data['street_number']
-		account.city = self.cleaned_data['city']
-		account.postal_code = self.cleaned_data['postal_code']
-		account.country = self.cleaned_data['country']
 
 		if commit:
 			account.save()

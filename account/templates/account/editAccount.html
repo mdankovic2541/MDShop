@@ -4,14 +4,18 @@
 <body id="editAccount">
     <div class="col-12 col-md-12 col-lg-10 col-xl-8 mx-auto my-5 p-3">
         <div class="card-login-register p-5">
-            <h1 class="text-center mb-5 neon-h1">Edit account - {{ account.username }}</h1>
+            <h1 class="text-center mb-5">Edit account - {{ account.username }}</h1>
             <form method="post" class="row">
                 {% csrf_token %}
-                {% for field in form %}
-                <div class="form-outline mb-4 col-md-6">
-                    {{ field }}
+                <h3 class="mb-4">Personal Info</h3>
+                <div class="row">
+                    {% include './includes/personal.html' %}
                 </div>
-                {% endfor %}
+                <hr>
+                <h3 class="mb-4">Address</h3>
+                <div class="row">
+                    {% include './includes/address.html' %}
+                </div>
                 <div class="form-outline my-4 text-center">
                     <button class="btn btn-outline-success" type="submit">Update</button>
                     <button class="btn btn-outline-warning" type="reset">Reset</button>
@@ -35,6 +39,12 @@
 </body>
 {% endblock content %}
 
+<!-- {% for field
+                {% for field in form %}
+                <div class="form-outline mb-4 col-md-6">
+                    {{ field }}
+                </div>
+                {% endfor %} -->
 <!--
     <div class="form-outline my-3">
                     <input class="form-control" type="text" name="first_name" id="id_first_name"
