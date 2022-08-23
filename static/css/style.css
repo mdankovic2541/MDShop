@@ -147,3 +147,20 @@ li a:hover,
    color: #fff;
 
 }
+
+.register,
+.forgot,
+.haveAccount {
+   text-decoration: none;
+   color: #619baf;
+   opacity: .7;
+   transition: all .4s ease;
+}
+
+.register:hover,
+.forgot:hover,
+.haveAccount:hover {
+   color: #000;
+   opacity: 1;
+   transform: scale(2);
+}
