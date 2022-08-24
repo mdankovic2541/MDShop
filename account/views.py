@@ -5,6 +5,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 from .models import Account, Address
 from .forms import AddressForm, EditAccountForm, EditAddressForm, RegistrationForm, LoginForm
+from main.helpers import isAjax
+import json
 
 
 def registerView(request):
@@ -106,15 +108,26 @@ def editAccountView(request,accountId):
 	return render(request, 'account/editAccount.html', context)
 
 
-def deleteAccountView(request,accountId):
-	try:
-		account = get_object_or_404(Account, id=accountId)
-		if not request.user.is_superuser:
-			return redirect('main:index')
-	except Account.DoesNotExist:
-		return HttpResponse("Account not found",status = 404)
-	except Exception:
-		return HttpResponse("Internal Error",status= 500)
-	account.delete()
+# def deleteAccountView(request,accountId):
+# 	try:
+# 		account = get_object_or_404(Account, id=accountId)
+# 		if not request.user.is_superuser:
+# 			return redirect('main:index')
+# 	except Account.DoesNotExist:
+# 		return HttpResponse("Account not found",status = 404)
+# 	except Exception:
+# 		return HttpResponse("Internal Error",status= 500)
+# 	account.delete()
 	
-	return redirect('main:users')
+# 	return redirect('main:users')
+
+
+def deleteAccountView (request):
+	if request.method == "POST" and isAjax(request):
+		userId = request.POST.get('id', None)
+		try:
+			user = get_object_or_404(Account, id=userId)
+			user.delete()
+			return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
+		except Account.DoesNotExist:
+			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")

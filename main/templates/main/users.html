@@ -6,66 +6,39 @@ Users
 {% block content %}
 
 <div class="container-fluid">
-  <div class="row text-center">
-    <div class="mx-auto p-5 my-5" style="background-color:darkgrey;">
-      <h3 class="pb-3"><b>User accounts</b></h3>
-      <div class="table-responsive">
-        <table class="table table-striped" id="tablica">
-          <thead>
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Username</th>
-              <th scope="col">Email</th>
-              <th scope="col">Country</th>
-              <th scope="col">City</th>
-              <th scope="col">Street Name</th>
-              <th scope="col">Street Number</th>
-              <th scope="col">Postal Code</th>
-              <th scope="col">Admin</th>
-              <th scope="col">Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for account in accounts %}
-            <tr>
-              <td>{{ account.first_name}}</td>
-              <td>{{ account.last_name}}</td>
-              <td>{{ account.username}}</td>
-              <td>{{ account.email}}</td>
-              <td>{{ account.address.country}}</td>
-              <td>{{ account.address.city}}</td>
-              <td>{{ account.address.street_name}}</td>
-              <td>{{ account.address.street_number}}</td>
-              <td>{{ account.address.postal_code}}</td>
-              <td>{{ account.is_superuser}}</td>
-              <td><a href="{% url 'account:editAccount' account.id %}" class="btnCardLeft">Edit</a>
-                <a href="{% url 'account:deleteAccount' account.id %}" class="btnCardRight">Delete</a>
-              </td>
-
-            </tr>
-
-            {% endfor %}
-
-          </tbody>
-        </table>
-      </div>
-
-
-
-    </div>
-  </div>
+	<div class="col-12">
+		<div class="col-11 mx-auto my-5">
+			<table id="example" class="table table-light table-hover text-center align-middle">
+				<thead>
+					<tr>
+						<th class="text-center">First Name</th>
+						<th class="text-center">Last Name</th>
+						<th class="text-center">Username</th>
+						<th class="text-center">Email</th>
+						<th class="text-center">Admin</th>
+						<th class="text-center">Street Name</th>
+						<th class="text-center">Street Number</th>
+						<th class="text-center">City</th>
+						<th class="text-center">Postal Code</th>
+						<th class="text-center">Country</th>
+						<th class="text-center">Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for account in accounts %}
+					{% include './includes/singleUserRow.html' %}
+					{% endfor %}
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+			<script>
+				$(document).ready(function () {
+					$('.dataTables_length').addClass('bs-select');
+					$("#example_filter>label>input").attr("placeholder", "Type here to search");
+				});
+			</script>
+		</div>
+	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock%}

@@ -4,11 +4,8 @@
 
 body {
    background: #ADA996;
-   /* fallback for old browsers */
    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
-   /* Chrome 10-25, Safari 5.1-6 */
    background: linear-gradient(to bottom, #eae9e9, #dad4d4, #a9a7a7, #827e69);
-   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .btnLogReg {
@@ -25,7 +22,6 @@ body {
    background-color: #619baf;
    color: white;
    transition-duration: 0.4s;
-
 }
 
 .card-login-register {
@@ -33,7 +29,6 @@ body {
    background-color: #fff;
    opacity: 0.8;
    transition: all 0.5s ease;
-
 }
 
 .card-login-register:hover {
@@ -43,7 +38,6 @@ body {
 li a,
 .link-grayish {
    transition: all 0.5s ease;
-
 }
 
 
@@ -77,7 +71,7 @@ li a:hover,
    padding-left: 5px;
    padding-right: 5px;
    text-decoration: none;
-
+   cursor: pointer;
 }
 
 .btnCardRight:hover {
@@ -98,6 +92,7 @@ li a:hover,
    padding-left: 5px;
    padding-right: 5px;
    text-decoration: none;
+   cursor: pointer;
 }
 
 .btnCardLeft:hover {
@@ -163,4 +158,41 @@ li a:hover,
    color: #000;
    opacity: 1;
    transform: scale(2);
+}
+
+#example_wrapper {
+   background-color: #fff;
+   padding: 1% 1%;
+}
+
+#example_length {
+   color: #000;
+   background: inherit;
+   margin: 1%;
+}
+
+#example_filter {
+   margin: 1%;
+}
+
+#example_filter>label>input {
+   margin-left: 5px;
+}
+
+#example_info {
+   color: #000;
+}
+
+#example_paginate a {
+   padding: 8px;
+   border: 1px solid #000;
+   text-decoration: none;
+}
+
+.dataTables_paginate {
+   text-align: center;
+   color: #000;
+   margin: auto;
+   width: 50%;
+   padding: 1%;
 }

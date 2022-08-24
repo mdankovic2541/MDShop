@@ -15,5 +15,5 @@ urlpatterns = [
     path('login', loginView, name='login'),
     path('logout', logoutView, name='logout'),    
     path('edit_account/<int:accountId>',editAccountView, name='editAccount'),
-    path('delete_account/<int:accountId>',deleteAccountView, name='deleteAccount'),
+    path('delete_account',deleteAccountView, name='deleteAccount'),
 ]

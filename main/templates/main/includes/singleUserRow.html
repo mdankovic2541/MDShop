@@ -1,0 +1,44 @@
+{% load static %}
+<tr id="userRow-{{ account.id }}">
+    <td>{{ account.first_name}}</td>
+    <td>{{ account.last_name}}</td>
+    <td>{{ account.username}}</td>
+    <td>{{ account.email}}</td>
+    <td>
+        {% if account.is_superuser %}
+        <i class="fa fa-circle-check text-success"></i>
+        {% else %}
+        <i class="fa fa-circle-xmark text-danger"></i>
+        {% endif %}
+    </td>
+    <td>{{ account.address.street_name}}</td>
+    <td>{{ account.address.street_number}}</td>
+    <td>{{ account.address.city}}</td>
+    <td>{{ account.address.postal_code}}</td>
+    <td>{{ account.address.country}}</td>
+    <td>
+        <a href="{% url 'account:editAccount' account.id %}" class="btnCardLeft">Edit</a>
+        <a class="btnCardRight" id="removeUser-{{ account.id }}">Remove</a>
+    </td>
+</tr>
+<script>
+    $(document).ready(function () {
+        let table = $('#example').DataTable();
+        $("#removeUser-{{ account.id }}").click(function () {
+            $.ajax({
+                url: "{% url 'account:deleteAccount' %}",
+                type: "POST",
+                data: {
+                    "id": "{{ account.id }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                cache: false,
+                dataType: "json",
+                success: function () {
+                    table.row("#userRow-{{ account.id }}").remove().draw();
+                    table.draw();
+                }
+            });
+        });
+    });
+</script>
