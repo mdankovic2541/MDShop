@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from account.models import Account
 from django.db.models.signals import post_delete
@@ -73,6 +74,7 @@ class Product(models.Model):
 	price					= models.DecimalField(max_digits=6, decimal_places=2)	
 	flag					= models.CharField(max_length=1, choices=ClothesFlag.choices, default=ClothesFlag.NEW, null=False, blank=False)
 	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False)
+
 
 	def __str__(self):
 		return f'product: {self.title}'

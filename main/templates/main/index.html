@@ -13,7 +13,7 @@ MDShop
         <div class="hero-content">
 
             <div class="col-md-12">
-                <h1>Bootstrap Hero Image</h1>
+                <h1>Summer collection</h1>
             </div>
             <div class="col-md-6">
                 <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image</p>
@@ -36,19 +36,29 @@ MDShop
 
     {% for product in products %}
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+<<<<<<< HEAD
+        <div class="card text-center">
+            <p class="flag">{{product.flag}}</p>
+=======
         <div class="card ">
             <p class="flag">{{ product.getFlag }}</p>
+>>>>>>> fc58105303fdd3e217c4663d5eaa77cbf86c96cd
             <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
             <div>
                 <h2>{{ product.title }}</h3>
                     <h4> {{ product.brand }}</h5>
             </div>
             <div class="card-body mx-auto">
+<<<<<<< HEAD
+                <p>Price: <b>{{ product.price }}kn</b></p>
+                <p>Size: {{ product.size }}</p>
+=======
                 <p><b>{{ product.price }}kn</b></p>
                 <p>{{ product.getSize }} - {{ product.size }}</p>
                 <p> {{ product.getType }}</p>
                 <p> {{ product.getCollection }} of {{ product.year }}</p>
                 <p> <i>{{ product.brand }}</i> </p>
+>>>>>>> fc58105303fdd3e217c4663d5eaa77cbf86c96cd
                 <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
                 <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
 
