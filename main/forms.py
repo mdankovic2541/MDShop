@@ -6,6 +6,7 @@ class CreateProductForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.fields['brand'].disabled = True if self.initial.get('isBranded') == True else False
+		self.fields['brand'].disabled = True if self.initial.get('isBranded') == True else False
 
 	year = forms.TypedChoiceField(coerce=int, choices=year_choices, widget=forms.Select(attrs={
 				'class': 'form-control',

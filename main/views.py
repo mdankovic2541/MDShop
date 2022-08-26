@@ -5,7 +5,7 @@ from django.http.response import Http404
 from django.http import HttpResponse, JsonResponse
 from account.models import Account
 from main.forms import CreateProductForm, EditProductForm, CreateBrandForm
-from .models import Brand, Product, Comment
+from .models import Brand, Cart, Product, Comment
 from main.helpers import isAjax
 
 # Create your views here.
@@ -13,11 +13,8 @@ from main.helpers import isAjax
 def indexView(request):
 	context = {}
 	products = Product.objects.all()
-	accounts = Account.objects.all()
 	context = {
 		'products' : products,
-		'accounts' : accounts,
-
 	}
 
 	return render(request,"main/index.html",context)
@@ -25,10 +22,12 @@ def indexView(request):
 
 def addProductView(request, brandId=None):
 	context = {}
+	isBranded = False
 	if not request.user.is_superuser:
 		return redirect('main:index')
 	if brandId:
-		brand = get_object_or_404(Brand, id=brandId)		
+		brand = get_object_or_404(Brand, id=brandId)
+		isBranded = True		
 		form = CreateProductForm(request.POST or None, request.FILES or None, initial = { 'brand': brand, 'isBranded': True })
 	else:
 		form = CreateProductForm(request.POST or None, request.FILES or None, initial = { 'isBranded': False })
@@ -39,11 +38,11 @@ def addProductView(request, brandId=None):
 		productId = obj.id
 		form = CreateProductForm()
 		return redirect('main:productDetail', productId=productId)
-	context['form'] = form
+	context = {
+		'form': form,
+		'isBranded': isBranded,
+	}
 	return render(request, 'main/addProduct.html', context)
-
-
-
 
 
 def usersView(request):

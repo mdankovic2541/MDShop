@@ -108,14 +108,15 @@ class Comment(models.Model):
 
 
 class Cart(models.Model):
-	user					= models.OneToOneField(Account, on_delete=models.CASCADE, null=False, blank=False, verbose_name='cart')
+	user					= models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='cart')
 	product					= models.ManyToManyField(Product)
 
 	def countProducts(self):
 		if self.product:
 			return self.product.count()
 		else:
-			return 0
+			return 0	
 
 	def __str__(self):
 		return f'{self.user}\'s cart'
+	
