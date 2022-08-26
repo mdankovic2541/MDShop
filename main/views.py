@@ -177,7 +177,7 @@ def menswearView(request):
 	
 def womenswearView(request):
 	context = {}
-	products = Product.objects.filter(Q(type__contains='W') | Q(type__contains='U')).all()
+	products = Product.objects.filter(Q(type__contains='F') | Q(type__contains='U')).all()
 	context = {
 		'products' : products,
 		'nav':'Women',

@@ -1,6 +1,6 @@
-<div class="col-4 text-cemter">
+
     <button class="btn btn-outline-success" id="btnCartManage-{{ product.id }}"></button>
-</div>
+
 <script>
     $(document).ready(function () {
 
@@ -13,12 +13,12 @@
             "{% endfor %}"
 
             if (isInCart) {
-                $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-succes").addClass("btn-outline-danger");
-                $("#btnCartManage-{{ product.id }}").html("Remove");
+                $("#btnCartManage-{{ product.id }}").removeClass("btnBuy").addClass("btn-outline-danger");
+                $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-square-minus"></i>&nbsp;Remove');
             }
             else {
-                $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-danger").addClass("btn-outline-succes");
-                $("#btnCartManage-{{ product.id }}").html("Add");
+                $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-danger").addClass("btnBuy");
+                $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-cart-plus"></i>&nbsp; Buy now');
             }
 
             $("#btnCartManage-{{ product.id }}").click(function () {
@@ -34,12 +34,12 @@
                     success: function () {
                         isInCart = !isInCart;
                         if (isInCart) {
-                            $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-succes").addClass("btn-outline-danger");
-                            $("#btnCartManage-{{ product.id }}").html("Remove");
+                            $("#btnCartManage-{{ product.id }}").removeClass("btnBuy").addClass("btn-outline-danger");
+                            $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-square-minus"></i>&nbsp;Remove');
                         }
                         else {
-                            $("#btnCartManage-{{ product.id }}").addClass("btn-outline-succes").removeClass("btn-outline-danger");
-                            $("#btnCartManage-{{ product.id }}").html("Add");
+                            $("#btnCartManage-{{ product.id }}").addClass("btnBuy").removeClass("btn-outline-danger");
+                            $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-cart-plus"></i>&nbsp; Buy now');
                         }
                     }
                 });

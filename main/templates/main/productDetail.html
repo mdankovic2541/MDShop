@@ -5,87 +5,77 @@
 {% block content %}
 
 
+
 <div class="hero">
     <div class="container-fluid">
-        <div class="hero-content">
+        <div class="hero-content p-5">
 
             <div class="col-md-12">
-                <h1>Bootstrap Hero Image</h1>
+                <h3>Live fashion!</h3>
             </div>
-            <div class="col-md-6">
-                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image</p>
+            <div class="col-md-12">
+                <h1>"Fashion is the armor to survive the reality of everyday life." - Bill Cunningham</h1>
             </div>
-            <div class="col-md-6 ">
-                <p>Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap
-                    Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero Image Bootstrap Hero
-                    Image
-                    Bootstrap Hero Image</p>
-            </div>
-
         </div>
     </div>
 </div>
 
+
+
 <div class="row">
-
-
-
     <div class="row col-md-{% if request.user.is_authenticated %}9 {% else %}12 {%endif%}">
-        <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-            <div class="card  ">
-                <div class="row">
+        <div class="card">
+            
 
-                    <div class="col">
-                        <p class="flag">{{product.flag}}</p>
-                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
-
-                    </div>
-
-
-                    <div class="col">
-                        <h2>{{ product.title }}</h3>
-                            <h4> {{ product.brand }}</h5>
-
-                                <div class="card-body mx-auto">
-                                    <h5><b>{{ product.price }}kn</b></h5>
-                                    <h5>{{ product.size }}</h5>
-                                    <h5> {{ product.type }}</h5>
-                                    <h5> <i>{{ product.brand }}</i> </h5>
-                                    <h5>{{ product.collection }} collection</h5>
+                <div class="col p-5 text-center ">
+                    <p class="flag">{{product.getFlag}}</p>
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid border">
+                    <h2>{{ product.title }}</h2>
+                    <h5><b>{{ product.price }}kn</b></h5>
+                    <h5>{{ product.getSize }}</h5>
+                    <h5> {{ product.getType }}</h5>
+                    <h5> <i>{{ product.brand }}</i> </h5>
+                    <h5>{{ product.getCollection }}</h5>
+                    
+                </div>
 
 
-                                    <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Buy</a>
-                                    <a class="btnCardRight" href="{% url 'main:index' %}">Back</a>
+                <div class="col p-5 text-center ">
+                    <div class="card-body mx-auto">
+                        
+                        
+                        <div class="row p-2">
+                            {% if request.user.is_authenticated %}
+                            {% include './includes/cartManagment.html' %}
+                            {% endif %}
+                            
+                            <a class="btn btn-outline-info" href="{% url 'main:index' %}"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;Back</a>
+                        </div>
+                       
 
-                                </div>
                     </div>
                 </div>
-            </div>
+            
         </div>
     </div>
 
 
-    <div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-white text-start"
+    <div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-dark text-start bg-white"
         id="postComments">
-        <div class="commentsBod">
+        <div class="commentsBod ">
             <div id="allComments">
                 {% for comment in comments %}
-                <div class="row m-2 comment" id="detailBlogComment-{{ comment.id }}">
+                <div class="row m-2 comment border" id="detailBlogComment-{{ comment.id }}">
                     <div class="col-md-8 text-start py-2 px-4">
-                        {% if comment.account.is_active %}
-                        <a href="#">{{ comment.account }}</a>
+                        <span><i><b>{{ comment.account }}</b></i></span>
                         says:
-                        {% else %}
-                        <span style="text-decoration: line-through; color: #aaa;">{{ comment.account }}</span>
-                        says:
-                        {% endif %}
                     </div>
                     <div class="col-md-9">
-                        <p class="text-white text-start p-2" id="appCommBody">{{ comment.description }}</p>
+                        <p class="text-dark text-start p-2" id="appCommBody">{{ comment.description }}</p>
                     </div>
                     {% if request.user.is_superuser or request.user == comment.account %}
                     <div class="col-md-3">
-                        <a class="btn btn-danger" href="{% url 'main:deleteComment' comment.id %}">del</a>
+                        <a class="btn btn-outline-danger" href="{% url 'main:deleteComment' comment.id %}"><i class="fa-solid fa-circle-minus"></i></a>
                     </div>
                     {% endif %}
                 </div>
@@ -94,6 +84,6 @@
         </div>
         {% include './createComment.html' %}
     </div>
-
 </div>
+
 {% endblock %}

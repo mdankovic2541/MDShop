@@ -62,11 +62,11 @@ li a:hover,
    transition: all 0.5s ease;
 }
 
-.btnCardRight {
-   border: 2px solid #1b6944;
-   border-radius: 1px 10px 10px 1px;
+.btnDetails {
+   border: 2px solid #00b3ff;
+   border-radius: 10px 10px 10px 10px;
    background-color: white;
-   color: #1b6944;
+   color: #00b3ff;
    font-size: 20px;
    padding-left: 5px;
    padding-right: 5px;
@@ -74,20 +74,20 @@ li a:hover,
    cursor: pointer;
 }
 
-.btnCardRight:hover {
+.btnDetails:hover {
    border: 2px solid white;
-   border-radius: 1px 10px 10px 1px;
-   background-color: #1b6944;
+   border-radius: 10px 10px 10px 10px;
+   background-color: #00b3ff;
    color: white;
    font-size: 20px;
    transition-duration: 0.4s;
 }
 
-.btnCardLeft {
-   border: 2px solid #908203;
-   border-radius: 10px 1px 1px 10px;
+.btnBuy {
+   border: 2px solid #dacf96;
+   border-radius: 10px 10px 10px 10px;
    background-color: white;
-   color: #908203;
+   color: #dacf96;
    font-size: 20px;
    padding-left: 5px;
    padding-right: 5px;
@@ -95,10 +95,10 @@ li a:hover,
    cursor: pointer;
 }
 
-.btnCardLeft:hover {
+.btnBuy:hover {
    border: 2px solid white;
-   border-radius: 10px 1px 1px 10px;
-   background-color: #908203;
+   border-radius: 10px 10px 10px 10px;
+   background-color: #dacf96;
    color: white;
    font-size: 20px;
    transition-duration: 0.4s;

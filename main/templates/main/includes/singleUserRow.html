@@ -17,8 +17,8 @@
     <td>{{ account.address.postal_code}}</td>
     <td>{{ account.address.country}}</td>
     <td>
-        <a href="{% url 'account:editAccount' account.id %}" class="btnCardLeft">Edit</a>
-        <a class="btnCardRight" id="removeUser-{{ account.id }}">Remove</a>
+        <a href="{% url 'account:editAccount' account.id %}" class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></a>
+        <a class="btn btn-outline-danger" id="removeUser-{{ account.id }}"><i class="fa-solid fa-user-xmark text-dark"></i></a>
     </td>
 </tr>
 <script>
