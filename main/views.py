@@ -130,19 +130,29 @@ def editProductView(request,productId):
 	return render(request, 'main/editProduct.html', context)
 
 
-def deleteProductView(request,productId):
-	try:
-		product = get_object_or_404(Product, id=productId)
-		if not request.user.is_superuser:
-			return redirect('main:index')
-	except Product.DoesNotExist:
-		return HttpResponse("Product not found",status = 404)
-	except Exception:
-		return HttpResponse("Internal Error",status= 500)
-	product.delete()
+# def deleteProductView(request,productId):
+# 	try:
+# 		product = get_object_or_404(Product, id=productId)
+# 		if not request.user.is_superuser:
+# 			return redirect('main:index')
+# 	except Product.DoesNotExist:
+# 		return HttpResponse("Product not found",status = 404)
+# 	except Exception:
+# 		return HttpResponse("Internal Error",status= 500)
+# 	product.delete()
 	
-	return redirect('main:products')
+# 	return redirect('main:products')
 	
+
+def deleteProductView (request):
+	if request.method == "POST" and isAjax(request):
+		productId = request.POST.get('id', None)
+		try:
+			product = get_object_or_404(Product, id=productId)
+			product.delete()
+			return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
+		except Account.DoesNotExist:
+			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
 
 
 

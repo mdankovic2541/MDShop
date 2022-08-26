@@ -7,61 +7,39 @@ Products
 
 
 <div class="container-fluid">
-  <div class="row text-center">
-    <div class="mx-auto p-5 my-5" style="background-color:darkgrey;">
-      <h3 class="pb-3"><b>Products</b></h3>
-      <a class="btn btn-outline-light mb-4" href="{% url 'main:addProduct' %}">Add Product</a>
-      <div class="table-responsive">
-        <table class="table table-striped" id="tablica">
+  <div class="col-12">
+      <div class="col-11 mx-auto my-5 text-center">
+        <a class="btn btn-dark mb-4" href="{% url 'main:addProduct' %}"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add Product</a>
+        <table class="table table-light table-hover text-center align-middle" id="example">
           <thead>
             <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Brand</th>
-              <th scope="col">Price</th>
-              <th scope="col">Type</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Size</th>
-              <th scope="col">Collection</th>
-              <th scope="col">Flag</th>
-              <th scope="col">Edit</th>
+              <th class="text-center">Title</th>
+              <th class="text-center">Brand</th>
+              <th class="text-center">Price</th>
+              <th class="text-center">Type</th>
+              <th class="text-center">Quantity</th>
+              <th class="text-center">Size</th>
+              <th class="text-center">text-centerlection</th>
+              <th class="text-center">Flag</th>
+              <th class="text-center">Edit</th>
             </tr>
           </thead>
           <tbody>
             {% for product in products %}
-            <tr>
-              <td>{{ product.title}}</td>
-              <td>{{ product.brand}}</td>
-              <td>{{ product.price}} kn</td>
-              <td>{{ product.type}}</td>
-              <td>{{ product.quantity}}</td>
-              <td>{{ product.size}}</td>
-              <td>{{ product.collection}}</td>
-              <td>{{ product.flag}}</td>
-              <td><a href="{% url 'main:editProduct' product.id %}" class="btnCardLeft">Edit</a>
-                <a href="{% url 'main:deleteProduct' product.id %}" class="btnCardRight">Delete</a>
-              </td>
-
-            </tr>
-
+            {% include './includes/singleProductTableRow.html' %}
             {% endfor %}
 
           </tbody>
         </table>
+        <script>
+          $(document).ready(function () {
+            $('.dataTables_length').addClass('bs-select');
+            $("#example_filter>label>input").attr("placeholder", "Type here to search");
+          });
+        </script>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% endblock%}

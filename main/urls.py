@@ -29,7 +29,7 @@ urlpatterns = [
 
     path('product_detail/<int:productId>',productDetailView, name='productDetail'),
     path('edit_product/<int:productId>',editProductView, name='editProduct'),
-    path('delete_product/<int:productId>',deleteProductView, name='deleteProduct'),
+    path('delete_product',deleteProductView, name='deleteProduct'),
     path('create_comment/<int:productId>',createCommentView, name='createComment'),
     path('delete_comment/<int:commentId>',deleteCommentView, name='deleteComment'),
     path('menswear',menswearView, name='menswear'),

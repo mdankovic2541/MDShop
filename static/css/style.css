@@ -9,17 +9,17 @@ body {
 }
 
 .btnLogReg {
-   border: 2px solid #619baf;
-   border-radius: 1px 10px 10px 1px;
+   border: 2px solid #2995ca;
+   border-radius: 10px 10px 10px 10px;
    background-color: white;
-   color: #619baf;
+   color: #2995ca;
    font-size: 1.35rem;
    padding: 0px 10px;
    text-decoration: none;
 }
 
 .btnLogReg:hover {
-   background-color: #619baf;
+   background-color: #2995ca;
    color: white;
    transition-duration: 0.4s;
 }
