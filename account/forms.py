@@ -146,7 +146,7 @@ class EditAccountForm(forms.ModelForm):
 
 	class Meta:
 		model = Account
-		fields = ['first_name', 'last_name', 'email', 'username']
+		fields = ['first_name', 'last_name', 'email', 'username', 'is_admin', 'is_active', 'is_superuser', 'is_staff']
 		widgets = {
 			'first_name': forms.TextInput(attrs={
 				'name': 'first_name',
@@ -170,7 +170,24 @@ class EditAccountForm(forms.ModelForm):
 				'class': 'form-control form-control-lg',
 				'placeholder': 'Username',
 				'readonly': True,
-			}),			
+			}),
+			'is_admin': forms.CheckboxInput(attrs={
+				'label': 'idemo',
+				'class': 'form-check-input',
+				'type': 'checkbox',
+			}),
+			'is_active': forms.CheckboxInput(attrs={
+				'class': 'form-check-input',
+				'type': 'checkbox',
+			}),
+			'is_superuser': forms.CheckboxInput(attrs={
+				'class': 'form-check-input',
+				'type': 'checkbox',
+			}),
+			'is_staff': forms.CheckboxInput(attrs={
+				'class': 'form-check-input',
+				'type': 'checkbox',
+			}),
 		}
 
 	def save(self, commit=True):

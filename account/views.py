@@ -1,3 +1,4 @@
+from re import A
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
@@ -107,6 +108,10 @@ def editAccountView(request,accountId):
 			'last_name': account.last_name,
 			'email': account.email,
 			'username': account.username,
+			'is_admin': account.is_admin,
+			'is_active': account.is_active,
+			'is_superuser': account.is_superuser,
+			'is_staff': account.is_staff,
 		}
 	)
 	address = EditAddressForm(
@@ -118,10 +123,12 @@ def editAccountView(request,accountId):
 			'country': address.country
 		}
 	)
+	admin_check = ['is_admin', 'is_active', 'is_superuser', 'is_staff']
 	context = {
 		'form': form,
 		'address': address,
 		'account': account,
+		'admin_check': admin_check,
 	}
 	return render(request, 'account/editAccount.html', context)
 
