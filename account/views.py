@@ -1,8 +1,9 @@
-from webbrowser import get
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
+
+from main.models import Cart
 from .models import Account, Address
 from .forms import AddressForm, EditAccountForm, EditAddressForm, RegistrationForm, LoginForm
 from main.helpers import isAjax
@@ -22,6 +23,11 @@ def registerView(request):
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password2')
 			account = authenticate(email=email, password=raw_password)
+			try:
+				cart = get_object_or_404(Cart, user=account)
+			except Cart.DoesNotExist:
+				cart = Cart.objects.create(user=account)
+			account.cart = cart 
 			login(request, account)
 			return redirect('main:index')
 		else:
@@ -53,6 +59,11 @@ def loginView(request):
 			password = request.POST['password']
 			user = authenticate(email=email, password=password)
 			if user:
+				try:
+					cart = get_object_or_404(Cart, user=user)
+				except Cart.DoesNotExist:
+					cart = Cart.objects.create(user=user)
+				user.cart = cart 
 				login(request, user)
 				nxt = request.GET.get('next', False)
 				if nxt:
@@ -67,7 +78,11 @@ def loginView(request):
 
 
 def logoutView(request):
-	logout(request)
+	try:
+		cart = get_object_or_404(Cart, user=request.user)
+		cart.delete()
+	finally:
+		logout(request)
 	return redirect('main:index')
 
 

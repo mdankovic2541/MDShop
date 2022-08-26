@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from account.models import Account
 from django.db.models.signals import post_delete
@@ -6,6 +5,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 def uploadLocation(instance, type):
 	file_path = 'product/{type}/{title}-{brand}'.format(
@@ -96,12 +96,26 @@ class Product(models.Model):
 def submission_delete(sender, instance, **kwargs):
 	instance.image.delete(False)
 
+
 class Comment(models.Model):  
-	description = models.CharField(max_length=250)
-	product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='comments')
-	createdAt = models.DateTimeField(auto_now_add=True)
-	account = models.ForeignKey(Account,on_delete=models.CASCADE)
+	description				= models.CharField(max_length=250)
+	product					= models.ForeignKey(Product,on_delete=models.CASCADE, related_name='comments')
+	createdAt				= models.DateTimeField(auto_now_add=True)
+	account					= models.ForeignKey(Account,on_delete=models.CASCADE)
 
 	def __str__(self):
 	   return f'Comment:{self.description}'
 
+
+class Cart(models.Model):
+	user					= models.OneToOneField(Account, on_delete=models.CASCADE, null=False, blank=False, verbose_name='cart')
+	product					= models.ManyToManyField(Product)
+
+	def countProducts(self):
+		if self.product:
+			return self.product.count()
+		else:
+			return 0
+
+	def __str__(self):
+		return f'{self.user}\'s cart'

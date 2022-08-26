@@ -42,7 +42,11 @@
         <div class="d-flex align-items-center">
             <!-- Icon -->
             <a class="link-grayish me-3" href="#" style="text-decoration: none; color:#888888">
+                {% if request.user.cart %}
+                <i class="fa fa-cart-plus"></i>&nbsp; <b>CART ({{ request.user.cart.countProducts }})</b> &nbsp;
+                {% else %}
                 <i class="fa fa-cart-plus"></i>&nbsp; <b>CART</b> &nbsp;
+                {% endif %}
             </a>
 
 
