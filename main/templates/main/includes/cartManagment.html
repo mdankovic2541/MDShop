@@ -1,0 +1,48 @@
+<div class="col-4 text-cemter">
+    <button class="btn btn-outline-success" id="btnCartManage-{{ product.id }}"></button>
+</div>
+<script>
+    $(document).ready(function () {
+
+        manageCart();
+
+        function manageCart() {
+            let isInCart;
+            "{% for cartProduct in cart.product.all %}"
+            "{{ cartProduct }}" == "{{ product }}" ? isInCart = true : false;
+            "{% endfor %}"
+
+            if (isInCart) {
+                $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-succes").addClass("btn-outline-danger");
+                $("#btnCartManage-{{ product.id }}").html("Remove");
+            }
+            else {
+                $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-danger").addClass("btn-outline-succes");
+                $("#btnCartManage-{{ product.id }}").html("Add");
+            }
+
+            $("#btnCartManage-{{ product.id }}").click(function () {
+                $.ajax({
+                    url: "{% url 'main:manageCart' %}",
+                    type: "POST",
+                    data: {
+                        "id": "{{ product.id }}",
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    cache: false,
+                    dataType: "json",
+                    success: function () {
+                        isInCart = !isInCart;
+                        if (isInCart) {
+                            $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-succes").addClass("btn-outline-danger");
+                            $("#btnCartManage-{{ product.id }}").html("Remove");
+                        }
+                        else {
+                            $("#btnCartManage-{{ product.id }}").addClass("btn-outline-succes").removeClass("btn-outline-danger");
+                            $("#btnCartManage-{{ product.id }}").html("Add");
+                        }
+                    }
+                });
+            });
+        }
+    })</script>

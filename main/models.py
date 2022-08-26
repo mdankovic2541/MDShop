@@ -109,7 +109,7 @@ class Comment(models.Model):
 
 class Cart(models.Model):
 	user					= models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='cart')
-	product					= models.ManyToManyField(Product)
+	product					= models.ManyToManyField(Product, related_name='products')
 
 	def countProducts(self):
 		if self.product:

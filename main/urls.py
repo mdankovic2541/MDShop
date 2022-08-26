@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     addBrandView,
     brandsView,
+    cartManagment,
     createCommentView,
     deleteCommentView,
     editProductView,
@@ -39,4 +40,5 @@ urlpatterns = [
     path('products/<int:brandId>', brandedClothesView, name='productsOfBrand'),
 
     path('create_brand', addBrandView, name='addBrand'),
+    path('cart_managment', cartManagment, name='manageCart'),
 ]

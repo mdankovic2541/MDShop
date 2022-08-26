@@ -1,3 +1,4 @@
+import json
 from math import prod
 from django.db.models import Q
 from django.shortcuts import render,redirect,get_object_or_404
@@ -13,10 +14,10 @@ from main.helpers import isAjax
 def indexView(request):
 	context = {}
 	products = Product.objects.all()
-	context = {
-		'products' : products,
-	}
-
+	if request.user.is_authenticated:
+		cart = get_object_or_404(Cart, user=request.user)
+		context['cart'] = cart
+	context['products'] = products
 	return render(request,"main/index.html",context)
 
 
@@ -233,3 +234,19 @@ def brandedClothesView(request, brandId):
 		'products': products,
 	}
 	return render(request, 'main/clothesWithBrand.html', context)
+
+
+def cartManagment(request):
+	if request.method == "POST" and isAjax(request):
+		productId = request.POST.get('id', None)
+		user = Account.objects.get(id=request.user.id)
+		product = Product.objects.get(id=productId)
+		cart = get_object_or_404(Cart, user=user)
+		if product in cart.product.all():
+			cart.product.remove(product)
+		else:
+			cart.product.add(product)
+		cart.save()
+		return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
+	else:
+		return redirect('main:index')

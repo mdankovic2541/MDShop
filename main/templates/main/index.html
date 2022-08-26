@@ -51,8 +51,16 @@ MDShop
                 <p> {{ product.getType }}</p>
                 <p> {{ product.getCollection }} of {{ product.year }}</p>
                 <p> <i>{{ product.brand }}</i> </p>
-                <a class="btnCardLeft" href="{% url 'main:productDetail' product.id %}">Add to cart</a>
-                <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">Details</a>
+                <div class="row">
+                    {% if request.user.is_authenticated %}
+                    {% include './includes/cartManagment.html' %}
+                    {% endif %}
+                    <div class="col-8 text-cemter">
+                        <a class="btnCardRight" href="{% url 'main:productDetail' product.id %}">
+                            Details
+                        </a>
+                    </div>
+                </div>
                 </ul>
             </div>
         </div>
