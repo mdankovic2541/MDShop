@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     addBrandView,
     brandsView,
-    cartManagment,
+    cartManagmentView,
+    cartView,
     createCommentView,
     deleteCommentView,
     editProductView,
@@ -40,5 +41,6 @@ urlpatterns = [
     path('products/<int:brandId>', brandedClothesView, name='productsOfBrand'),
 
     path('create_brand', addBrandView, name='addBrand'),
-    path('cart_managment', cartManagment, name='manageCart'),
+    path('cart_managment', cartManagmentView, name='manageCart'),
+    path('cart', cartView, name='cart'),
 ]

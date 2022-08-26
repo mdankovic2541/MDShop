@@ -236,7 +236,7 @@ def brandedClothesView(request, brandId):
 	return render(request, 'main/clothesWithBrand.html', context)
 
 
-def cartManagment(request):
+def cartManagmentView(request):
 	if request.method == "POST" and isAjax(request):
 		productId = request.POST.get('id', None)
 		user = Account.objects.get(id=request.user.id)
@@ -250,3 +250,11 @@ def cartManagment(request):
 		return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
 	else:
 		return redirect('main:index')
+
+
+def cartView(request):
+	cart = get_object_or_404(Cart, user=request.user)
+	context = {
+		'cart': cart,
+	}
+	return render(request, 'main/cart.html', context)

@@ -1,0 +1,45 @@
+{% load static %}
+<tr id="productRow-{{ product.id }}">
+    <td>
+        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="cartImage">
+    </td>
+    <td>{{ product.title }}</td>
+    <td>{{ product.getCollection }}</td>
+    <td>{{ product.year }}</td>
+    <td>{{ product.brand }}</td>
+    <td>{{ product.getSize }}</td>
+    <td>{{ product.getType }}</td>
+    <td>{{ product.price }} HRK</td>
+    <td>
+        <a class="btnCardRight" id="removeProduct-{{ product.id }}">Remove</a>
+    </td>
+</tr>
+<script>
+    $(document).ready(function () {
+        $("#productRow-{{ product.id }}").css("cursor", "pointer");
+        $("#productRow-{{ product.id }}").click(function () {
+            window.open("{% url 'main:productDetail' product.id %}", "_blank");
+        });
+
+        let table = $('#productTable').DataTable();
+        $("#removeProduct-{{ product.id }}").click(function () {
+            $.ajax({
+                url: "{% url 'main:manageCart' %}",
+                type: "POST",
+                data: {
+                    "id": "{{ product.id }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                cache: false,
+                dataType: "json",
+                success: function () {
+                    var oldPrice = $("#totalPrice").html();
+                    var price = "{{ product.price }}";
+                    $("#totalPrice").html((parseFloat(oldPrice) - parseFloat(price)).toFixed(2) + " HRK");
+                    table.row("#productRow-{{ product.id }}").remove().draw();
+                    table.draw();
+                }
+            });
+        });
+    });
+</script>

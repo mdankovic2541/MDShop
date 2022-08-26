@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+{% block title %}
+{{ request.user.username }}'s cart
+{% endblock%}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="col-12">
+        <div class="col-11 mx-auto my-5">
+            <table id="productTable" class="table table-light table-hover text-center align-middle">
+                <thead>
+                    <tr>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Collection</th>
+                        <th class="text-center">Year</th>
+                        <th class="text-center">Brand</th>
+                        <th class="text-center">Size</th>
+                        <th class="text-center">Type</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in cart.product.all %}
+                    {% include './includes/singleProductRow.html' %}
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Total: <span id="totalPrice"></span></th>
+                        <td></td>
+                    </tr>
+                    <script>
+                        let price = 0.0;
+                        "{% for product in cart.product.all %}"
+                        currPrice = parseFloat("{{ product.price }}");
+                        price += currPrice;
+                        "{% endfor %}"
+                        $("#totalPrice").html(price.toFixed(2) + " HRK");
+                    </script>
+                </tfoot>
+            </table>
+            <script>
+                $(document).ready(function () {
+                    $('.dataTables_length').addClass('bs-select');
+                    $("#example_filter>label>input").attr("placeholder", "Type here to search");
+                });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock%}

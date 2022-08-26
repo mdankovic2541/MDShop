@@ -115,7 +115,13 @@ class Cart(models.Model):
 		if self.product:
 			return self.product.count()
 		else:
-			return 0	
+			return 0
+	
+	def getTotalPrice(self):
+		price = 0
+		for product in self.product.all():
+			price += product.price
+		return price
 
 	def __str__(self):
 		return f'{self.user}\'s cart'
