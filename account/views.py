@@ -89,7 +89,10 @@ def logoutView(request):
 def editAccountView(request,accountId):
 	context = {}
 	account = get_object_or_404(Account, id=accountId)
-	address = get_object_or_404(Address, user=account)
+	try:
+		address = get_object_or_404(Address, user=account)
+	except:
+		address = Address.objects.create(user=account)
 	if request.POST:
 		form = EditAccountForm(request.POST or None, instance=account)
 		address = EditAddressForm(request.POST)
