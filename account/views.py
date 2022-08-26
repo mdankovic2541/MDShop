@@ -24,7 +24,7 @@ def registerView(request):
 			raw_password = form.cleaned_data.get('password2')
 			account = authenticate(email=email, password=raw_password)
 			try:
-				cart = get_object_or_404(Cart, user=account)
+				cart = Cart.objects.get(user=account)
 			except Cart.DoesNotExist:
 				cart = Cart.objects.create(user=account)
 			account.cart = cart 
@@ -60,7 +60,7 @@ def loginView(request):
 			user = authenticate(email=email, password=password)
 			if user:
 				try:
-					cart = get_object_or_404(Cart, user=user)
+					cart = Cart.objects.get(user=user)
 				except Cart.DoesNotExist:
 					cart = Cart.objects.create(user=user)
 				user.cart = cart 
