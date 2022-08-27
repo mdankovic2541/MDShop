@@ -18,7 +18,7 @@
             }
             else {
                 $("#btnCartManage-{{ product.id }}").removeClass("btn-outline-danger").addClass("btnBuy");
-                $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-cart-plus"></i>&nbsp; Buy now');
+                $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-circle-plus"></i>&nbsp; Buy now');
             }
 
             $("#btnCartManage-{{ product.id }}").click(function () {
@@ -39,7 +39,7 @@
                         }
                         else {
                             $("#btnCartManage-{{ product.id }}").addClass("btnBuy").removeClass("btn-outline-danger");
-                            $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-cart-plus"></i>&nbsp; Buy now');
+                            $("#btnCartManage-{{ product.id }}").html('<i class="fa-solid fa-circle-plus"></i>&nbsp; Buy now');
                         }
                     }
                 });
