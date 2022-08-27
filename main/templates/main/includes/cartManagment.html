@@ -9,7 +9,7 @@
         function manageCart() {
             let isInCart;
             "{% for cartProduct in cart.product.all %}"
-            "{{ cartProduct }}" == "{{ product }}" ? isInCart = true : false;
+            "{{ cartProduct.id }}" == "{{ product.id }}" ? isInCart = true : false;
             "{% endfor %}"
 
             if (isInCart) {
