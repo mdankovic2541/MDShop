@@ -52,4 +52,10 @@
             {% endif %}
         </div>
     </div>
+    <hr>
 </nav>
+{% if not request.user.is_authenticated %}
+<div class="sticky-top bg-warning text-center p-2">
+    <h5 class="text-center">You have to login in order to buy items and view comments!</h5>
+</div>
+{% endif %}
