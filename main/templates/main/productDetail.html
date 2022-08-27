@@ -27,20 +27,20 @@
         <div class="card">
             
 
-                <div class="col p-5 text-center ">
+                <div class="col p-2 text-center">
                     <p class="flag">{{product.getFlag}}</p>
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid border">
-                    <h2>{{ product.title }}</h2>
-                    <h5><b>{{ product.price }}kn</b></h5>
-                    <h5>{{ product.getSize }}</h5>
-                    <h5> {{ product.getType }}</h5>
-                    <h5> <i>{{ product.brand }}</i> </h5>
-                    <h5>{{ product.getCollection }}</h5>
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid border detailImg">
+                    <h2 class="p-2 text-uppercase">{{ product.title }}</h2>
+                    <h5 class="pb-2"><b>Price: {{ product.price }}kn</b></h5>
+                    <h5 class="pb-2">Size: {{ product.getSize }}</h5>
+                    <h5 class="pb-2">Gender: {{ product.getType }}</h5>
+                    <h5 class="pb-2">Brand: <i>{{ product.brand }}</i> </h5>
+                    <h5>Collection: {{ product.getCollection }}</h5>
                     
                 </div>
 
 
-                <div class="col p-5 text-center ">
+                <div class="col  text-center ">
                     <div class="card-body mx-auto">
                         
                         
@@ -49,7 +49,7 @@
                             {% include './includes/cartManagment.html' %}
                             {% endif %}
                             
-                            <a class="btn btn-outline-info" href="{% url 'main:index' %}"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;Back</a>
+                            <a class="btn btn-outline-info mt-2" href="{% url 'main:index' %}"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;Back</a>
                         </div>
                        
 
@@ -60,9 +60,18 @@
     </div>
 
 
-    <div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-dark text-start bg-white"
+    <div class="{% if request.user.is_authenticated %}col-3 {% else %}d-none {%endif%} pe-3 text-dark text-start bg-white" id="scrollIt"
         id="postComments">
         <div class="commentsBod ">
+            <div class="input-group mb-3 sticky-top">
+                <button class="btn btn-info btn-sm" onClick="clearTextarea()" id="resetCommentBtn">
+                    <i class="fa-solid fa-broom"></i>&nbsp;&nbsp;Clear
+                </button>
+                <input type="text" id="commText" class="form-control py-1 px-3" placeholder="Your comment" onkeyup="checkForWhitespace()"></input>
+                <button class="btn btn-info btn-sm" disabled id="addCommentBtn">
+                    <i class="fa-solid fa-comment-dots"></i>&nbsp;&nbsp;Submit
+                </button>
+            </div>
             <div id="allComments">
                 {% for comment in comments %}
                 <div class="row m-2 comment border" id="detailBlogComment-{{ comment.id }}">

@@ -62,6 +62,22 @@ li a:hover,
    transition: all 0.5s ease;
 }
 
+#scrollIt{
+   width: 50vh;
+   height: 113.5vh;
+   overflow-x: hidden;
+   overflow-y: auto;
+   text-align: center;
+   padding: 20px;
+}
+
+.detailImg{
+   height: fit-content;
+   width: fit-content;
+   max-width: 100vh;
+   max-height:  70vh;
+}
+
 .btnDetails {
    border: 2px solid #00b3ff;
    border-radius: 10px 10px 10px 10px;

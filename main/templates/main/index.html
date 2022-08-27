@@ -11,16 +11,19 @@ MDShop
 <div class="hero">
     <div class="container-fluid">
         <div class="hero-content p-5">
-
+            <!-- Maybe add table in db with many quotes and display different one every day? -->
             <div class="col-md-12">
-                <h3>Live fashion!</h3>
+                <h2>Live fashion!</h2>
             </div>
             <div class="col-md-12">
+                <h5>Quote of the day:</h5>
                 <h1>"Fashion is the armor to survive the reality of everyday life." - Bill Cunningham</h1>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -32,25 +35,23 @@ MDShop
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
         <div class="card text-center">
             <p class="flag">{{ product.getFlag }}</p>
-            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
+            <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid border-bottom">
             <div>
-                <h2>{{ product.title }}</h3>
-                <h4> {{ product.brand }}</h5>
+                <h2 class="p-2 text-uppercase">{{ product.title }}</h3>
+                    <h4 class=""> {{ product.brand }}</h5>
             </div>
             <div class="card-body mx-auto">
                 <p><b>{{ product.price }}kn</b></p>
                 <p>{{ product.getSize }} - {{ product.size }}</p>
                 <p> {{ product.getType }}</p>
+
                 <div class="row">
                     {% if request.user.is_authenticated %}
                     {% include './includes/cartManagment.html' %}
                     {% endif %}
-                    <a class="btnDetails" href="{% url 'main:productDetail' product.id %}">
-                        <i class="fa-solid fa-circle-info"></i>&nbsp;Info
-                    </a>
-                    
+                    <a class="btnDetails mt-2" href="{% url 'main:productDetail' product.id %}">
+                        <i class="fa-solid fa-circle-info"></i>&nbsp;Info</a>
                 </div>
-                </ul>
             </div>
         </div>
     </div>
