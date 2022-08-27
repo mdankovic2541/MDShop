@@ -9,10 +9,12 @@ Products
 <div class="container-fluid">
   <div class="col-12">
     <div class="col-11 mx-auto my-5 text-center">
+      <h3 class="pb-3"><b>Products</b></h3>
       <a class="btn btn-dark mb-4" href="{% url 'main:addProduct' %}"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add Product</a>
       <table class="table table-light table-hover text-center align-middle" id="productsTable">
         <thead>
           <tr>
+            <th class="text-center">Image</th>
             <th class="text-center">Title</th>
             <th class="text-center">Brand</th>
             <th class="text-center">Price</th>
@@ -21,7 +23,7 @@ Products
             <th class="text-center">Size</th>
             <th class="text-center">Collection</th>
             <th class="text-center">Flag</th>
-            <th class="text-center">Edit</th>
+            <th class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
