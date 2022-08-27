@@ -1,7 +1,7 @@
 {% load static %}
 <tr id="productRow-{{ product.id }}">
     <td>
-        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="cartImage">
+        <a href="{% url 'main:productDetail' product.id %}"><img src="{{ product.image.url }}" alt="{{ product.title }}" class="cartImage"></a>
     </td>
     <td>{{ product.title }}</td>
     <td>{{ product.getCollection }}</td>
@@ -16,11 +16,6 @@
 </tr>
 <script>
     $(document).ready(function () {
-        $("#productRow-{{ product.id }}").css("cursor", "pointer");
-        $("#productRow-{{ product.id }}").click(function () {
-            window.open("{% url 'main:productDetail' product.id %}", "_blank");
-        });
-
         let table = $('#productTable').DataTable();
         $("#removeProduct-{{ product.id }}").click(function () {
             $.ajax({
