@@ -5,6 +5,7 @@ from .views import (
     cartManagmentView,
     cartView,
     createCommentView,
+    deleteBrandView,
     deleteCommentView,
     editProductView,
     indexView,
@@ -39,7 +40,8 @@ urlpatterns = [
     path('products',productsView, name='products'),
     path('brands',brandsView, name='brands'),
     path('products/<int:brandId>', brandedClothesView, name='productsOfBrand'),
-
+    
+    path('delete_brand',deleteBrandView,name='deleteBrand'),
     path('create_brand', addBrandView, name='addBrand'),
     path('cart_managment', cartManagmentView, name='manageCart'),
     path('cart', cartView, name='cart'),

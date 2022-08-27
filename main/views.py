@@ -222,6 +222,20 @@ def addBrandView(request):
 	return render(request, 'main/addBrand.html', context)
 
 
+
+def deleteBrandView (request):
+	if request.method == "POST" and isAjax(request):
+		brandId = request.POST.get('id', None)
+		try:
+			brand = get_object_or_404(Brand, id=brandId)
+			brand.delete()
+			return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
+		except Account.DoesNotExist:
+			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
+
+
+
+
 def brandsView(request):
 	if not request.user.is_superuser:
 		return redirect('main:index')

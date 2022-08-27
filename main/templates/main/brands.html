@@ -7,53 +7,34 @@ Brands
 
 
 <div class="container-fluid">
-    <div class="row text-center">
-        <div class="mx-auto p-5 my-5" style="background-color:darkgrey;">
+    <div class="col-12">
+        <div class="col-11 mx-auto my-5 text-center">
             <h3 class="pb-3"><b>Brands</b></h3>
-            <a class="btn btn-outline-light mb-4" href="{% url 'main:addBrand' %}">Add Brand</a>
-            <div class="table-responsive">
-                <table class="table table-striped" id="tablica">
-                    <thead>
-                        <tr>
-                            <th scope="col">Brand Name</th>
-                            <th scope="col">Count</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for brand in brands %}
-                        <tr>
-                            <td>{{ brand.name}}</td>
-                            <td>
-                                {{ brand.getCount }}&nbsp;&nbsp;<a href="{% url 'main:productsOfBrand' brand.id %}"
-                                    class="btnCardRight">View</a>
-                            </td>
-                            <td>
-                                <a href="#" class="btnCardLeft">Edit</a>
-                                <a href="#" class="btnCardRight">Delete</a>
-                            </td>
+            <a class="btn btn-dark mb-4" href="{% url 'main:addBrand' %}"><i
+                    class="fa-solid fa-circle-plus"></i>&nbsp;Add Brand</a>
 
-                        </tr>
+            <table class="table table-light table-hover text-center align-middle" id="tablica">
+                <thead>
+                    <tr>
+                        <th scope="col">Brand Name</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for brand in brands %}
+                    {% include './includes/singleBrandRow.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <script>
+                $(document).ready(function () {
+                    $('.dataTables_length').addClass('bs-select');
+                    $("#tablica_filter>label>input").attr("placeholder", "Type here to search");
+                });
+            </script>
 
-                        {% endfor %}
-
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock%}

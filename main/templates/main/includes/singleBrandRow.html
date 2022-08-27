@@ -1,0 +1,34 @@
+{% load static %}
+<tr id="brandRow-{{ brand.id }}">
+    <td>{{ brand.name}}</td>
+    <td>
+        {{ brand.getCount }}&nbsp;&nbsp;<a href="{% url 'main:productsOfBrand' brand.id %}"
+            class="btn btn-outline-dark"><i class="fa-solid fa-eye"></i>&nbsp;View</a>
+    </td>
+    <td>
+        <a class="btn btn-outline-danger" id="removeBrand-{{ brand.id }}"><i class="fa-solid fa-ban text-dark"></i></a>
+    </td>
+</tr>
+<script>
+    $(document).ready(function () {
+        let table = $('#tablica').DataTable();
+        $("#removeBrand-{{ brand.id }}").click(function () {
+            $.ajax({
+                url: "{% url 'main:deleteBrand' %}",
+                type: "POST",
+                data: {
+                    "id": "{{ brand.id }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                cache: false,
+                dataType: "json",
+                success: function () {
+                    table.row("#brandRow-{{ brand.id }}").remove().draw();
+                    table.draw();
+                }
+            });
+        });
+    });
+</script>
+
+

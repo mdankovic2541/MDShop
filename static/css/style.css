@@ -178,34 +178,41 @@ li a:hover,
 
 /* ? DATATABLES */
 #example_wrapper,
-#productTable_wrapper {
+#productsTable_wrapper,
+#tablica_wrapper {
    background-color: rgba(255, 255, 255, .3);
    padding: 1% 1%;
 }
 
 #example_length,
-#productTable_length {
+#productsTable_length,
+#tablica_length
+ {
    color: #000;
    margin: 1%;
 }
 
 #example_filter,
-#productTable_filter {
+#productsTable_filter,
+#tablica_filter {
    margin: 1%;
 }
 
 #example_filter>label>input,
-#productTable_filter>label>input {
+#productsTable_filter>label>input,
+#tablica_filter>label>input {
    margin-left: 5px;
 }
 
 #example_info,
-#productTable_info {
+#productsTable_info,
+#tablica_info {
    color: #000;
 }
 
 #example_paginate a,
-#productTable_paginate a {
+#productsTable_paginate a,
+#tablica_paginate a {
    padding: 8px;
    border: 1px solid #000;
    text-decoration: none;
