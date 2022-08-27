@@ -1,17 +1,13 @@
 {% load static %}
-<tr id="productRow-{{ productid }}">
-    <tr>
-        <td>{{ product.title}}</td>
-        <td>{{ product.brand}}</td>
-        <td>{{ product.price}} kn</td>
-        <td>{{ product.getType}}</td>
-        <td>{{ product.quantity}}</td>
-        <td>{{ product.getSize}}</td>
-        <td>{{ product.getCollection}}</td>
-        <td>{{ product.getFlag}}</td>
-        
-      
-      
+<tr id="productRow-{{ product.id }}">
+    <td>{{ product.title}}</td>
+    <td>{{ product.brand}}</td>
+    <td>{{ product.price}} kn</td>
+    <td>{{ product.getType}}</td>
+    <td>{{ product.quantity}}</td>
+    <td>{{ product.getSize}}</td>
+    <td>{{ product.getCollection}}</td>
+    <td>{{ product.getFlag}}</td>
     <td>
         <a href="{% url 'main:editProduct' product.id %}" class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></a>
         <a class="btn btn-outline-danger" id="removeProduct-{{ product.id }}"><i class="fa-solid fa-ban text-dark"></i></a>
@@ -19,7 +15,7 @@
 </tr>
 <script>
     $(document).ready(function () {
-        let table = $('#example').DataTable();
+        let table = $('#productsTable').DataTable();
         $("#removeProduct-{{ product.id }}").click(function () {
             $.ajax({
                 url: "{% url 'main:deleteProduct' %}",
