@@ -37,6 +37,7 @@ class Brand(models.Model):
 	def getCount(self):
 		return self.brands.count()
 
+	# TODO: Add these to others that need to be serialized
 	def to_dict_json(self):
 		return {
 			'pk': self.pk,
