@@ -59,12 +59,12 @@
                             { "data": "name" },
                             {
                                 data: "count", render: function (data, type, row, meta) {
-                                    return '<button onclick=visitBrand(' + row["pk"] + ') class="btn btn-outline-dark"><i class="fa-solid fa-eye"></i>&nbsp;View&nbsp;[' + row["count"] + ']</button>'
+                                    return '<button onclick=visitBrand(' + row["pk"] + ') class="btn btn-outline-dark btn-sm"><i class="fa-solid fa-eye"></i>&nbsp;View&nbsp;[' + row["count"] + ']</button>'
                                 }
                             },
                             {
                                 data: "id", render: function (data, type, row, meta) {
-                                    return '<button onclick=deleteBrand(' + row["pk"] + ') class="btn btn-outline-danger" id="removeBrand-' + row["pk"] + '"><i class="fa-solid fa-ban text-dark"></i>&nbsp;</button>';
+                                    return '<button onclick=deleteBrand(' + row["pk"] + ') class="btn btn-outline-danger btn-sm" id="removeBrand-' + row["pk"] + '"><i class="fa-solid fa-ban"></i></button>';
                                 }
                             }
                         ],

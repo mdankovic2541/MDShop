@@ -99,6 +99,21 @@ class Product(models.Model):
 	def getSize(self):
 		return self.get_size_display()
 
+	def to_dict_json(self):
+		return {
+			'pk': self.pk,
+			'title': self.title,
+			'quantity': self.quantity,
+			'collection': self.getCollection(),
+			'year': self.year,
+			'brand': self.brand.name,
+			'size': self.getSize(),
+			'type': self.getType(),
+			'price': self.price,
+			'flag': self.getFlag(),
+			'image': self.image.url
+		}
+
 
 @receiver(post_delete, sender=Product)
 def submission_delete(sender, instance, **kwargs):
@@ -134,3 +149,10 @@ class Cart(models.Model):
 	def __str__(self):
 		return f'{self.user}\'s cart'
 	
+class Receipt(models.Model):
+	cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+	time = models.DateTimeField(auto_now_add=True)
+	account = models.ForeignKey(Account, on_delete=models.CASCADE,verbose_name='receipt')
+
+	def __str__(self):
+		return f'{self.account.username}\'s receipt | {self.time}'

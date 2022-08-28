@@ -91,13 +91,8 @@ def deleteCommentView(request,commentId):
 def productsView(request):
 	if not request.user.is_superuser:
 		return redirect('main:index')
-	context = {}
-	products = Product.objects.all()
-	context = {
-		'products' : products,
-
-	}
-	return render(request,"main/products.html",context)
+	
+	return render(request,"main/products.html",{})
 
 
 def editProductView(request,productId):
@@ -129,6 +124,7 @@ def editProductView(request,productId):
 		'product': product,
 	}
 	return render(request, 'main/editProduct.html', context)
+
 
 
 # def deleteProductView(request,productId):
@@ -172,6 +168,28 @@ def productDetailView(request,productId):
 	}
 	
 	return render(request, 'main/productDetail.html', context)
+
+
+def productsJsonView(request):
+	products = Product.objects.all()
+	total = products.count()	
+	_start = request.GET.get('start')
+	_length = request.GET.get('length')
+	if _start and _length:
+		start = int(_start)
+		length = int(_length)
+		page = math.ceil(start / length) + 1
+		per_page = length
+		products = products[start:start + length]
+	data = [product.to_dict_json() for product in products]
+	response = {
+		'data': data,
+		'page': page,  # [opcional]
+		'per_page': per_page,  # [opcional]
+		'recordsTotal': total,
+		'recordsFiltered': total,
+	}
+	return JsonResponse(response)
 
 
 def menswearView(request):
@@ -299,3 +317,7 @@ def cartView(request):
 		'cart': cart,
 	}
 	return render(request, 'main/cart.html', context)
+
+
+def checkoutView(request):
+	return render(request, 'main/checkout.html', {})
