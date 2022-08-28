@@ -20,7 +20,8 @@ from .views import (
     deleteProductView,
     brandedClothesView,
     brandsJsonView,
-    checkoutView
+    checkoutView,
+    checkoutFinalView
 )
 
 
@@ -55,6 +56,7 @@ urlpatterns = [
     path('cart_managment', cartManagmentView, name='manageCart'),
     path('cart', cartView, name='cart'),
     path('checkout',checkoutView, name='checkout'),
+    path('checkoutFinal',checkoutFinalView, name='checkoutFinal'),
 
     path('brands',brandsView, name='brands'),
     path('brands/json/', brandsJsonView, name='brandsJson'),

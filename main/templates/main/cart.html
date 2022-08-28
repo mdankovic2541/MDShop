@@ -38,9 +38,11 @@
                         <td></td>
                         <th>Total: <span id="totalPrice"></span></th>
                         <td>
-                            <button type="button" class="btn btn-success {% if not cart.product.all %} disabled {% endif %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button"
+                                class="btn btn-success {% if not cart.product.all %} disabled {% endif %}"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="fa-solid fa-cash-register"></i>&nbsp;Go to checkout
-                              </button>
+                            </button>
                         </td>
                     </tr>
                     <script>
@@ -63,27 +65,96 @@
     </div>
 </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-                  Receipt No: {{ request.session.session_key }}
-                  User: {{ request.user}}
-                  
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Receipt</b> [<span class="text-muted">{{ request.session.session_key }}</span>]</h5>
             </div>
-          </div>
+            <div class="modal-body row align-items-center">
+                <div class="col-6 text-center">
+                    <b>Total price:</b> {{ cart.getTotalPrice }} HRK
+                </div>
+                <div class="col-6 text-center">
+                    <b>User:</b> {{ request.user.username }}
+                </div>
+                <div class="col-10 mx-auto text-center">
+                    <hr>
+                </div>
+                <div class="col-10 mx-auto text-center mb-3">
+                    <span class="h5">Address</span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a
+                            class="btn btn-outline-warning btn-sm"
+                            href="{% url 'account:editAccount' request.user.id %}"><i
+                                class="fa-solid fa-pen-to-square"></i></a></span>
+                </div>
+                <div class="col-12 text-center">
+                    <span id="userAddress">{{ request.user.address }}</span>
+                </div>
+                <div class="col-10 mx-auto text-center mb-3">
+                    <hr>
+                    <h5>Deliver Purchase</h5>
+                </div>
+                <div class="col-10 mx-auto text-center">
+                    <div class="input-group">
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="addressRb" checked>
+                            <label class="form-check-label" for="addressRb">To Address</label>
+                        </div>
+                        <div class="form-check mx-auto">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="localStoreRb">
+                            <label class="form-check-label" for="localStoreRb">To Local Store</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 mx-auto text-center d-none p-2 mt-3 text-warning" id="returning">
+                    <p>Returning to main page in 3 seconds...</p>
+                </div>
+                <script>
+                    $('input:radio').change(function () {
+                        if ($("#addressRb").is(":checked")) {
+                            $("#userAddress").css("text-decoration", "none").removeClass("text-muted");
+                            $("#pod").removeClass("d-none").addClass("d-block");
+                        }
+                        else {
+                            $("#userAddress").css("text-decoration", "line-through").addClass("text-muted");
+                            $("#pod").addClass("d-none").removeClass("d-block");
+                        }
+                    });
+                </script>
+            </div>
+            <div class="modal-footer">
+                <div class="mt-3 text-danger me-auto" id="pod">* payment on delivery.</div>
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="confirmPurchase">Confirm purchase</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Checkout</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
+<script>
+    $('#confirmPurchase').click(function(){
+        $.ajax({
+            url: "{% url 'main:checkoutFinal' %}",
+            type: "POST",
+            data: {
+                "id": "{{ cart.id }}",
+                "receiptNumber": "{{ request.session.session_key }}" ,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+                    setTimeout(function () {
+                        window.location = "{% url 'main:index' %}";
+                    }, 3000);   
+                    $(this).html("Purchased");
+                    $('#returning').removeClass("d-none").addClass("d-block");     
+            }
+        });
+
+        
+    })
+  
+    </script>
 {% endblock%}

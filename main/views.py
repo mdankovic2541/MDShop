@@ -7,7 +7,7 @@ from django.http.response import Http404
 from django.http import HttpResponse, JsonResponse
 from account.models import Account
 from main.forms import CreateProductForm, EditProductForm, CreateBrandForm
-from .models import Brand, Cart, Product, Comment
+from .models import Brand, Cart, Product, Comment, Receipt
 from main.helpers import isAjax
 
 # Create your views here.
@@ -321,3 +321,21 @@ def cartView(request):
 
 def checkoutView(request):
 	return render(request, 'main/checkout.html', {})
+
+
+def checkoutFinalView(request):
+	if request.method == "POST":
+		cartId = request.POST.get('id', None)
+		receiptNumber =  request.POST.get('receiptNumber', None)
+		cart = get_object_or_404(Cart, id=cartId)
+		for product in cart.product.all():
+			cart.product.remove(product)
+		
+		cart.save()
+		receipt = Receipt.objects.create(cart=cart, account=request.user, receiptNumber=receiptNumber)
+		receipt.save()
+		return JsonResponse({"good" : "True"})
+
+def receiptView(request):
+	context = {}	
+	receipts = Receipt.objects.filter(account=request.user).all()
