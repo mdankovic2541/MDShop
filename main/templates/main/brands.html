@@ -1,19 +1,14 @@
 {% extends 'main/base.html' %}
-{% block title %}
-Brands
-{% endblock%}
+{% block title %}Brands{% endblock%}
 
 {% block content %}
-
-
 <div class="container-fluid">
     <div class="col-12">
         <div class="col-11 mx-auto my-5 text-center">
             <h3 class="pb-3"><b>Brands</b></h3>
-            <a class="btn btn-dark mb-4" href="{% url 'main:addBrand' %}"><i
-                    class="fa-solid fa-circle-plus"></i>&nbsp;Add Brand</a>
+            <a class="btn btn-dark mb-4" href="{% url 'main:addBrand' %}"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add Brand</a>
 
-            <table class="table table-light table-hover text-center align-middle" id="tablica">
+            <table class="table table-light table-hover text-center align-middle" id="brandsTable">
                 <thead>
                     <tr>
                         <th scope="col">Brand Name</th>
@@ -21,19 +16,61 @@ Brands
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {% for brand in brands %}
-                    {% include './includes/singleBrandRow.html' %}
-                    {% endfor %}
-                </tbody>
             </table>
             <script>
+                let table;
+
+                function deleteBrand(data) {
+                    $.ajax({
+                        url: "{% url 'main:deleteBrand' %}",
+                        type: "POST",
+                        data: {
+                            "id": data,
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        },
+                        cache: false,
+                        dataType: "json",
+                        success: function () {
+                            table.row("#brandRow-{{ brand.id }}").remove().draw();
+                            table.draw();
+                        }
+                    });
+                }
+
+                String.prototype.replaceAt = function (index, replacement) {
+                    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+                }
+
+                function visitBrand(data) { window.location.assign("/products/" + data); }
+
                 $(document).ready(function () {
-                    $('.dataTables_length').addClass('bs-select');
-                    $("#tablica_filter>label>input").attr("placeholder", "Type here to search");
+                    table = $('#brandsTable').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            type: "GET",
+                            datatype: 'json',
+                            url: 'brands/json',
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        columns: [
+                            { "data": "name" },
+                            {
+                                data: "count", render: function (data, type, row, meta) {
+                                    return '<button onclick=visitBrand(' + row["pk"] + ') class="btn btn-outline-dark"><i class="fa-solid fa-eye"></i>&nbsp;View&nbsp;[' + row["count"] + ']</button>'
+                                }
+                            },
+                            {
+                                data: "id", render: function (data, type, row, meta) {
+                                    return '<button onclick=deleteBrand(' + row["pk"] + ') class="btn btn-outline-danger" id="removeBrand-' + row["pk"] + '"><i class="fa-solid fa-ban text-dark"></i>&nbsp;</button>';
+                                }
+                            }
+                        ],
+                    });
                 });
             </script>
-
         </div>
     </div>
 </div>

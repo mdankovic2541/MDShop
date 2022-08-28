@@ -1,5 +1,6 @@
 import json
 from math import prod
+import math
 from django.db.models import Q
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http.response import Http404
@@ -234,18 +235,34 @@ def deleteBrandView (request):
 			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
 
 
-
-
+# TODO: Refactor others to work with DataTables
 def brandsView(request):
 	if not request.user.is_superuser:
 		return redirect('main:index')
-	context = {}
-	brands = Brand.objects.all()
-	context = {
-		'brands' : brands,
+	return render(request, "main/brands.html", {})
 
+
+def brandsJsonView(request):
+	brands = Brand.objects.all()
+	total = brands.count()	
+	_start = request.GET.get('start')
+	_length = request.GET.get('length')
+	if _start and _length:
+		start = int(_start)
+		length = int(_length)
+		page = math.ceil(start / length) + 1
+		per_page = length
+		brands = brands[start:start + length]
+	data = [brand.to_dict_json() for brand in brands]
+	response = {
+		'data': data,
+		'page': page,  # [opcional]
+		'per_page': per_page,  # [opcional]
+		'recordsTotal': total,
+		'recordsFiltered': total,
 	}
-	return render(request,"main/brands.html",context)
+	return JsonResponse(response)
+# TODO: End todo.
 
 
 def brandedClothesView(request, brandId):

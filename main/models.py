@@ -37,6 +37,13 @@ class Brand(models.Model):
 	def getCount(self):
 		return self.brands.count()
 
+	def to_dict_json(self):
+		return {
+			'pk': self.pk,
+			'name': self.name,
+			'count': self.getCount()
+		}
+
 
 class Product(models.Model):
 	class ClothesCollection(models.TextChoices):
