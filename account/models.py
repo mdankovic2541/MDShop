@@ -56,6 +56,17 @@ class Account(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return True
 
+	def to_dict_json(self):
+		return {
+			'pk': self.pk,
+			'first_name': self.first_name,
+			'last_name': self.last_name,
+			'email': self.email,
+			'username': self.username,
+			'is_admin': self.is_admin,
+			'address': self.address.to_dict_json(),
+		}
+
 
 class Address(models.Model):
 	user						= models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True, related_name='address')
@@ -71,14 +82,9 @@ class Address(models.Model):
 	def to_dict_json(self):
 		return {
 			'pk': self.pk,
-			'user_first_name': self.user.first_name,
-			'user_last_name': self.user.last_name,
-			'email': self.user.email,
-			'username': self.user.username,
 			'street_name': self.street_name,
 			'street_number': self.street_number,
 			'city': self.city,
-			'is_admin': self.is_admin,
 			'postal_code': self.postal_code,
-			'country': self.country		
+			'country': self.country
 		}
