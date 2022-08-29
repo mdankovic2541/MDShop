@@ -133,7 +133,8 @@ def editProductView(request,productId):
 			'size': product.size,
 			'price' : product.price,
 			'flag': product.flag,
-			'image': product.image,
+			'front_image': product.front_image,
+			'back_image': product.back_image,
 		}
 	)
 	context = {
@@ -212,12 +213,12 @@ def productsJsonView(request):
 def menswearView(request):
 	context = {}
 	products = Product.objects.filter(Q(type__contains='M') | Q(type__contains='U')).all()
-	brands = Brand.objects.filter(Q(brands__type__contains='M') | Q(brands__type__contains='U')).all()
-	sizes = Product.objects.values_list('size',flat=True)
+	brands = list(set(Brand.objects.filter(Q(brands__type__contains='M') | Q(brands__type__contains='U')).all()))
+	sizes = list(set(Product.objects.values_list('size',flat=True)))
 	context = {
 		'products' : products,
 		'nav':'Men',
-		'brands': list(set(brands)),
+		'brands': brands,
 		'sizes' : sizes,
 		
 
