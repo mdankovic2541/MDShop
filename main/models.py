@@ -150,9 +150,10 @@ class Cart(models.Model):
 		return f'{self.user}\'s cart'
 	
 class Receipt(models.Model):
-	cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+	cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
 	time = models.DateTimeField(auto_now_add=True)
-	account = models.ForeignKey(Account, on_delete=models.CASCADE,verbose_name='receipt')
+	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='receipt')
+	receiptNumber = models.CharField(max_length=255, null=False, blank=False)
 
 	def __str__(self):
 		return f'{self.account.username}\'s receipt | {self.time}'
