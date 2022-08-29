@@ -65,11 +65,18 @@
 							console.log(data);
 						},
 						columns: [
-							{ "data": "user_first_name" },
-							{ "data": "user_last_name" },
+							{ "data": "first_name" },
+							{ "data": "last_name" },
 							{ "data": "username" },
 							{ "data": "email" },
-							{ "data": "is_admin" },
+							{ data: "is_admin", render: function (data, type, row, meta) {
+									if( row["is_admin"] == true) {
+										return '<i class="fa-solid fa-circle-check text-success"></i>';
+									}else {
+										return '<i class="fa-solid fa-circle-xmark text-danger"></i>'
+									}
+										
+								}},
 							{ "data": "address.street_name" },
 							{ "data": "address.street_number" },
 							{ "data": "address.city" },

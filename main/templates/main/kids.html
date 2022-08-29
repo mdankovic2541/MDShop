@@ -7,15 +7,15 @@
 
 
 
-
 <div class="row col-md-12">
     {% for product in products %}
     
     <div class="col-9 col-md-6  col-lg-3 mt-2 mx-auto p-5">
         <div class="card text-center">
-            {% if  product.getFlag != 'NONE'%}
+            {% if  product.getFlag != 'NONE' %}
             <p class="flag">{{ product.getFlag }}</p>
             {%else%}
+            <p class="hidden p-3"></p>
             {%endif%}
             <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid">
             <div>
@@ -30,7 +30,7 @@
                     {% if request.user.is_authenticated %}
                     {% include './includes/cartManagment.html' %}
                     {% endif %}
-                    <a class="btnDetails" href="{% url 'main:productDetail' product.id %}">
+                    <a class="btnDetails mt-2" href="{% url 'main:productDetail' product.id %}">
                         <i class="fa-solid fa-circle-info"></i>&nbsp;Info
                     </a>
                     
@@ -42,8 +42,6 @@
     
     {% endfor %}
 </div>
-
-
 
 
 

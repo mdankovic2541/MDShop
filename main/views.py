@@ -55,7 +55,7 @@ def usersView(request):
 	return render(request,"main/users.html",{})
 
 def usersJsonView(request):
-	users = Address.objects.all()
+	users = Account.objects.all()
 	total = users.count()	
 	_start = request.GET.get('start')
 	_length = request.GET.get('length')
@@ -212,9 +212,14 @@ def productsJsonView(request):
 def menswearView(request):
 	context = {}
 	products = Product.objects.filter(Q(type__contains='M') | Q(type__contains='U')).all()
+	brands = Brand.objects.filter(Q(brands__type__contains='M') | Q(brands__type__contains='U')).all()
+	sizes = Product.objects.values_list('size',flat=True)
 	context = {
 		'products' : products,
 		'nav':'Men',
+		'brands': list(set(brands)),
+		'sizes' : sizes,
+		
 
 	}
 
@@ -347,7 +352,8 @@ def checkoutFinalView(request):
 		cart = get_object_or_404(Cart, id=cartId)
 		for product in cart.product.all():
 			cart.product.remove(product)
-		
+			product.quantity -= 1
+			product.save()
 		cart.save()
 		receipt = Receipt.objects.create(cart=cart, account=request.user, receiptNumber=receiptNumber)
 		receipt.save()

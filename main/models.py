@@ -65,11 +65,12 @@ class Product(models.Model):
 	
 	class ClothesSize(models.TextChoices):
 		EXTRA_SMALL = 'XS', _('Extra small')
-		SMALL = 'RS', _('Small')
-		MEDIUM = 'RM', _('Medium')
-		LARGE = 'RL', _('Large')
+		SMALL = 'S', _('Small')
+		MEDIUM = 'M', _('Medium')
+		LARGE = 'L', _('Large')
 		EXTRA_LARGE = 'XL', _('Extra large')
-		EXTRA_EXTRA_LARGE = '2L', _('Extra extra large')
+		EXTRA_EXTRA_LARGE = 'XXL', _('Extra extra large')
+		
 	
 	quantity				= models.IntegerField(null=False,blank=False)
 	title					= models.CharField(null=False,blank=False,max_length=80)
@@ -77,7 +78,7 @@ class Product(models.Model):
 	year					= models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)	
 	brand					= models.ForeignKey(Brand, on_delete=models.CASCADE, null=False, blank=False, related_name='brands')
 	isBranded				= models.BooleanField()
-	size					= models.CharField(choices=ClothesSize.choices, max_length=2, default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
+	size					= models.CharField(choices=ClothesSize.choices, max_length=3, default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
 	type					= models.CharField(max_length=1, choices=ClothesType.choices, default=ClothesType.UNISEX, null=False, blank=False)
 	price					= models.DecimalField(max_digits=6, decimal_places=2)	
 	flag					= models.CharField(max_length=1, choices=ClothesFlag.choices, default=ClothesFlag.NEW, null=False, blank=False)
