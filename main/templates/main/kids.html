@@ -7,47 +7,70 @@
 
 
 
-<div class="row col-md-12">
-    {% for product in products %}
+<div class="row ">
+    <div class="col-md-3">
+        <div class="bg-white">
+            <select class="form-select">
+                <option value="-1" selected disabled>Select a brand</option>
+                {% for brand in brands %}
+                <option value="{{ brand.id }}">{{ brand }}</option>
+                {%endfor%}
+            </select>
+            <select class="form-select">
+                <option value="-1" selected disabled>Select a size</option>
+                {% for size in sizes %}
+                <option value="{{ size.id }}">{{ size }}</option>
+                {%endfor%}
+            </select>
 
-    <div class="col-9 col-md-6  col-lg-3 mt-2 mx-auto p-5">
-        <div class="card text-center">
-            {% if product.getFlag != 'NONE' %}
-            <p class="flag">{{ product.getFlag }}</p>
-            {%else%}
-            <p class="hidden p-3"></p>
-            {%endif%}
-            <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-fluid border-bottom">
-            <script>
-                $("#image-{{ product.id }}").hover(function () {
-                    $(this).attr("src", "{{ product.back_image.url }}");
-                }, function () {
-                    $(this).attr("src", "{{ product.front_image.url }}");
-                });
-            </script>
-            <div>
-                <h2>{{ product.title }}</h3>
-                    <h4> {{ product.brand }}</h5>
-            </div>
-            <div class="card-body mx-auto">
-                <p><b>{{ product.price }}kn</b></p>
-                <p>{{ product.getSize }} - {{ product.size }}</p>
-                <p> {{ product.getType }}</p>
-                <div class="row">
-                    {% if request.user.is_authenticated %}
-                    {% include './includes/cartManagment.html' %}
-                    {% endif %}
-                    <a class="btnDetails mt-2" href="{% url 'main:productDetail' product.id %}">
-                        <i class="fa-solid fa-circle-info"></i>&nbsp;Info
-                    </a>
+        </div>
 
+
+    </div>
+    <div class="row col-md-9">
+
+        {% for product in products %}
+
+        <div class="col-9 col-md-6  col-lg-3 mt-2 mx-auto p-5">
+            <div class="card text-center">
+                {% if product.getFlag != 'NONE' %}
+                <p class="flag">{{ product.getFlag }}</p>
+                {%else%}
+                <p class="hidden p-3"></p>
+                {%endif%}
+                <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-fluid border-bottom">
+                <script>
+                    $("#image-{{ product.id }}").hover(function () {
+                        $(this).attr("src", "{{ product.back_image.url }}");
+                    }, function () {
+                        $(this).attr("src", "{{ product.front_image.url }}");
+                    });
+                </script>
+                <div>
+                    <h2>{{ product.title }}</h3>
+                        <h4> {{ product.brand }}</h5>
                 </div>
-                </ul>
+                <div class="card-body mx-auto">
+                    <p><b>{{ product.price }}kn</b></p>
+                    <p>{{ product.getSize }} - {{ product.size }}</p>
+                    <p> {{ product.getType }}</p>
+                    <div class="row">
+                        {% if request.user.is_authenticated %}
+                        {% include './includes/cartManagment.html' %}
+                        {% endif %}
+                        <a class="btnDetails mt-2" href="{% url 'main:productDetail' product.id %}">
+                            <i class="fa-solid fa-circle-info"></i>&nbsp;Info
+                        </a>
+
+                    </div>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        {% endfor %}
     </div>
 
-    {% endfor %}
 </div>
 
 

@@ -40,7 +40,7 @@ Products of {{ brand.name }}
                             <td>{{ product.collection}}</td>
                             <td>{{ product.flag}}</td>
                             <td><a href="{% url 'main:editProduct' product.id %}" class="btnCardLeft">Edit</a>
-                                <a href="{% url 'main:deleteProduct' product.id %}" class="btnCardRight">Delete</a>
+                                <a href="{% url 'main:deleteProduct' %}" class="btnCardRight">Delete</a>
                             </td>
 
                         </tr>

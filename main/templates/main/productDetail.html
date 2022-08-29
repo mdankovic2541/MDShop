@@ -29,7 +29,14 @@
 
             <div class="col p-2 text-center">
                 <p class="flag">{{product.getFlag}}</p>
-                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="img-fluid border detailImg">
+               <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-fluid border-bottom detailImg">
+            <script>
+                $("#image-{{ product.id }}").hover(function () {
+                    $(this).attr("src", "{{ product.back_image.url }}");
+                }, function () {
+                    $(this).attr("src", "{{ product.front_image.url }}");
+                });
+            </script>
                 <h2 class="p-2 text-uppercase">{{ product.title }}</h2>
                 <h5 class="pb-2"><b>Price: {{ product.price }}kn</b></h5>
                 <h5 class="pb-2">Size: {{ product.getSize }}</h5>
