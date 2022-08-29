@@ -1,3 +1,4 @@
+from audioop import add
 import json
 from math import prod
 import math
@@ -5,7 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http.response import Http404
 from django.http import HttpResponse, JsonResponse
-from account.models import Account
+from account.models import Account, Address
 from main.forms import CreateProductForm, EditProductForm, CreateBrandForm
 from .models import Brand, Cart, Product, Comment, Receipt
 from main.helpers import isAjax
@@ -50,13 +51,29 @@ def addProductView(request, brandId=None):
 def usersView(request):
 	if not request.user.is_superuser:
 		return redirect('main:index')
-	context = {}
-	accounts = Account.objects.all()
-	context = {
-		'accounts' : accounts,
+	
+	return render(request,"main/users.html",{})
 
+def usersJsonView(request):
+	users = Address.objects.all()
+	total = users.count()	
+	_start = request.GET.get('start')
+	_length = request.GET.get('length')
+	if _start and _length:
+		start = int(_start)
+		length = int(_length)
+		page = math.ceil(start / length) + 1
+		per_page = length
+		users = users[start:start + length]
+	data = [user.to_dict_json() for user in users]
+	response = {
+		'data': data,
+		'page': page,  # [opcional]
+		'per_page': per_page,  # [opcional]
+		'recordsTotal': total,
+		'recordsFiltered': total,
 	}
-	return render(request,"main/users.html",context)
+	return JsonResponse(response)
 
 
 def createCommentView(request, productId):

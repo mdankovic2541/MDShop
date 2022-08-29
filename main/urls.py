@@ -21,7 +21,8 @@ from .views import (
     brandedClothesView,
     brandsJsonView,
     checkoutView,
-    checkoutFinalView
+    checkoutFinalView,
+    usersJsonView
 )
 
 
@@ -45,6 +46,7 @@ urlpatterns = [
     path('kidswear',kidswearView, name='kidswear'),
 
     path('users',usersView, name='users'),
+    path('users/json/',usersJsonView, name='usersJson'),
 
     path('products',productsView, name='products'),
     path('products/json/', productsJsonView, name='productsJson'),

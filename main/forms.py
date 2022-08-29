@@ -85,6 +85,15 @@ class CreateProductForm(forms.ModelForm):
 
 
 class EditProductForm(forms.ModelForm):
+	year = forms.TypedChoiceField(coerce=int, choices=year_choices, widget=forms.Select(attrs={
+				'class': 'form-control',
+			}), initial=current_year)
+	brand = forms.ModelChoiceField(queryset= Brand.objects.all(),  widget=forms.Select(attrs={				
+		    	'class': 'form-control',
+		    	'name': 'Brand',
+		    	'id': 'id_brand',
+		    	'required': True,
+	}), empty_label='Pick a Brand')
 	class Meta:
 		model = Product
 		fields = ['title', 'quantity', 'collection', 'year', 'brand','type','size','price','flag', 'image']

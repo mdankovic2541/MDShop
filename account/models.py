@@ -67,3 +67,18 @@ class Address(models.Model):
 
 	def __str__(self):
 		return f'{self.street_name} {self.street_number}, {self.city} {self.postal_code}, {self.country}'
+
+	def to_dict_json(self):
+		return {
+			'pk': self.pk,
+			'user_first_name': self.user.first_name,
+			'user_last_name': self.user.last_name,
+			'email': self.user.email,
+			'username': self.user.username,
+			'street_name': self.street_name,
+			'street_number': self.street_number,
+			'city': self.city,
+			'is_admin': self.is_admin,
+			'postal_code': self.postal_code,
+			'country': self.country		
+		}

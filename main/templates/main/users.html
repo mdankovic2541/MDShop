@@ -1,7 +1,5 @@
 {% extends 'main/base.html' %}
-{% block title %}
-Users
-{% endblock%}
+{% block title %}Users{% endblock%}
 
 {% block content %}
 
@@ -9,7 +7,7 @@ Users
 	<div class="col-12">
 		<div class="col-11 mx-auto my-5 text-center">
 			<h3 class="pb-3"><b>Users</b></h3>
-			<table id="example" class="table table-light table-hover text-center align-middle">
+			<table id="usersDatatable" class="table table-light table-hover text-center align-middle">
 				<thead>
 					<tr>
 						<th class="text-center">First Name</th>
@@ -25,18 +23,67 @@ Users
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
-				<tbody>
-					{% for account in accounts %}
-					{% include './includes/singleUserRow.html' %}
-					{% endfor %}
-				</tbody>
-				<tfoot>
-				</tfoot>
 			</table>
 			<script>
+				let table;
+
+				function deleteUser(data) {
+					$.ajax({
+						url: "{% url 'account:deleteAccount' %}",
+						type: "POST",
+						data: {
+							"id": data,
+							csrfmiddlewaretoken: '{{ csrf_token }}',
+						},
+						cache: false,
+						dataType: "json",
+						success: function () {
+							table.row("#userRow-{{ account.id }}").remove().draw();
+							table.draw();
+						}
+					});
+				}
+
+				String.prototype.replaceAt = function (index, replacement) {
+					return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+				}
+				
+				function visitEditAccount(data) {
+           			window.location.assign("/edit_account/" + data); 
+      			}
+
 				$(document).ready(function () {
-					$('.dataTables_length').addClass('bs-select');
-					$("#example_filter>label>input").attr("placeholder", "Type here to search");
+					table = $('#usersDatatable').DataTable({
+						processing: true,
+						serverSide: true,
+						ajax: {
+							type: "GET",
+							datatype: 'json',
+							url: 'users/json/',
+						},
+						success: function (data) {
+							console.log(data);
+						},
+						columns: [
+							{ "data": "user_first_name" },
+							{ "data": "user_last_name" },
+							{ "data": "username" },
+							{ "data": "email" },
+							{ "data": "is_admin" },
+							{ "data": "street_name" },
+							{ "data": "street_number" },
+							{ "data": "city" },
+							{ "data": "postal_code" },
+							{ "data": "country" },
+							{
+								data: "id", render: function (data, type, row, meta) {
+									return '<button onclick=visitEditAccount(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' +
+										'<button onclick=deleteUser(' + row["pk"] + ') class="btn btn-outline-danger" id="removeUser-' + row["pk"] + '"><i class="fa-solid fa-user-xmark text-dark"></i></button>';
+								}
+							},
+
+						],
+					});
 				});
 			</script>
 		</div>
