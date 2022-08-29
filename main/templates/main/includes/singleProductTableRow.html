@@ -1,0 +1,42 @@
+{% load static %}
+<tr id="productRow-{{ productid }}">
+    <tr>
+        <td>{{ product.title}}</td>
+        <td>{{ product.brand}}</td>
+        <td>{{ product.price}} kn</td>
+        <td>{{ product.getType}}</td>
+        <td>{{ product.quantity}}</td>
+        <td>{{ product.getSize}}</td>
+        <td>{{ product.getCollection}}</td>
+        <td>{{ product.getFlag}}</td>
+        
+      
+      
+    <td>
+        <a href="{% url 'main:editProduct' product.id %}" class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></a>
+        <a class="btn btn-outline-danger" id="removeProduct-{{ product.id }}"><i class="fa-solid fa-ban text-dark"></i></a>
+    </td>
+</tr>
+<script>
+    $(document).ready(function () {
+        let table = $('#example').DataTable();
+        $("#removeProduct-{{ product.id }}").click(function () {
+            $.ajax({
+                url: "{% url 'main:deleteProduct' %}",
+                type: "POST",
+                data: {
+                    "id": "{{ product.id }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                cache: false,
+                dataType: "json",
+                success: function () {
+                    table.row("#productRow-{{ product.id }}").remove().draw();
+                    table.draw();
+                }
+            });
+        });
+    });
+</script>
+
+<!-- It deletes but does not update the table after deleting -->
