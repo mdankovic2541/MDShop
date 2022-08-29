@@ -19,7 +19,7 @@ class CreateProductForm(forms.ModelForm):
 	}), empty_label='Pick a Brand')
 	class Meta:
 		model = Product
-		fields = ['title', 'collection', 'year', 'quantity', 'type', 'flag', 'brand', 'size', 'price', 'image']
+		fields = ['title', 'collection', 'year', 'quantity', 'type', 'flag', 'brand', 'size', 'price', 'front_image', 'back_image']
 		widgets = {
 	    	'title': forms.TextInput(attrs={
 		    	'class': 'form-control',
@@ -73,13 +73,21 @@ class CreateProductForm(forms.ModelForm):
 		    	'id': 'id_flag',
 		    	'required': True
 		    }),
-			'image': forms.FileInput(attrs={
+			'front_image': forms.FileInput(attrs={
 				'class': 'form-control',
 				'type': 'file',
-				'name': 'image',
-				'id': 'id_image',
+				'name': 'front_image',
+				'id': 'id_front_image',
 				'accept': 'image/*',
 				'required': True
+			}),
+			'back_image': forms.FileInput(attrs={
+				'class': 'form-control',
+				'type': 'file',
+				'name': 'back_image',
+				'id': 'id_back_image',
+				'accept': 'image/*',
+				'required': False
 			})
 		}
 
@@ -96,7 +104,7 @@ class EditProductForm(forms.ModelForm):
 	}), empty_label='Pick a Brand')
 	class Meta:
 		model = Product
-		fields = ['title', 'quantity', 'collection', 'year', 'brand','type','size','price','flag', 'image']
+		fields = ['title', 'collection', 'year', 'quantity', 'type', 'flag', 'brand', 'size', 'price', 'front_image', 'back_image']
 		widgets = {
 	    	'title': forms.TextInput(attrs={
 		    	'class': 'form-control',
@@ -150,13 +158,21 @@ class EditProductForm(forms.ModelForm):
 		    	'id': 'id_flag',
 		    	'required': True
 		    }),
-			'image': forms.FileInput(attrs={
+			'front_image': forms.FileInput(attrs={
 				'class': 'form-control',
 				'type': 'file',
-				'name': 'image',
-				'id': 'id_image',
+				'name': 'front_image',
+				'id': 'id_front_image',
 				'accept': 'image/*',
 				'required': True
+			}),
+			'back_image': forms.FileInput(attrs={
+				'class': 'form-control',
+				'type': 'file',
+				'name': 'back_image',
+				'id': 'id_back_image',
+				'accept': 'image/*',
+				'required': False
 			})
 		}
 
@@ -170,9 +186,9 @@ class EditProductForm(forms.ModelForm):
 		product.size = self.cleaned_data['size']
 		product.price = self.cleaned_data['price']
 		product.flag = self.cleaned_data['flag']
-		if self.cleaned_data['image']:
-			product.image = self.cleaned_data['image']
-		
+		if self.cleaned_data['front_image'] or self.cleaned_data['back_image']:
+			product.front_image = self.cleaned_data['front_image']
+			product.back_image = self.cleaned_data['back_image']
 		if commit:
 			product.save()
 		return product

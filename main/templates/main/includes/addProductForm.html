@@ -1,6 +1,6 @@
 {% for field in form %}
-<div class="{% if field.name == 'collection' %}col-8{% elif field.name == 'quantity' or field.name == 'type' or field.name == 'flag' or field.name == 'year' %}col-4{% elif field.name == 'size' or field.name == 'price' %}col-12{% endif %}">
-    <h5 class="ms-2">{{field.name|capfirst}}</h5>
+<div class="{% if field.name == 'collection' %}col-8{% elif field.name == 'quantity' or field.name == 'type' or field.name == 'flag' or field.name == 'year' %}col-4{% elif field.name == 'size' or field.name == 'price' %}col-12{% elif field.name == 'front_image' or field.name == 'back_image' %}col-6{% endif %}">
+    <h5 class="ms-2">{{field.label|title}}</h5>
     <div class="input-group mb-4">
         {{ field }}
         {% if field.name == 'price' %}

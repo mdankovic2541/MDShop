@@ -89,20 +89,6 @@
                 <div class="row">
                     {% include './includes/productInfo.html' %}
                 </div>
-                <script type="text/javascript">
-                    document.getElementById('id_image_group').onclick = function (event) {
-                        document.getElementById('id_image_file').click();
-                    };
-        
-                    function readURL(input) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $('#id_image_display')
-                                .attr('src', e.target.result)
-                        };
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                </script>
                 <div class="form-outline my-4 text-center">
                     <button class="btn btn-outline-success" type="submit">Update</button>
                     <button class="btn btn-outline-warning" type="reset">Reset</button>
@@ -124,21 +110,4 @@
         </div>
     </div>
 </body>
-
-        <script type="text/javascript">
-            document.getElementById('id_image_group').onclick = function (event) {
-                document.getElementById('id_image_file').click();
-            };
-
-            function readURL(input) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#id_image_display')
-                        .attr('src', e.target.result)
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        </script>
-    <!-- </div>
-</body> -->
 {% endblock content %}

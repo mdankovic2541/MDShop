@@ -6,14 +6,23 @@ from django.utils.translation import gettext_lazy as _
 import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
-def uploadLocation(instance, type):
-	file_path = 'product/{type}/{title}-{brand}'.format(
+def uploadFront(instance, type):
+	file_path =  'product/{type}/{title}-front-{brand}'.format(
 		title=str(instance.title),
 		brand=str(instance.brand),
 		type=type
-	)
+		)
 	return file_path
+
+
+def uploadBack(instance, type):
+	file_path =  'product/{type}/{title}-back-{brand}'.format(
+		title=str(instance.title),
+		brand=str(instance.brand),
+		type=type
+		)
+	return file_path
+
 
 
 def current_year():
@@ -82,7 +91,8 @@ class Product(models.Model):
 	type					= models.CharField(max_length=1, choices=ClothesType.choices, default=ClothesType.UNISEX, null=False, blank=False)
 	price					= models.DecimalField(max_digits=6, decimal_places=2)	
 	flag					= models.CharField(max_length=1, choices=ClothesFlag.choices, default=ClothesFlag.NEW, null=False, blank=False)
-	image					= models.ImageField(upload_to=uploadLocation, null=False, blank=False)
+	front_image				= models.ImageField(upload_to=uploadFront, null=False, blank=False)
+	back_image				= models.ImageField(upload_to=uploadBack, null=True, blank=True)
 
 
 	def __str__(self):
@@ -112,7 +122,8 @@ class Product(models.Model):
 			'type': self.getType(),
 			'price': self.price,
 			'flag': self.getFlag(),
-			'image': self.image.url
+			'front_image': self.front_image.url,
+			'back_image': self.back_image.url
 		}
 
 

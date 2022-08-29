@@ -6,8 +6,7 @@
     <div class="col-12">
         <div class="col-11 mx-auto my-5 text-center">
             <h3 class="pb-3"><b>Products</b></h3>
-            <a class="btn btn-dark mb-4" href="{% url 'main:addProduct' %}"><i
-                    class="fa-solid fa-circle-plus"></i>&nbsp;Add Product</a>
+            <a class="btn btn-dark mb-4" href="{% url 'main:addProduct' %}"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add Product</a>
             <table class="table table-light table-hover text-center align-middle" id="productsTable">
                 <thead>
                     <tr>
@@ -85,7 +84,14 @@
                         columns: [
                             {
                                 data: "image", render: function (data, type, row, meta) {
-                                    return '<a><img src="' + row["image"] + '" alt="{{ product.title }}" class="cartImage"></a>'
+                                    return '<script>' +
+                                        '$("#imageProducts-' + row["pk"] + '").hover(function () {' +
+                                        '$(this).attr("src", "' + row["back_image"] + '");' +
+                                        '}, function () {' +
+                                        '$(this).attr("src", "' + row["front_image"] + '");' +
+                                        '});' +
+                                        '<\/script>' +
+                                        '<a><img src="' + row["front_image"] + '" id="imageProducts-' + row["pk"] + '" alt="' + row["title"] + '" class="cartImage"></a>'
                                 }
                             },
                             { "data": "title" },
