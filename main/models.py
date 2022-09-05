@@ -129,7 +129,8 @@ class Product(models.Model):
 
 @receiver(post_delete, sender=Product)
 def submission_delete(sender, instance, **kwargs):
-	instance.image.delete(False)
+	instance.front_image.delete(False)
+	instance.back_image.delete(False)
 
 
 class Comment(models.Model):  
