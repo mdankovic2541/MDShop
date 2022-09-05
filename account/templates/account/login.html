@@ -23,7 +23,7 @@
                     <div class="mt-4 mb-3">
                         <a href="{% url 'account:register' %}" class="register">Don't have an account? Sign up!</a>
                         <br>
-                        <a href="#" class="forgot">Forgot your password?</a>
+                        <a href="{% url 'account:password_reset' %}" class="forgot">Forgot your password?</a>
                     </div>
                 </div>
                 <input type="submit" hidden />

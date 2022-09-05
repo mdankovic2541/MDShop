@@ -200,3 +200,9 @@ class EditAccountForm(forms.ModelForm):
 			account.save()
 		return account
 
+
+class UserPasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordResetForm, self).__init__(*args, **kwargs)
+
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={'name': 'email', 'class':'form-control form-control-lg', 'placeholder':'Electronic mail', 'autofocus':'true'}))
