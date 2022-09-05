@@ -38,7 +38,7 @@
                 });
             </script>
                 <h2 class="p-2 text-uppercase">{{ product.title }}</h2>
-                <h5 class="pb-2"><b>Price: {{ product.price }}kn</b></h5>
+                <h5 class="pb-2"><b>Price: {{ product.price }} kn | {{ product.getPriceInEUR }} EUR</b></h5>
                 <h5 class="pb-2">Size: {{ product.getSize }}</h5>
                 <h5 class="pb-2">Gender: {{ product.getType }}</h5>
                 <h5 class="pb-2">Brand: <i>{{ product.brand }}</i> </h5>
@@ -90,7 +90,7 @@
                     </div>
                     {% if request.user.is_superuser or request.user == comment.account %}
                     <div class="col-md-3">
-                        <a class="btn btn-outline-danger" href="{% url 'main:deleteComment' comment.id %}"><i class="fa-solid fa-circle-minus"></i></a>
+                        <a class="btn btn-outline-danger" href="{% url 'main:deleteComment' %}"><i class="fa-solid fa-circle-minus"></i></a>
                     </div>
                     {% endif %}
                 </div>

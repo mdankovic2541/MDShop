@@ -96,7 +96,11 @@
                             },
                             { "data": "title" },
                             { "data": "brand" },
-                            { "data": "price" },
+                            {  
+                                data: "price", render: function (data, type, row, meta) {
+                                    var eur = 7.5345;
+                                    return row['price'] + ' HRK <br> ' + (row['price']/eur).toFixed(2) + ' EUR' ;
+                                } },
                             { "data": "type" },
                             { "data": "quantity" },
                             { "data": "size" },
