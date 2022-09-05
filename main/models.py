@@ -1,10 +1,18 @@
+from decimal import Rounded
+import decimal
+from importlib.metadata import SelectableGroups
 from django.db import models
 from account.models import Account
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 import datetime
+import math
 from django.core.validators import MaxValueValidator, MinValueValidator
+
+
+TO_EUR = decimal.Decimal(7.5345)
+
 
 def uploadFront(instance, type):
 	file_path =  'product/{type}/{title}-front-{brand}'.format(
@@ -106,6 +114,12 @@ class Product(models.Model):
 
 	def getType(self):
 		return self.get_type_display()
+
+	def getPriceInEUR(self):
+		price = decimal.Decimal(self.price)
+		eur = decimal.Decimal(TO_EUR) 
+		priceEUR = price / eur
+		return round(priceEUR,2)
 	
 	def getSize(self):
 		return self.get_size_display()
@@ -158,6 +172,9 @@ class Cart(models.Model):
 		for product in self.product.all():
 			price += product.price
 		return price
+
+	def getTotalPriceInEUR(self):
+		return round((self.getTotalPrice() / TO_EUR),2)
 
 	def __str__(self):
 		return f'{self.user}\'s cart'

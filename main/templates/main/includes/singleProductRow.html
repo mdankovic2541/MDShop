@@ -16,7 +16,7 @@
     <td>{{ product.brand }}</td>
     <td>{{ product.getSize }}</td>
     <td>{{ product.getType }}</td>
-    <td>{{ product.price }} HRK</td>
+    <td>{{ product.price }} HRK | {{product.getPriceInEUR}} EUR</td>
     <td>
         <a class="btn btn-outline-danger" id="removeProduct-{{ product.id }}"><i class="fa-solid fa-square-minus"></i>&nbsp;Remove</a>
     </td>
@@ -37,7 +37,8 @@
                 success: function () {
                     var oldPrice = $("#totalPrice").html();
                     var price = "{{ product.price }}";
-                    $("#totalPrice").html((parseFloat(oldPrice) - parseFloat(price)).toFixed(2) + " HRK");
+                    
+                    $("#totalPrice").html((parseFloat(oldPrice) - parseFloat(price)).toFixed(2) + " HRK | " + ((parseFloat(oldPrice) - parseFloat(price)) / 7.5345 ).toFixed(2) + " EUR");
                     table.row("#productRow-{{ product.id }}").remove().draw();
                     table.draw();
                 }

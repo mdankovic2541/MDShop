@@ -92,18 +92,31 @@ def createCommentView(request, productId):
 	else:
 		return redirect('main:index')
 
-def deleteCommentView(request,commentId):
-	try:
-		comment = get_object_or_404(Comment, id=commentId)
-	except Comment.DoesNotExist:
-		return HttpResponse("Comment not found",status = 404)
-	except Exception:
-		print(Exception)
-		return HttpResponse("Internal Error",status= 500)
-	comment.delete()
+# def deleteCommentView(request,commentId):
+# 	try:
+# 		comment = get_object_or_404(Comment, id=commentId)
+# 	except Comment.DoesNotExist:
+# 		return HttpResponse("Comment not found",status = 404)
+# 	except Exception:
+# 		print(Exception)
+# 		return HttpResponse("Internal Error",status= 500)
+# 	comment.delete()
 	
-	return redirect('main:index')
-	
+# 	return redirect('main:index')
+
+
+
+def deleteCommentView (request):
+	if request.method == "POST" and isAjax(request):
+		commentId = request.POST.get('id', None)
+		try:
+			comment = get_object_or_404(Comment, id=commentId)
+			comment.delete()
+			return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
+		except Account.DoesNotExist:
+			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
+
+
 
 def productsView(request):
 	if not request.user.is_superuser:

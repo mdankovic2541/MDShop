@@ -23,6 +23,23 @@
                 checkForWhitespace();
             }
 
+            function deleteComment(data) {
+                    $.ajax({
+                        url: "{% url 'main:deleteComment' %}",
+                        type: "POST",
+                        data: {
+                            "id": data,
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        },
+                        cache: false,
+                        dataType: "json",
+                        success: function () {
+                            table.row("#productRow-{{ product.id }}").remove().draw();
+                            table.draw();
+                        }
+                    });
+                }
+
             $("#addCommentBtn").click(function (e) {
                 e.preventDefault();
                 $.ajax({
@@ -36,35 +53,18 @@
                     success: function (data) {
                         clearTextarea();
                         $("#allComments").append(
-                            "<div class='row m-2 border' id='detailBlogComment-" + data['comm_id'] + "'>" +
-                            "<div class='col-md-8 text-start py-2 px-4'>" +
-                            "<p href='#'>" + "<b>" + data['account'] + "</b>" + " says:" +"</p>" +                        
-                            "</div>" +
-                            "<div class=\"col-md-4 text-end py-2 px-4\">" +
-                            "<button class=\"btn btn-outline-danger\" id=\"btnCommentDelete-" + data['comm_id'] + "\">" +
-                            "<i class=\"fa-solid fa-circle-minus\"></i>" +
-                            "</button></div>" +
-                            "<div class='col-md-12'>" +
-                            "<p class='text-dark text-start p-2' id='appCommBody'>" + data['description'] + "</p>" +
-                            "</div>" +
-                            "</div>" +
-                            "<script>$(\"#btnCommentDelete-" + data['comm_id'] + "\").click(function (e) {" +
-                            "$.ajax({ " +
-                            "url: \"#\"," +
-                            "type: \"POST\"," +
-                            "data: {" +
-                            "'id': " + data['comm_id'] + "," +
-                            "csrfmiddlewaretoken: '{{ csrf_token }}'," +
-                            "}," +
-                            "cache: false," +
-                            "dataType: \"json\"," +
-                            "success: function () {" +
-                            "$(\"#detailBlogComment-" + data['comm_id'] + "\").remove();" +
-                            "$(\"#commentCount\").html($(\".comment\").length + \" comments\");" +
-                            "}," +
-                            "fail: function () { }" +
-                            "});" +
-                            "});<\/script>");
+                           ' <div class="row m-2 comment border" id="detailBlogComment-{{ comment.id }}">'+
+                            '<div class="col-md-8 text-start py-2 px-4">'+
+                           ' <span><i><b>{{ comment.account }}</b></i></span>'+
+                            'says:'+
+                            '</div>'+
+                            '<div class="col-md-9">'+
+                            '<p class="text-dark text-start p-2" id="appCommBody">{{ comment.description }}</p>'+
+                           ' </div>'+
+                            '<div class="col-md-3">'+
+                                '<button class="btn btn-outline-danger"  onclick=deleteComment(' + row["pk"] + ')><i class="fa-solid fa-circle-minus"></i></button>'+
+                           ' </div>'+
+                            '</div>');
                         $("#commentCount").html($(".comment").length + " comments");
                         
                     },

@@ -47,7 +47,7 @@ cart {% endblock%} {% block content %}
                         currPrice = parseFloat("{{ product.price }}");
                         price += currPrice;
                         "{% endfor %}"
-                        $("#totalPrice").html(price.toFixed(2) + " HRK");
+                        $("#totalPrice").html(price.toFixed(2) + " HRK " + "| " + (price/7.5345).toFixed(2)+ " EUR" );
                     </script>
                 </tfoot>
             </table>
@@ -70,8 +70,8 @@ cart {% endblock%} {% block content %}
                 <h5 class="modal-title" id="exampleModalLabel"><b>Receipt</b> [<span class="text-muted">{{ request.session.session_key }}</span>]</h5>
             </div>
             <div class="modal-body row align-items-center">
-                <div class="col-6 text-center">
-                    <b>Total price:</b> {{ cart.getTotalPrice }} HRK
+                <div class="col-6 text-end">
+                    <b>Total price:</b> {{ cart.getTotalPrice }} HRK {{ cart.getTotalPriceInEUR }} EUR
                 </div>
                 <div class="col-6 text-center">
                     <b>User:</b> {{ request.user.username }}

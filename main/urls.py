@@ -39,7 +39,7 @@ urlpatterns = [
     path('delete_product',deleteProductView, name='deleteProduct'),
 
     path('create_comment/<int:productId>',createCommentView, name='createComment'),
-    path('delete_comment/<int:commentId>',deleteCommentView, name='deleteComment'),
+    path('delete_comment',deleteCommentView, name='deleteComment'),
 
     path('menswear',menswearView, name='menswear'),
     path('womenswear',womenswearView, name='womenswear'),
