@@ -1,10 +1,11 @@
+from multiprocessing import context
 from re import A
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 
-from main.models import Cart
+from main.models import Cart, Receipt
 from .models import Account, Address
 from .forms import AddressForm, EditAccountForm, EditAddressForm, RegistrationForm, LoginForm
 from main.helpers import isAjax
@@ -48,6 +49,21 @@ def registerView(request):
 	return render(request, 'account/register.html', context)
 
 
+def profileView(request):
+	context = {}
+	user = get_object_or_404(Account, id=request.user.id)
+	if not user.is_authenticated:
+		return redirect('main:index')
+	receipts = Receipt.objects.filter(account=user).all()
+	context['receipts'] = receipts
+	context['user'] = user
+	return render(request,"account/profile.html",context)
+
+
+
+
+
+
 def loginView(request):
 	context = {}
 	user = request.user
@@ -79,11 +95,7 @@ def loginView(request):
 
 
 def logoutView(request):
-	try:
-		cart = get_object_or_404(Cart, user=request.user)
-		cart.delete()
-	finally:
-		logout(request)
+	logout(request)
 	return redirect('main:index')
 
 
@@ -102,18 +114,28 @@ def editAccountView(request,accountId):
 			address = address.save(commit=False)
 			address.user = user
 			address.save()
-	form = EditAccountForm(
-		initial = {
-			'first_name' : account.first_name ,
-			'last_name': account.last_name,
-			'email': account.email,
-			'username': account.username,
-			'is_admin': account.is_admin,
-			'is_active': account.is_active,
-			'is_superuser': account.is_superuser,
-			'is_staff': account.is_staff,
-		}
-	)
+	if not request.user.is_superuser:
+		form = EditAccountForm(
+			initial = {
+				'first_name' : account.first_name,
+				'last_name': account.last_name,
+				'email': account.email,
+				'username': account.username,
+			}
+		)
+	else:
+		form = EditAccountForm(
+			initial = {
+				'first_name' : account.first_name ,
+				'last_name': account.last_name,
+				'email': account.email,
+				'username': account.username,
+				'is_admin': account.is_admin,
+				'is_active': account.is_active,
+				'is_superuser': account.is_superuser,
+				'is_staff': account.is_staff,
+			}
+		)
 	address = EditAddressForm(
 		initial = {
 			'street_name': address.street_name,
@@ -130,6 +152,7 @@ def editAccountView(request,accountId):
 		'account': account,
 		'admin_check': admin_check,
 	}
+
 	return render(request, 'account/editAccount.html', context)
 
 

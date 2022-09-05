@@ -202,8 +202,8 @@ def productsJsonView(request):
 	data = [product.to_dict_json() for product in products]
 	response = {
 		'data': data,
-		'page': page,  # [opcional]
-		'per_page': per_page,  # [opcional]
+		'page': page,  
+		'per_page': per_page,  
 		'recordsTotal': total,
 		'recordsFiltered': total,
 	}
@@ -352,7 +352,6 @@ def checkoutFinalView(request):
 		receiptNumber =  request.POST.get('receiptNumber', None)
 		cart = get_object_or_404(Cart, id=cartId)
 		for product in cart.product.all():
-			cart.product.remove(product)
 			product.quantity -= 1
 			product.save()
 		cart.save()

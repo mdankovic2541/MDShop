@@ -5,7 +5,6 @@ from .models import Account, Address
 
 
 class AddressForm(forms.ModelForm):
-
 	class Meta:
 		model = Address
 		fields = ['street_name', 'street_number', 'city', 'postal_code', 'country']
@@ -102,7 +101,6 @@ class RegistrationForm(UserCreationForm):
 	
 
 class LoginForm(forms.ModelForm):
-
 	class Meta:
 		model = Account
 		fields = ['email', 'password']
@@ -174,7 +172,7 @@ class EditAccountForm(forms.ModelForm):
 			'is_admin': forms.CheckboxInput(attrs={
 				'label': 'idemo',
 				'class': 'form-check-input',
-				'type': 'checkbox',
+				'type': 'checkbox',	
 			}),
 			'is_active': forms.CheckboxInput(attrs={
 				'class': 'form-check-input',
@@ -189,6 +187,7 @@ class EditAccountForm(forms.ModelForm):
 				'type': 'checkbox',
 			}),
 		}
+	
 
 	def save(self, commit=True):
 		account = self.instance
@@ -200,3 +199,4 @@ class EditAccountForm(forms.ModelForm):
 		if commit:
 			account.save()
 		return account
+

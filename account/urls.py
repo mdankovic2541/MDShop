@@ -6,6 +6,7 @@ from .views import (
     registerView,
     loginView,
     logoutView,
+    profileView,
 )
 
 app_name = 'account'
@@ -13,7 +14,8 @@ app_name = 'account'
 urlpatterns = [
     path('register', registerView, name='register'),
     path('login', loginView, name='login'),
-    path('logout', logoutView, name='logout'),    
+    path('logout', logoutView, name='logout'), 
+    path('profile', profileView, name='profile'),   
     path('edit_account/<int:accountId>',editAccountView, name='editAccount'),
     path('delete_account',deleteAccountView, name='deleteAccount'),
 ]

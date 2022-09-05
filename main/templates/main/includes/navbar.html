@@ -22,7 +22,7 @@
         <div class="d-flex align-items-center">
             {% if request.user.is_authenticated %}
             <a class="link-grayish me-3" href="{% url 'main:cart' %}" style="text-decoration: none; color:#888888">
-                <i class="fa fa-cart-plus"></i>&nbsp; <b>CART ({{ request.user.cart.countProducts }})</b> &nbsp;
+                <i class="fa fa-cart-plus"></i>&nbsp; <b>CART </b> &nbsp;
             </a>
             <div class="dropdown me-4">
                 <a class="btn btn-white dropdown-toggle {% if request.user.is_superuser %}text-danger {% else %}text-muted {% endif %}" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,6 +37,7 @@
                     <li><a href="{% url 'admin:index' %}" class="dropdown-item text-muted">Admin</a></li>
                     <hr class="dropdown-divider">
                     {% endif %}
+                    <li><a href="{% url 'account:profile' %}" class="dropdown-item text-muted">Profile</a></li>
                     <li><a href="{% url 'account:logout' %}" class="dropdown-item text-muted">Log out</a></li>
                 </ul>
             </div>

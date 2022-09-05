@@ -35,7 +35,7 @@ MDShop
     <div class="col-12 col-md-6  col-lg-3 mt-2 mx-auto p-5">
         <div class="card text-center">
             <p class="flag">{{ product.getFlag }}</p>
-            <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-fluid border-bottom">
+            <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-fluid border-bottom cardImg">
             <script>
                 $("#image-{{ product.id }}").hover(function () {
                     $(this).attr("src", "{{ product.back_image.url }}");
