@@ -108,7 +108,7 @@
                             { "data": "flag" },
                             {
                                 data: "id", render: function (data, type, row, meta) {
-                                    return '<button onclick=visitEditProduct(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' +
+                                    return '<button onclick=visitEditProduct(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' + "&nbsp;" +
                                         '<button onclick=deleteProduct(' + row["pk"] + ') class="btn btn-outline-danger" id="removeProduct-' + row["pk"] + '"><i class="fa-solid fa-ban text-dark"></i></button>';
                                 }
                             },

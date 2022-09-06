@@ -84,7 +84,7 @@
 							{ "data": "address.country" },
 							{
 								data: "id", render: function (data, type, row, meta) {
-									return '<button onclick=visitEditAccount(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' +
+									return '<button onclick=visitEditAccount(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' + "&nbsp;" +
 										'<button onclick=deleteUser(' + row["pk"] + ') class="btn btn-outline-danger" id="removeUser-' + row["pk"] + '"><i class="fa-solid fa-user-xmark text-dark"></i></button>';
 								}
 							},

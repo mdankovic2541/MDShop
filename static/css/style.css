@@ -180,7 +180,10 @@ li a:hover,
 #example_wrapper,
 #productsTable_wrapper,
 #productTable_wrapper,
-#brandsTable_wrapper {
+#brandsTable_wrapper,
+#usersDatatable_wrapper,
+#dtVerticalScrollExampleAnalytics_wrapper,
+#dtVerticalScrollExample_wrapper {
    background-color: rgba(255, 255, 255, .3);
    padding: 1% 1%;
 }
@@ -188,7 +191,10 @@ li a:hover,
 #example_length,
 #productsTable_length,
 #productTable_length,
-#brandsTable_length
+#brandsTable_length,
+#usersDatatable_length,
+#dtVerticalScrollExampleAnalytics_length,
+#dtVerticalScrollExample_length
  {
    color: #000;
    margin: 1%;
@@ -197,21 +203,30 @@ li a:hover,
 #example_filter,
 #productsTable_filter,
 #productTable_filter,
-#brandsTable_filter {
+#brandsTable_filter,
+#usersDatatable_filter,
+#dtVerticalScrollExampleAnalytics_filter,
+#dtVerticalScrollExample_filter  {
    margin: 1%;
 }
 
 #example_filter>label>input,
 #productsTable_filter>label>input,
 #productTable_filter>label>input,
-#brandsTable_filter>label>input {
+#brandsTable_filter>label>input,
+#usersDatatable_filter>label>input,
+#dtVerticalScrollExampleAnalytics>label>input,
+#dtVerticalScrollExample>label>input {
    margin-left: 5px;
 }
 
 #example_info,
 #productsTable_info,
 #productTable_info,
-#brandsTable_info {
+#brandsTable_info,
+#usersDatatable_info,
+#dtVerticalScrollExampleAnalytics_info,
+#dtVerticalScrollExample_info {
    color: #000;
 }
 
@@ -219,7 +234,9 @@ li a:hover,
 #productsTable_paginate a,
 #productTable_paginate a,
 #brandsTable_paginate a,
-#dtVerticalScrollExample a {
+#usersDatatable_paginate a,
+#dtVerticalScrollExampleAnalytics_paginate a ,
+#dtVerticalScrollExample_paginate a{
    padding: 8px;
    border: 1px solid #000;
    text-decoration: none;
