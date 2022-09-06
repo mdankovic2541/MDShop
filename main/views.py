@@ -86,36 +86,21 @@ def createCommentView(request, productId):
 			response = {
 				'description': comment.description,
 				'account': comment.account.username,
-				
+				'id': comment.id,
 			}
 			return JsonResponse(response)
 	else:
 		return redirect('main:index')
 
-# def deleteCommentView(request,commentId):
-# 	try:
-# 		comment = get_object_or_404(Comment, id=commentId)
-# 	except Comment.DoesNotExist:
-# 		return HttpResponse("Comment not found",status = 404)
-# 	except Exception:
-# 		print(Exception)
-# 		return HttpResponse("Internal Error",status= 500)
-# 	comment.delete()
-	
-# 	return redirect('main:index')
-
-
 
 def deleteCommentView (request):
 	if request.method == "POST" and isAjax(request):
-		commentId = request.POST.get('id', None)
-		try:
-			comment = get_object_or_404(Comment, id=commentId)
-			comment.delete()
-			return HttpResponse(json.dumps({ "good": True }), content_type="application/json")
-		except Account.DoesNotExist:
-			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
-
+		id = request.POST.get('id', None)
+		comment = Comment.objects.get(pk=id)
+		comment.delete()
+		return JsonResponse({ 'deleted': True })
+	else:
+		return redirect('main:index')
 
 
 def productsView(request):
@@ -190,8 +175,7 @@ def productDetailView(request,productId):
 		product = get_object_or_404(Product, id=productId)
 		comments = product.comments.all()
 	except Http404: 
-		return redirect('main:index')
-	
+		return redirect('main:index')	
 	context = {
 		'product' : product,
 		'comments' : comments
@@ -233,10 +217,7 @@ def menswearView(request):
 		'nav':'Men',
 		'brands': brands,
 		'sizes' : sizes,
-		
-
 	}
-
 	return render(request,"main/men.html",context)
 
 	
@@ -246,10 +227,9 @@ def womenswearView(request):
 	context = {
 		'products' : products,
 		'nav':'Women',
-
 	}
-
 	return render(request,"main/women.html",context)
+
 
 def kidswearView(request):
 	context = {}
@@ -257,9 +237,7 @@ def kidswearView(request):
 	context = {
 		'products' : products,
 		'nav':'Kids',
-
 	}
-
 	return render(request,"main/kids.html",context)
 
 
@@ -289,7 +267,6 @@ def deleteBrandView (request):
 			return HttpResponse(json.dumps({ "good": False }), content_type="application/json")
 
 
-# TODO: Refactor others to work with DataTables
 def brandsView(request):
 	if not request.user.is_superuser:
 		return redirect('main:index')
@@ -316,7 +293,6 @@ def brandsJsonView(request):
 		'recordsFiltered': total,
 	}
 	return JsonResponse(response)
-# TODO: End todo.
 
 
 def brandedClothesView(request, brandId):
@@ -371,6 +347,7 @@ def checkoutFinalView(request):
 		receipt = Receipt.objects.create(cart=cart, account=request.user, receiptNumber=receiptNumber)
 		receipt.save()
 		return JsonResponse({"good" : "True"})
+
 
 def receiptView(request):
 	context = {}	
