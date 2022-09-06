@@ -14,6 +14,7 @@ from .views import (
     loginView,
     logoutView,
     profileView,
+    analyticsView,
 )
 from .forms import UserPasswordResetForm
 
@@ -23,7 +24,8 @@ urlpatterns = [
     path('register', registerView, name='register'),
     path('login', loginView, name='login'),
     path('logout', logoutView, name='logout'), 
-    path('profile', profileView, name='profile'),   
+    path('profile', profileView, name='profile'),  
+    path('analytics', analyticsView, name='analytics'),   
     path('edit_account/<int:accountId>',editAccountView, name='editAccount'),
     path('delete_account',deleteAccountView, name='deleteAccount'),
     # ! Reset and Change Password

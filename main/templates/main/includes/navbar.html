@@ -38,6 +38,9 @@
                     <hr class="dropdown-divider">
                     {% endif %}
                     <li><a href="{% url 'account:profile' %}" class="dropdown-item text-muted">Profile</a></li>
+                    {% if request.user.is_superuser %}
+                    <li><a href="{% url 'account:analytics' %}" class="dropdown-item text-muted">Analytics</a></li>
+                    {% endif %}
                     <hr class="dropdown-divider">
                     <li><a href="{% url 'account:logout' %}" class="dropdown-item text-muted">Log out</a></li>
                 </ul>

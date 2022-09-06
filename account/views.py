@@ -61,7 +61,18 @@ def profileView(request):
 	return render(request,"account/profile.html",context)
 
 
-
+def analyticsView(request):
+	context = {}
+	if not request.user.is_superuser:
+		return redirect('main:index')
+	user = get_object_or_404(Account, id=request.user.id)
+	
+	if not user.is_authenticated:
+		return redirect('main:index')
+	receipts = Receipt.objects.all()
+	context['receipts'] = receipts
+	context['user'] = user
+	return render(request,"account/profile.html",context)
 
 
 
