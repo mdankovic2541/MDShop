@@ -7,7 +7,7 @@
         <div class="col-md-3">
             <div class="col-11 mx-auto my-5 text-center">
                 <h3 class="pb-3"><b>User - {{request.user}}</b></h3>
-                
+
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
@@ -25,7 +25,7 @@
                             <div class="col-md-12 p-3">
                                 <p>Email</p>
                                 <h4>{{ user.email }}</h4>
-                                
+
                             </div>
                             <hr>
                             <div class="col-md-12 p-3">
@@ -33,7 +33,7 @@
                                 <h4>{{ user.username }}</h4>
                             </div>
                             <hr>
-                            <div class="text-center p-2"> 
+                            <div class="text-center p-2">
                                 <p>Address</p>
                                 <h4>{{ user.address.street_name }} {{ user.address.street_number }}, {{ user.address.city }} {{ user.address.postal_code }}</h4>
                                 <h4>{{ user.address.country }}</h4>
@@ -43,8 +43,8 @@
                         </div>
                     </div>
                 </div>
-            
-                
+
+
             </div>
         </div>
         <div class="col-md-9">
@@ -56,13 +56,15 @@
                             <th scope="col">Receipt #</th>
                             <th scope="col">Cart</th>
                             <th scope="col">Time</th>
+
+
                         </tr>
                     </thead>
                     <tbody>
                         {% for receipt in receipts %}
                         <tr>
                             <td>{{ receipt.receiptNumber }}</td>
-                            <td>{{ receipt.cart.getTotalPrice }} HRK | {{ receipt.cart.getTotalPriceInEUR }} EUR</td>
+                            <td>{{ receipt.getTotalPrice }} HRK | {{ receipt.getTotalPriceInEUR }} EUR</td>
                             <td>{{ receipt.time }}</td>
                         </tr>
 
@@ -70,17 +72,17 @@
                     </tbody>
                 </table>
                 <script>
-                     $(document).ready(function () {
-                    $('#dtVerticalScrollExample').DataTable({
-                      "scrollY": "400px",
-                      "scrollCollapse": true,
+                    $(document).ready(function () {
+                        $('#dtVerticalScrollExample').DataTable({
+                            "scrollY": "400px",
+                            "scrollCollapse": true,
+                        });
+                        $('.dataTables_length').addClass('bs-select');
                     });
-                    $('.dataTables_length').addClass('bs-select');
-                  });
                 </script>
-               
+
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 {% endblock%}
