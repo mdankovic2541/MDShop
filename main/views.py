@@ -253,7 +253,7 @@ def womenswearView(request):
 
 def kidswearView(request):
 	context = {}
-	products = Product.objects.filter(type='KIDS').all()
+	products = Product.objects.filter(Q(type__contains='K')).all()
 	context = {
 		'products' : products,
 		'nav':'Kids',
