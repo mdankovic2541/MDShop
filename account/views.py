@@ -69,10 +69,10 @@ def analyticsView(request):
 	
 	if not user.is_authenticated:
 		return redirect('main:index')
-	receipts = Receipt.objects.all()
+	receipts = Receipt.objects.distinct('account').all()
 	context['receipts'] = receipts
 	context['user'] = user
-	return render(request,"account/profile.html",context)
+	return render(request,"account/analytics.html",context)
 
 
 

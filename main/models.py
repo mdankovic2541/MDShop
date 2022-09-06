@@ -205,3 +205,19 @@ class Receipt(models.Model):
 
 	def getTotalPriceInEUR(self):
 		return round(self.getTotalPrice() / TO_EUR, 2)
+
+	def getTotalSpent(self):
+		receipts = Receipt.objects.filter(account=self.account).all()
+		price = 0
+		for receipt in receipts:
+			for product in receipt.products.all():
+				price += product.price
+		return price
+
+	def getTotalSpentEUR(self):
+		receipts = Receipt.objects.filter(account=self.account).all()
+		price = 0
+		for receipt in receipts:
+			for product in receipt.products.all():
+				price += product.price
+		return round((price/TO_EUR),2)
