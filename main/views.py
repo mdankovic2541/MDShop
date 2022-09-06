@@ -325,10 +325,7 @@ def cartManagmentView(request):
 
 def cartView(request):
 	cart = get_object_or_404(Cart, user=request.user)
-	context = {
-		'cart': cart,
-	}
-	return render(request, 'main/cart.html', context)
+	return render(request, 'main/cart.html', { 'cart': cart, })
 
 
 def checkoutView(request):
@@ -340,12 +337,16 @@ def checkoutFinalView(request):
 		cartId = request.POST.get('id', None)
 		receiptNumber =  request.POST.get('receiptNumber', None)
 		cart = get_object_or_404(Cart, id=cartId)
+		receipt = Receipt.objects.create(account=request.user, receiptNumber=receiptNumber)
+		receipt.save()
 		for product in cart.product.all():
+			receipt.products.add(product)
 			product.quantity -= 1
 			product.save()
+			cart.product.remove(product)
 		cart.save()
-		receipt = Receipt.objects.create(cart=cart, account=request.user, receiptNumber=receiptNumber)
 		receipt.save()
+
 		return JsonResponse({"good" : "True"})
 
 

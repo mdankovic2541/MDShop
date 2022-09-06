@@ -168,7 +168,7 @@ class Comment(models.Model):
 
 class Cart(models.Model):
 	user					= models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='cart')
-	product					= models.ManyToManyField(Product, related_name='products')
+	product					= models.ManyToManyField(Product, related_name='cart_products')
 
 	def countProducts(self):
 		if self.product:
@@ -189,10 +189,19 @@ class Cart(models.Model):
 		return f'{self.user}\'s cart'
 	
 class Receipt(models.Model):
-	cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+	products = models.ManyToManyField(Product, related_name='receipt_products')
 	time = models.DateTimeField(auto_now_add=True)
 	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='receipt')
 	receiptNumber = models.CharField(max_length=255, null=False, blank=False)
 
 	def __str__(self):
 		return f'{self.account.username}\'s receipt | {self.time}'
+
+	def getTotalPrice(self):
+		price = 0
+		for product in self.products.all():
+			price += product.price
+		return price
+
+	def getTotalPriceInEUR(self):
+		return round(self.getTotalPrice() / TO_EUR, 2)
