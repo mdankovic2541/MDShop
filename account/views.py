@@ -102,7 +102,10 @@ def logoutView(request):
 
 def editAccountView(request,accountId):
 	context = {}
-	account = get_object_or_404(Account, id=accountId)
+	if not request.user.is_superuser:
+		account = get_object_or_404(Account, id=request.user.id)
+	else:
+		account = get_object_or_404(Account, id=accountId)
 	try:
 		address = get_object_or_404(Address, user=account)
 	except:

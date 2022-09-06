@@ -50,15 +50,12 @@
         <div class="col-md-9">
             <div class="col-11 mx-auto my-5 text-center">
                 <h3 class="pb-3"><b>Receipts</b></h3>
-
                 <table class="table table-light table-hover text-center align-middle" id="dtVerticalScrollExample">
                     <thead>
                         <tr>
                             <th scope="col">Receipt #</th>
                             <th scope="col">Cart</th>
                             <th scope="col">Time</th>
-                            
-                     
                         </tr>
                     </thead>
                     <tbody>
@@ -67,20 +64,15 @@
                             <td>{{ receipt.receiptNumber }}</td>
                             <td>{{ receipt.cart.getTotalPrice }} HRK | {{ receipt.cart.getTotalPriceInEUR }} EUR</td>
                             <td>{{ receipt.time }}</td>
-                            
-
-
                         </tr>
 
                         {% endfor %}
                     </tbody>
-                
-                    
                 </table>
                 <script>
                      $(document).ready(function () {
                     $('#dtVerticalScrollExample').DataTable({
-                      "scrollY": "200px",
+                      "scrollY": "400px",
                       "scrollCollapse": true,
                     });
                     $('.dataTables_length').addClass('bs-select');
