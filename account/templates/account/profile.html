@@ -4,21 +4,42 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div class="col-11 mx-auto my-5 text-center">
                 <h3 class="pb-3"><b>User - {{request.user}}</b></h3>
-                <a class="btn btn-dark mb-4" href="{% url 'account:editAccount' user.id %}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit profile</a>
+                
                 <div class="card">
                     <div class="card-body">
-                        <div>
-                            <h4>First name</h4>
-                            <p>{{ user.first_name }}</p>
-                            <h4>Last name</h4>
-                            <p>{{ user.last_name }}</p>
-                            <h4>Username </h4>
-                            <p>{{ user.username }}</p>
-                            <h4>Email</h4>
-                            <p>{{ user.email }}</p>
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>First name</p>
+                                    <h4>{{ user.first_name }}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Last name</p>
+                                    <h4>{{ user.last_name }}</h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12 p-3">
+                                <p>Email</p>
+                                <h4>{{ user.email }}</h4>
+                                
+                            </div>
+                            <hr>
+                            <div class="col-md-12 p-3">
+                                <p>Username</p>
+                                <h4>{{ user.username }}</h4>
+                            </div>
+                            <hr>
+                            <div class="text-center p-2"> 
+                                <p>Address</p>
+                                <h4>{{ user.address.street_name }} {{ user.address.street_number }}, {{ user.address.city }} {{ user.address.postal_code }}</h4>
+                                <h4>{{ user.address.country }}</h4>
+                            </div>
+                            <hr>
+                            <a class="btn btn-dark mt-2" href="{% url 'account:editAccount' user.id %}"><i class="fa-solid fa-user-pen"></i>&nbsp;Edit profile</a>
                         </div>
                     </div>
                 </div>
@@ -26,7 +47,7 @@
                 
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             <div class="col-11 mx-auto my-5 text-center">
                 <h3 class="pb-3"><b>Receipts</b></h3>
 
@@ -36,6 +57,7 @@
                             <th scope="col">Receipt #</th>
                             <th scope="col">Cart</th>
                             <th scope="col">Time</th>
+                            
                      
                         </tr>
                     </thead>
@@ -43,8 +65,9 @@
                         {% for receipt in receipts %}
                         <tr>
                             <td>{{ receipt.receiptNumber }}</td>
-                            <td>{{ receipt.cart }}</td>
+                            <td>{{ receipt.cart.getTotalPrice }} HRK | {{ receipt.cart.getTotalPriceInEUR }} EUR</td>
                             <td>{{ receipt.time }}</td>
+                            
 
 
                         </tr>

@@ -52,6 +52,7 @@ def registerView(request):
 def profileView(request):
 	context = {}
 	user = get_object_or_404(Account, id=request.user.id)
+	
 	if not user.is_authenticated:
 		return redirect('main:index')
 	receipts = Receipt.objects.filter(account=user).all()
