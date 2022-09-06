@@ -23,22 +23,21 @@
                 checkForWhitespace();
             }
 
-            function deleteComment(data) {
-                    $.ajax({
-                        url: "{% url 'main:deleteComment' %}",
-                        type: "POST",
-                        data: {
-                            "id": data,
-                            csrfmiddlewaretoken: '{{ csrf_token }}',
-                        },
-                        cache: false,
-                        dataType: "json",
-                        success: function () {
-                            table.row("#productRow-{{ product.id }}").remove().draw();
-                            table.draw();
-                        }
-                    });
-                }
+            function deleteComment(id) {
+                $.ajax({
+                    url: "{% url 'main:deleteComment' %}",
+                    type: "POST",
+                    data: {
+                        "id": id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    cache: false,
+                    dataType: "json",
+                    success: function () {
+                        $("#detailProductComment-" + id).remove();
+                    }
+                });
+            }
 
             $("#addCommentBtn").click(function (e) {
                 e.preventDefault();
@@ -53,20 +52,19 @@
                     success: function (data) {
                         clearTextarea();
                         $("#allComments").append(
-                           ' <div class="row m-2 comment border" id="detailBlogComment-{{ comment.id }}">'+
-                            '<div class="col-md-8 text-start py-2 px-4">'+
-                           ' <span><i><b>{{ comment.account }}</b></i></span>'+
-                            'says:'+
-                            '</div>'+
-                            '<div class="col-md-9">'+
-                            '<p class="text-dark text-start p-2" id="appCommBody">{{ comment.description }}</p>'+
-                           ' </div>'+
-                            '<div class="col-md-3">'+
-                                '<button class="btn btn-outline-danger"  onclick=deleteComment(' + row["pk"] + ')><i class="fa-solid fa-circle-minus"></i></button>'+
-                           ' </div>'+
+                            '<div class="row m-2 comment border" id="detailProductComment-' + data["id"] + '">' +
+                            '<div class="col-md-8 text-start py-2 px-4">' +
+                            '<span><i><b>' + data["account"] + '</b></i></span> says:' +
+                            '</div>' +
+                            '<div class="col-md-9">' +
+                            '<p class="text-dark text-start p-2" id="appCommBody">' + data["description"] + '</p>' +
+                            '</div>' +
+                            '<div class="col-md-3">' +
+                            '<button onclick="deleteComment(' + data["id"] + ')" class="btn btn-outline-danger"><i class="fa-solid fa-circle-minus"></i></button>' +
+                            '</div>' +
                             '</div>');
                         $("#commentCount").html($(".comment").length + " comments");
-                        
+
                     },
                     failure: function () { },
                 });

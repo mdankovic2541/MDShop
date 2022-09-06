@@ -1,0 +1,23 @@
+<button class="btn btn-outline-danger" id="btnCommentDelete-{{ comment.id }}">
+    <i class="fa-solid fa-circle-minus"></i>
+</button>
+<script>
+    deleteComment();
+    function deleteComment() {
+        $("#btnCommentDelete-{{ comment.id }}").click(function (e) {
+            $.ajax({
+                url: "{% url 'main:deleteComment' %}",
+                type: "POST",
+                data: {
+                    'id': "{{ comment.id }}",
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                cache: false,
+                dataType: "json",
+                success: function () {
+                    $("#detailProductComment-{{ comment.id }}").remove();
+                }
+            });
+        });
+    }
+</script>

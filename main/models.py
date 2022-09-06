@@ -154,7 +154,16 @@ class Comment(models.Model):
 	account					= models.ForeignKey(Account,on_delete=models.CASCADE)
 
 	def __str__(self):
-	   return f'Comment:{self.description}'
+		return f'Comment:{self.description}'
+
+	def to_dict_json(self):
+		return {
+			'pk': self.pk,
+			'description': self.description,
+			'product': self.product,
+			'createdAt': self.createdAt,
+			'user': self.account.username,			
+		}
 
 
 class Cart(models.Model):
