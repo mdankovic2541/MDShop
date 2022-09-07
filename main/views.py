@@ -32,9 +32,11 @@ def addProductView(request, brandId=None):
     if brandId:
         brand = get_object_or_404(Brand, id=brandId)
         isBranded = True
-        form = CreateProductForm(request.POST or None, request.FILES or None, initial={'brand': brand, 'isBranded': True})
+        form = CreateProductForm(request.POST or None, request.FILES or None, initial={
+                                 'brand': brand, 'isBranded': True})
     else:
-        form = CreateProductForm(request.POST or None, request.FILES or None, initial={'isBranded': False})
+        form = CreateProductForm(
+            request.POST or None, request.FILES or None, initial={'isBranded': False})
     if form.is_valid():
         obj = form.save(commit=False)
         obj.isBranded = True if brandId else False
@@ -83,7 +85,8 @@ def createCommentView(request, productId):
     if product and isAjax(request):
         description = request.POST.get('description', None)
         if description:
-            comment = product.comments.create(description=description, product=product.id, account=request.user)
+            comment = product.comments.create(
+                description=description, product=product.id, account=request.user)
             comment.save()
             response = {
                 'description': comment.description,
@@ -118,7 +121,8 @@ def editProductView(request, productId):
     if not request.user.is_superuser:
         return redirect('main:index')
     if request.POST:
-        form = EditProductForm(request.POST or None, request.FILES or None, instance=product)
+        form = EditProductForm(request.POST or None,
+                               request.FILES or None, instance=product)
         if form.is_valid():
             obj = form.save()
             context['success_message'] = 'Product updated!'
@@ -209,8 +213,10 @@ def productsJsonView(request):
 
 def menswearView(request):
     context = {}
-    products = Product.objects.filter(Q(type__contains='M') | Q(type__contains='U')).all()
-    brands = list(set(Brand.objects.filter(Q(brands__type__contains='M') | Q(brands__type__contains='U')).all()))
+    products = Product.objects.filter(
+        Q(type__contains='M') | Q(type__contains='U')).all()
+    brands = list(set(Brand.objects.filter(
+        Q(brands__type__contains='M') | Q(brands__type__contains='U')).all()))
     sizes = list(set(Product.objects.values_list('size', flat=True)))
     context = {
         'products': products,
@@ -223,7 +229,8 @@ def menswearView(request):
 
 def womenswearView(request):
     context = {}
-    products = Product.objects.filter(Q(type__contains='F') | Q(type__contains='U')).all()
+    products = Product.objects.filter(
+        Q(type__contains='F') | Q(type__contains='U')).all()
     context = {
         'products': products,
         'nav': 'Women',
@@ -337,7 +344,8 @@ def checkoutFinalView(request):
         cartId = request.POST.get('id', None)
         receiptNumber = request.POST.get('receiptNumber', None)
         cart = get_object_or_404(Cart, id=cartId)
-        receipt = Receipt.objects.create(account=request.user, receiptNumber=receiptNumber, totalPrice=0.0, totalSpent=0.0)
+        receipt = Receipt.objects.create(
+            account=request.user, receiptNumber=receiptNumber, totalPrice=0.0, totalSpent=0.0)
         receipt.save()
         for product in cart.product.all():
             receipt.products.add(product)
@@ -347,10 +355,11 @@ def checkoutFinalView(request):
             receipt.totalPrice += float(product.price)
         cart.save()
         receipt.save()
-        if user.points < 10:
-            user.points += 1
-        elif user.points == 10:
-            user.points = 1
+        if receipt.totalPrice >= 100:
+            if user.points < 10:
+                user.points += 1
+            elif user.points == 10:
+                user.points = 1
         user.save()
         return JsonResponse({"good": "True"})
 
