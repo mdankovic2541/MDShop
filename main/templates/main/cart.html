@@ -34,20 +34,22 @@ cart {% endblock%} {% block content %}
                         <td></td>
                         <th>Total: <span id="totalPrice"></span></th>
                         <td>
-                            <button type="button"
-                                class="btn btn-success {% if not cart.product.all %} disabled {% endif %}"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-success {% if not cart.product.all %} disabled {% endif %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="fa-solid fa-cash-register"></i>&nbsp;Go to checkout
                             </button>
                         </td>
                     </tr>
                     <script>
-                        let price = 0.0;
+                        var price = 0.0;
                         "{% for product in cart.product.all %}"
+                        "{% if request.user.points == 10 %}"
+                        currPrice = parseFloat("{{ product.price }}" * 0.9);
+                        "{% else %}"
                         currPrice = parseFloat("{{ product.price }}");
+                        "{% endif %}"
                         price += currPrice;
                         "{% endfor %}"
-                        $("#totalPrice").html(price.toFixed(2) + " HRK " + "| " + (price/7.5345).toFixed(2)+ " EUR" );
+                        $("#totalPrice").html(price.toFixed(2) + " HRK | " + (price / 7.5345).toFixed(2) + " EUR");
                     </script>
                 </tfoot>
             </table>
@@ -59,11 +61,10 @@ cart {% endblock%} {% block content %}
             </script>
         </div>
     </div>
-  </div>
+</div>
 </div>
 
-<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,7 +72,19 @@ cart {% endblock%} {% block content %}
             </div>
             <div class="modal-body row align-items-center">
                 <div class="col-6 text-end">
-                    <b>Total price:</b> {{ cart.getTotalPrice }} HRK {{ cart.getTotalPriceInEUR }} EUR
+                    <b>Total price:</b> <span id="totalCartPrice"></span>
+                    <script>
+                        var price = 0.0;
+                        "{% for product in cart.product.all %}"
+                        "{% if request.user.points == 10 %}"
+                        currPrice = parseFloat("{{ product.price }}" * 0.9);
+                        "{% else %}"
+                        currPrice = parseFloat("{{ product.price }}");
+                        "{% endif %}"
+                        price += currPrice;
+                        "{% endfor %}"
+                        $("#totalCartPrice").html(price.toFixed(2) + " HRK<br>" + (price / 7.5345).toFixed(2) + " EUR");
+                    </script>
                 </div>
                 <div class="col-6 text-center">
                     <b>User:</b> {{ request.user.username }}
@@ -80,10 +93,7 @@ cart {% endblock%} {% block content %}
                     <hr>
                 </div>
                 <div class="col-10 mx-auto text-center mb-3">
-                    <span class="h5">Address</span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a
-                            class="btn btn-outline-warning btn-sm"
-                            href="{% url 'account:editAccount' request.user.id %}"><i
-                                class="fa-solid fa-pen-to-square"></i></a></span>
+                    <span class="h5">Address</span>&nbsp;&nbsp;&nbsp;&nbsp;<span><a class="btn btn-outline-warning btn-sm" href="{% url 'account:editAccount' request.user.id %}"><i class="fa-solid fa-pen-to-square"></i></a></span>
                 </div>
                 <div class="col-12 text-center">
                     <span id="userAddress">{{ request.user.address }}</span>
@@ -130,28 +140,28 @@ cart {% endblock%} {% block content %}
 </div>
 
 <script>
-    $('#confirmPurchase').click(function(){
+    $('#confirmPurchase').click(function () {
         $.ajax({
             url: "{% url 'main:checkoutFinal' %}",
             type: "POST",
             data: {
                 "id": "{{ cart.id }}",
-                "receiptNumber": "{{ request.session.session_key }}" ,
+                "receiptNumber": "{{ request.session.session_key }}",
                 csrfmiddlewaretoken: '{{ csrf_token }}',
             },
             cache: false,
             dataType: "json",
             success: function (data) {
-                    setTimeout(function () {
-                        window.location = "{% url 'main:index' %}";
-                    }, 3000);   
-                    $(this).html("Purchased");
-                    $('#returning').removeClass("d-none").addClass("d-block");     
+                setTimeout(function () {
+                    window.location = "{% url 'main:index' %}";
+                }, 3000);
+                $(this).html("Purchased");
+                $('#returning').removeClass("d-none").addClass("d-block");
             }
         });
 
-        
+
     })
-  
-    </script>
+
+</script>
 {% endblock%}

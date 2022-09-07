@@ -16,7 +16,18 @@
     <td>{{ product.brand }}</td>
     <td>{{ product.getSize }}</td>
     <td>{{ product.getType }}</td>
-    <td>{{ product.price }} HRK | {{product.getPriceInEUR}} EUR</td>
+    <td id="price"></td>
+    <script>
+        var price = "{{ product.price }}";
+        var priceInEur = "{{ product.getPriceInEUR }}";
+        var discounted = price * 0.9;
+        var discountedEur = priceInEur * 0.9;
+        "{% if request.user.points == 10 %}"
+        $("#price").html(discounted.toFixed(2) + " HRK | " + discountedEur.toFixed(2) + " EUR");
+        "{% else %}"
+        $("#price").html(price.toFixed(2) + " HRK | " + priceEur.toFixed(2) + " EUR");
+        "{% endif %}"
+    </script>
     <td>
         <a class="btn btn-outline-danger" id="removeProduct-{{ product.id }}"><i class="fa-solid fa-square-minus"></i>&nbsp;Remove</a>
     </td>
@@ -37,8 +48,7 @@
                 success: function () {
                     var oldPrice = $("#totalPrice").html();
                     var price = "{{ product.price }}";
-                    
-                    $("#totalPrice").html((parseFloat(oldPrice) - parseFloat(price)).toFixed(2) + " HRK | " + ((parseFloat(oldPrice) - parseFloat(price)) / 7.5345 ).toFixed(2) + " EUR");
+                    $("#totalPrice").html((parseFloat(oldPrice) - parseFloat(price)).toFixed(2) + " HRK | " + ((parseFloat(oldPrice) - parseFloat(price)) / 7.5345).toFixed(2) + " EUR");
                     table.row("#productRow-{{ product.id }}").remove().draw();
                     table.draw();
                 }
