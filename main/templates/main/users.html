@@ -47,10 +47,10 @@
 				String.prototype.replaceAt = function (index, replacement) {
 					return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 				}
-				
+
 				function visitEditAccount(data) {
-           			window.location.assign("/edit_account/" + data); 
-      			}
+					window.location.assign("/edit_account/" + data);
+				}
 
 				$(document).ready(function () {
 					table = $('#usersDatatable').DataTable({
@@ -69,14 +69,16 @@
 							{ "data": "last_name" },
 							{ "data": "username" },
 							{ "data": "email" },
-							{ data: "is_admin", render: function (data, type, row, meta) {
-									if( row["is_admin"] == true) {
+							{
+								data: "is_admin", render: function (data, type, row, meta) {
+									if (row["is_admin"] == true) {
 										return '<i class="fa-solid fa-circle-check text-success"></i>';
-									}else {
+									} else {
 										return '<i class="fa-solid fa-circle-xmark text-danger"></i>'
 									}
-										
-								}},
+
+								}
+							},
 							{ "data": "address.street_name" },
 							{ "data": "address.street_number" },
 							{ "data": "address.city" },
@@ -84,8 +86,11 @@
 							{ "data": "address.country" },
 							{
 								data: "id", render: function (data, type, row, meta) {
-									return '<button onclick=visitEditAccount(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>' + "&nbsp;" +
-										'<button onclick=deleteUser(' + row["pk"] + ') class="btn btn-outline-danger" id="removeUser-' + row["pk"] + '"><i class="fa-solid fa-user-xmark text-dark"></i></button>';
+									var currUser = "{{ request.user.id }}";
+									var editButton = '<button onclick=visitEditAccount(' + row["pk"] + ') class="btn btn-outline-info"><i class="fa-solid fa-pen-to-square text-dark"></i></button>&nbsp;';
+									var delButton = '<button onclick=deleteUser(' + row["pk"] + ') class="btn btn-outline-danger" id="removeUser-' + row["pk"] + '"><i class="fa-solid fa-user-xmark text-dark"></i></button>';
+									return currUser == row["pk"] ? editButton : editButton + delButton;
+
 								}
 							},
 
