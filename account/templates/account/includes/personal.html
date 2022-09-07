@@ -1,3 +1,5 @@
+{% if request.user.is_superuser %}
+
 {% for field in form %}
 <div class="{% if field.name == 'email' %}col-8{% elif field.name == 'username' %}col-4{% elif field.name == 'is_admin' or field.name == 'is_staff' or field.name == 'is_active' or field.name == 'is_superuser' %}col-3 mb-3{% else %}col-6{% endif %}">
     {% if field.name != 'is_admin' and field.name != 'is_staff' and field.name != 'is_active' and field.name != 'is_superuser' %}
@@ -12,3 +14,19 @@
     {% endfor %}
 </div>
 {% endfor %}
+
+{% else %}
+
+{% for field in form %}
+<div class="{% if field.name == 'email' %}col-8{% elif field.name == 'username' %}col-4{% elif field.name == 'is_admin' or field.name == 'is_staff' or field.name == 'is_active' or field.name == 'is_superuser' %}d-none{% else %}col-6{% endif %}">
+    <h5 class="ms-2">{{ field.label|title }}</h5>
+    <div class="{% if field.name == 'is_admin' or field.name == 'is_staff' or field.name == 'is_active' or field.name == 'is_superuser' %}d-none{% else %}input-group mb-4{% endif %}">
+        {{ field }}
+    </div>
+    {% for error in field.errors %}
+    <p class="my-2 text-danger">{{ error }}</p>
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% endif %}
