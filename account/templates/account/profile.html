@@ -6,8 +6,8 @@
     <div class="row">
         <div class="col-md-3">
             <div class="col-11 mx-auto my-5 text-center">
-                <h3 class="pb-3"><b>User - {{request.user}}</b></h3>
-
+                <h3 class="{% if request.user.points != 10 %}pb-3{% endif %}"><b>User - {{request.user}} [<span class="{% if request.user.points == 10 %}text-danger{% endif %}">{{ request.user.points }}{% if request.user.points == 10 %}*{% endif %}</span>]</b></h3>
+                {% if request.user.points == 10 %} <span class="text-muted text-center mb-5">* popust na sljedećoj kupnji</span> {% endif %}
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
