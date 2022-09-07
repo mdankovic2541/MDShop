@@ -62,7 +62,16 @@ li a:hover,
    transition: all 0.5s ease;
 }
 
-#scrollIt{
+.cardImg {
+   max-width: 40vh;
+   max-height: 40vh;
+   min-width: 20vh;
+   min-height: 40vh;
+   height: 100%;
+   width: 100%;
+}
+
+#scrollIt {
    width: 50vh;
    height: 113.5vh;
    overflow-x: hidden;
@@ -71,11 +80,13 @@ li a:hover,
    padding: 20px;
 }
 
-.detailImg{
-   height: fit-content;
-   width: fit-content;
-   max-width: 100vh;
-   max-height:  70vh;
+.detailImg {
+   max-width: 70vh;
+   max-height: 70vh;
+   min-width: 20vh;
+   min-height: 70vh;
+   height: 100%;
+   width: 100%;
 }
 
 .btnDetails {
@@ -194,8 +205,7 @@ li a:hover,
 #brandsTable_length,
 #usersDatatable_length,
 #dtVerticalScrollExampleAnalytics_length,
-#dtVerticalScrollExample_length
- {
+#dtVerticalScrollExample_length {
    color: #000;
    margin: 1%;
 }
@@ -206,7 +216,7 @@ li a:hover,
 #brandsTable_filter,
 #usersDatatable_filter,
 #dtVerticalScrollExampleAnalytics_filter,
-#dtVerticalScrollExample_filter  {
+#dtVerticalScrollExample_filter {
    margin: 1%;
 }
 
@@ -235,8 +245,8 @@ li a:hover,
 #productTable_paginate a,
 #brandsTable_paginate a,
 #usersDatatable_paginate a,
-#dtVerticalScrollExampleAnalytics_paginate a ,
-#dtVerticalScrollExample_paginate a{
+#dtVerticalScrollExampleAnalytics_paginate a,
+#dtVerticalScrollExample_paginate a {
    padding: 8px;
    border: 1px solid #000;
    text-decoration: none;
