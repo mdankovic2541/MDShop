@@ -354,12 +354,13 @@ def checkoutFinalView(request):
             cart.product.remove(product)
             receipt.totalPrice += float(product.price)
         cart.save()
-        receipt.save()
         if receipt.totalPrice >= 100:
             if user.points < 10:
                 user.points += 1
             elif user.points == 10:
                 user.points = 1
+                receipt.isDiscounted = True
+        receipt.save()
         user.save()
         return JsonResponse({"good": "True"})
 

@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Men{% endblock %}
 
 
 {% block content %}
@@ -37,8 +37,7 @@
             {%else%}
             <p class="hidden p-3"></p>
             {%endif%}
-            <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}"
-                class="img-responsive img-thumbnail border-bottom mx-auto d-block cardImg ">
+            <img src="{{ product.front_image.url }}" alt="{{ product.title }}" id="image-{{ product.id }}" class="img-responsive img-thumbnail border-bottom mx-auto d-block cardImg ">
             <script>
                 $("#image-{{ product.id }}").hover(function () {
                     $(this).attr("src", "{{ product.back_image.url }}");

@@ -11,14 +11,16 @@
                     <thead>
                         <tr>
                             <th scope="col">Username</th>
-                            <th scope="col">Total spent</th>
+                            <th scope="col">Total spent [HRK]</th>
+                            <th scope="col">Total spent [EUR]</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for receipt in receipts %}
                         <tr>
                             <td>{{ receipt.account }}</td>
-                            <td>{{ receipt.getTotalSpent }} HRK | {{ receipt.getTotalSpentEUR }} EUR</td>                            
+                            <td>{{ receipt.getTotalSpent }}</td>
+                            <td>{{ receipt.getTotalSpentEUR }}</td>
                         </tr>
 
                         {% endfor %}
@@ -29,20 +31,21 @@
                             <th scope="col">Total spent</th>
                         </tr>
                     </tfoot>
-                    
+
                 </table>
                 <script>
-                     $(document).ready(function () {
-                    $('#dtVerticalScrollExampleAnalytics').DataTable({
-                      "scrollY": "600px",
-                      "scrollCollapse": true,
+
+                    $(document).ready(function () {
+                        $('#dtVerticalScrollExampleAnalytics').DataTable({
+                            "scrollY": "600px",
+                            "scrollCollapse": true,
+                        });
+                        $('.dataTables_length').addClass('bs-select');
                     });
-                    $('.dataTables_length').addClass('bs-select');
-                  });
                 </script>
-               
+
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 {% endblock%}

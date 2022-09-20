@@ -1,4 +1,4 @@
-from decimal import Rounded
+from decimal import Decimal, Rounded
 import decimal
 from importlib.metadata import SelectableGroups
 from django.db import models
@@ -45,7 +45,8 @@ def year_choices():
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=256, blank=False, null=False, unique=True)
+    name = models.CharField(max_length=256, blank=False,
+                            null=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -91,15 +92,22 @@ class Product(models.Model):
 
     quantity = models.IntegerField(null=False, blank=False)
     title = models.CharField(null=False, blank=False, max_length=80)
-    collection = models.CharField(max_length=2, choices=ClothesCollection.choices, default=ClothesCollection.OUT_OF_COLLECTION, null=False, blank=False)
-    year = models.IntegerField(_('year'), validators=[MinValueValidator(1984), max_value_current_year], default=current_year)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=False, blank=False, related_name='brands')
+    collection = models.CharField(max_length=2, choices=ClothesCollection.choices,
+                                  default=ClothesCollection.OUT_OF_COLLECTION, null=False, blank=False)
+    year = models.IntegerField(_('year'), validators=[MinValueValidator(
+        1984), max_value_current_year], default=current_year)
+    brand = models.ForeignKey(
+        Brand, on_delete=models.CASCADE, null=False, blank=False, related_name='brands')
     isBranded = models.BooleanField()
-    size = models.CharField(choices=ClothesSize.choices, max_length=3, default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
-    type = models.CharField(max_length=1, choices=ClothesType.choices, default=ClothesType.UNISEX, null=False, blank=False)
+    size = models.CharField(choices=ClothesSize.choices, max_length=3,
+                            default=ClothesSize.EXTRA_SMALL, null=False, blank=False)
+    type = models.CharField(max_length=1, choices=ClothesType.choices,
+                            default=ClothesType.UNISEX, null=False, blank=False)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    flag = models.CharField(max_length=1, choices=ClothesFlag.choices, default=ClothesFlag.NEW, null=False, blank=False)
-    front_image = models.ImageField(upload_to=uploadFront, null=False, blank=False)
+    flag = models.CharField(max_length=1, choices=ClothesFlag.choices,
+                            default=ClothesFlag.NEW, null=False, blank=False)
+    front_image = models.ImageField(
+        upload_to=uploadFront, null=False, blank=False)
     back_image = models.ImageField(upload_to=uploadBack, null=True, blank=True)
 
     def __str__(self):
@@ -148,7 +156,8 @@ def submission_delete(sender, instance, **kwargs):
 
 class Comment(models.Model):
     description = models.CharField(max_length=250)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='comments')
     createdAt = models.DateTimeField(auto_now_add=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
@@ -166,7 +175,8 @@ class Comment(models.Model):
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='cart')
+    user = models.OneToOneField(
+        Account, on_delete=models.CASCADE, verbose_name='cart')
     product = models.ManyToManyField(Product, related_name='cart_products')
 
     def countProducts(self):
@@ -195,21 +205,19 @@ class Receipt(models.Model):
     receiptNumber = models.CharField(max_length=255, null=False, blank=False)
     totalPrice = models.FloatField()
     totalSpent = models.FloatField()
+    isDiscounted = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.account.username}\'s receipt | {self.time}'
-
-    def getTotalPrice(self):
-        if self.account.points < 10:
-            return float(self.totalPrice)
-        elif self.account.points == 10:
-            return float(self.totalPrice * 0.9)
-
+        
     def getTotalPriceInEUR(self):
-        if self.account.points < 10:
-            return round(self.getTotalPrice() / float(TO_EUR), 2)
-        elif self.account.points == 10:
-            return round((self.getTotalPrice() / float(TO_EUR) * 0.9), 2)
+        return round(self.totalPrice / float(TO_EUR), 2)
+
+    def getDiscountedPrice(self):
+        return round(float(self.totalPrice * 0.9),2)
+    
+    def getDiscountedPriceInEur(self):
+        return round(float(self.totalPrice * 0.9) / float(TO_EUR),2)
 
     def getTotalSpent(self):
         receipts = Receipt.objects.filter(account=self.account).all()

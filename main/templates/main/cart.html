@@ -32,7 +32,7 @@ cart {% endblock%} {% block content %}
                         <td></td>
                         <td></td>
                         <td></td>
-                        <th>Total: <span id="totalPrice"></span></th>
+                        <th>Total: <span id="totalPrice"></span><br>{% if request.user.points == 10 %}<span class="text-danger">* discount 10% due to 10 gathered points</span>{% endif %}</th>
                         <td>
                             <button type="button" class="btn btn-success {% if not cart.product.all %} disabled {% endif %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="fa-solid fa-cash-register"></i>&nbsp;Go to checkout

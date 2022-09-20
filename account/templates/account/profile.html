@@ -37,7 +37,7 @@
                                     <h4 class="{% if request.user.points == 10 %}text-danger{% endif %}">
                                         {{ request.user.points }}{% if request.user.points == 10 %}*{% endif %}
                                     </h4>
-                                    {% if request.user.points == 10 %} <span class="text-muted text-center mb-5">* popust na sljedećoj kupnji</span> {% endif %}
+                                    {% if request.user.points == 10 %} <span class="text-muted text-center mb-5">* discount 10% on next order</span> {% endif %}
                                 </div>
                             </div>
                             <hr>
@@ -63,7 +63,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Receipt #</th>
-                            <th scope="col">Total price</th>
+                            <th scope="col">Total price [HRK]</th>
+                            <th scope="col">Total price [EUR]</th>
                             <th scope="col">Time</th>
 
 
@@ -73,7 +74,8 @@
                         {% for receipt in receipts %}
                         <tr>
                             <td>{{ receipt.receiptNumber }}</td>
-                            <td>{{ receipt.getTotalPrice }} HRK | {{ receipt.getTotalPriceInEUR }} EUR</td>
+                            <td>{% if receipt.isDiscounted %} {{ receipt.getDiscountedPrice }} {% else %} {{ receipt.totalPrice }} {% endif %} </td>
+                            <td>{% if receipt.isDiscounted %} {{ receipt.getDiscountedPriceInEur }} {% else %} {{ receipt.getTotalPriceInEUR }} {% endif %}</td>
                             <td>{{ receipt.time }}</td>
                         </tr>
 

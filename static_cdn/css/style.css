@@ -1,0 +1,200 @@
+* {
+   font-family: "Roboto", Helvetica, Arial, sans-serif;
+}
+
+body {
+   background: #ADA996;
+   background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+   background: linear-gradient(to bottom, #eae9e9, #dad4d4, #a9a7a7, #827e69);
+}
+
+.btnLogReg {
+   border: 2px solid #619baf;
+   border-radius: 1px 10px 10px 1px;
+   background-color: white;
+   color: #619baf;
+   font-size: 1.35rem;
+   padding: 0px 10px;
+   text-decoration: none;
+}
+
+.btnLogReg:hover {
+   background-color: #619baf;
+   color: white;
+   transition-duration: 0.4s;
+}
+
+.card-login-register {
+   box-shadow: 5px 5px 20px 5px #888888;
+   background-color: #fff;
+   opacity: 0.8;
+   transition: all 0.5s ease;
+}
+
+.card-login-register:hover {
+   opacity: 1;
+}
+
+li a,
+.link-grayish {
+   transition: all 0.5s ease;
+}
+
+
+li a:hover,
+.link-grayish:hover {
+   color: black;
+   transform: scale(1.2);
+}
+
+.card {
+   box-shadow: 5px 5px 20px 5px #888888;
+   background-color: #fff;
+   opacity: 0.8;
+   padding-top: 10px;
+   transition: all 0.5s ease;
+}
+
+.card:hover {
+   box-shadow: 5px 5px 20px 5px #888888;
+   background-color: #fff;
+   opacity: 1;
+   transition: all 0.5s ease;
+}
+
+.btnCardRight {
+   border: 2px solid #1b6944;
+   border-radius: 1px 10px 10px 1px;
+   background-color: white;
+   color: #1b6944;
+   font-size: 20px;
+   padding-left: 5px;
+   padding-right: 5px;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.btnCardRight:hover {
+   border: 2px solid white;
+   border-radius: 1px 10px 10px 1px;
+   background-color: #1b6944;
+   color: white;
+   font-size: 20px;
+   transition-duration: 0.4s;
+}
+
+.btnCardLeft {
+   border: 2px solid #908203;
+   border-radius: 10px 1px 1px 10px;
+   background-color: white;
+   color: #908203;
+   font-size: 20px;
+   padding-left: 5px;
+   padding-right: 5px;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.btnCardLeft:hover {
+   border: 2px solid white;
+   border-radius: 10px 1px 1px 10px;
+   background-color: #908203;
+   color: white;
+   font-size: 20px;
+   transition-duration: 0.4s;
+}
+
+.flag {
+   background-color: #ab1919;
+   width: fit-content;
+   padding: 4px;
+   color: white;
+   border-radius: 1px 10px 10px 1px;
+}
+
+.cont {
+   padding: 3%;
+   position: relative;
+
+
+}
+
+.hero {
+   min-height: 50vh;
+   background: #000 url(https://wallpaperaccess.com/full/1098467.jpg) center center no-repeat;
+   background-size: cover;
+   position: relative;
+}
+
+.hero:before {
+   content: "";
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.hero-content {
+   position: absolute;
+   bottom: 15px;
+   color: #fff;
+
+}
+
+.register,
+.forgot,
+.haveAccount {
+   text-decoration: none;
+   color: #619baf;
+   opacity: .7;
+   transition: all .4s ease;
+}
+
+.register:hover,
+.forgot:hover,
+.haveAccount:hover {
+   color: #000;
+   opacity: 1;
+   transform: scale(2);
+}
+
+/* ? DATATABLES */
+#example_wrapper {
+   background-color: rgba(255, 255, 255, .3);
+   padding: 1% 1%;
+}
+
+#example_length {
+   color: #000;
+   margin: 1%;
+}
+
+#example_filter {
+   margin: 1%;
+}
+
+#example_filter>label>input {
+   margin-left: 5px;
+}
+
+#example_info {
+   color: #000;
+}
+
+#example_paginate a {
+   padding: 8px;
+   border: 1px solid #000;
+   text-decoration: none;
+}
+
+.dataTables_paginate {
+   text-align: center;
+   color: #000;
+   margin: auto;
+   width: 50%;
+   padding: 1%;
+}
+
+/* ? DATATABLES */
