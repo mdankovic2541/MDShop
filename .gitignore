@@ -12,7 +12,5 @@
 !/*/migrations/__init__.py
 
 # Static, Media and DB
-/media_cdn/
-/static_cdn/
 db.sqlite3
 
